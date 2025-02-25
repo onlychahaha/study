@@ -1,0 +1,3178 @@
+<!DOCTYPE html>
+<!-- saved from url=(0066)https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963 -->
+<html lang="zh-CN" class="js-focus-visible" data-js-focus-visible=""><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+                            <title>协程调度模块 - 类库与框架 - 程序员的自我修养</title>
+    
+        
+
+                        
+    
+                        
+    
+
+                
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=EDGE,chrome=IE7">
+
+<meta id="confluence-context-path" name="confluence-context-path" content="/wiki">
+<meta id="confluence-base-url" name="confluence-base-url" content="https://www.midlane.top/wiki">
+
+    <meta id="atlassian-token" name="atlassian-token" content="23c593631beb51c94b6d8fd88317986e8d7fe45f">
+
+
+<meta id="confluence-space-key" name="confluence-space-key" content="libs">
+<script type="text/javascript">
+        var contextPath = '/wiki';
+</script>
+
+    
+
+    <meta name="confluence-request-time" content="1740455112480">
+        
+    
+        
+            <style>.ia-fixed-sidebar, .ia-splitter-left {width: 285px;}.theme-default .ia-splitter #main {margin-left: 285px;}.ia-fixed-sidebar {visibility: hidden;}</style>
+            <meta name="ajs-use-keyboard-shortcuts" content="true">
+            <meta name="ajs-discovered-plugin-features" content="$discoveredList">
+            <meta name="ajs-keyboardshortcut-hash" content="ebd3e926cabc35118abb0880fc17847d">
+            <meta name="ajs-team-calendars-display-time-format" content="displayTimeFormat12">
+            <meta id="team-calendars-display-week-number" content="false">
+            <meta id="team-calendars-user-timezone" content="Asia/Shanghai">
+            <script type="text/x-template" id="team-calendars-messages" title="team-calendars-messages"><fieldset class="i18n hidden"><input type="hidden" name="calendar3.month.long.july" value="七月"><input type="hidden" name="calendar3.day.short.wednesday" value="周三"><input type="hidden" name="calendar3.day.short.thursday" value="周四"><input type="hidden" name="calendar3.month.short.march" value="3月"><input type="hidden" name="calendar3.month.long.april" value="四月"><input type="hidden" name="calendar3.month.long.october" value="十月"><input type="hidden" name="calendar3.month.long.august" value="八月"><input type="hidden" name="calendar3.month.short.july" value="7月"><input type="hidden" name="calendar3.month.short.may" value="5月"><input type="hidden" name="calendar3.month.short.november" value="11月"><input type="hidden" name="calendar3.day.long.friday" value="星期五"><input type="hidden" name="calendar3.day.long.sunday" value="星期日"><input type="hidden" name="calendar3.day.long.saturday" value="星期六"><input type="hidden" name="calendar3.month.short.april" value="4月"><input type="hidden" name="calendar3.day.long.wednesday" value="星期三"><input type="hidden" name="calendar3.month.long.december" value="十二月"><input type="hidden" name="calendar3.month.short.october" value="10月"><input type="hidden" name="calendar3.day.long.monday" value="星期一"><input type="hidden" name="calendar3.month.short.june" value="6月"><input type="hidden" name="calendar3.day.short.monday" value="周一"><input type="hidden" name="calendar3.day.short.tuesday" value="周二"><input type="hidden" name="calendar3.day.short.saturday" value="周六"><input type="hidden" name="calendar3.month.long.march" value="三月"><input type="hidden" name="calendar3.month.long.june" value="六月"><input type="hidden" name="calendar3.month.short.february" value="2月"><input type="hidden" name="calendar3.month.short.august" value="8月"><input type="hidden" name="calendar3.month.short.december" value="12月"><input type="hidden" name="calendar3.day.short.sunday" value="周日"><input type="hidden" name="calendar3.month.long.february" value="二月"><input type="hidden" name="calendar3.day.long.tuesday" value="星期二"><input type="hidden" name="calendar3.month.long.may" value="五月"><input type="hidden" name="calendar3.month.long.september" value="九月"><input type="hidden" name="calendar3.month.long.november" value="十一月"><input type="hidden" name="calendar3.month.short.january" value="1月"><input type="hidden" name="calendar3.month.short.september" value="9月"><input type="hidden" name="calendar3.day.long.thursday" value="星期四"><input type="hidden" name="calendar3.month.long.january" value="一月"><input type="hidden" name="calendar3.day.short.friday" value="周五"></fieldset></script>
+            <meta name="ajs-emojis-allow-current-user-upload-emojis" content="true">
+<meta name="ajs-emojis-max-upload-file-size" content="1">
+
+            <meta name="ajs-public-signup-permitted" content="false">
+            <meta name="ajs-cq-is-admin" content="false"><meta name="ajs-cq-is-anonymous" content="true">
+            
+            <meta name="ajs-is-confluence-admin" content="false">
+            <meta name="ajs-connection-timeout" content="10000">
+            
+    
+    
+            <meta name="ajs-page-title" content="协程调度模块">
+            <meta name="ajs-latest-published-page-title" content="协程调度模块">
+            <meta name="ajs-space-name" content="类库与框架">
+            <meta name="ajs-page-id" content="10060963">
+            <meta name="ajs-latest-page-id" content="10060963">
+            <meta name="ajs-content-type" content="page">
+            <meta name="ajs-parent-page-title" content="从零开始重写sylar C++高性能分布式服务器框架">
+            <meta name="ajs-parent-page-id" content="10060952">
+            <meta name="ajs-space-key" content="libs">
+            <meta name="ajs-max-number-editors" content="12">
+            <meta name="ajs-macro-placeholder-timeout" content="5000">
+            <meta name="ajs-jira-metadata-count" content="0">
+            <meta name="ajs-from-page-title" content="">
+            <meta name="ajs-can-remove-page" content="false">
+            <meta name="ajs-can-remove-page-hierarchy" content="false">
+            <meta name="ajs-browse-page-tree-mode" content="view">
+            <meta name="ajs-shared-drafts" content="false">
+            <meta name="ajs-context-path" content="/wiki">
+            <meta name="ajs-base-url" content="https://www.midlane.top/wiki">
+            <meta name="ajs-version-number" content="8.5.5">
+            <meta name="ajs-build-number" content="9012">
+            <meta name="ajs-remote-user" content="">
+            <meta name="ajs-remote-user-key" content="">
+            <meta name="ajs-remote-user-has-licensed-access" content="false">
+            <meta name="ajs-remote-user-has-browse-users-permission" content="false">
+            <meta name="ajs-current-user-fullname" content="">
+            <meta name="ajs-current-user-avatar-uri-reference" content="/wiki/images/icons/profilepics/anonymous.svg">
+            <meta name="ajs-static-resource-url-prefix" content="/wiki">
+            <meta name="ajs-global-settings-attachment-max-size" content="104857600">
+            <meta name="ajs-global-settings-quick-search-enabled" content="true">
+            <meta name="ajs-user-locale" content="zh_CN">
+            <meta name="ajs-user-timezone-offset" content="28800000">
+            <meta name="ajs-enabled-dark-features" content="site-wide.synchrony,site-wide.shared-drafts.disable,clc.quick.create,confluence.view.edit.transition,cql.search.screen,confluence-inline-comments-resolved,http.session.registrar,nps.survey.inline.dialog,confluence.efi.onboarding.new.templates,atlassian.cdn.static.assets,pdf-preview,previews.sharing,previews.versions,file-annotations,confluence.efi.onboarding.rich.space.content,collaborative-audit-log,confluence.reindex.improvements,previews.conversion-service,editor.ajax.save,crowd.sync.nested.groups.group.membership.changes.batching.enabled,read.only.mode,graphql,previews.trigger-all-file-types,attachment.extracted.text.extractor,lucene.caching.filter,confluence.table.resizable,notification.batch,previews.sharing.pushstate,confluence-inline-comments-rich-editor,tc.tacca.dacca,topicEventPublisher,confluence.reindex.audit,site-wide.synchrony.opt-in,atlassian.webresource.twophase.js.i18n.disabled,confluence.denormalisedpermissions,file-annotations.likes,gatekeeper-ui-v2,v2.content.name.searcher,confluence.search.improvements.ranking,crowd.event.transformer.directory.manager.cache,mobile.supported.version,confluence.reindex.spaces,confluence.fast-xml-backup-restore,pulp,crowd.sync.delete.user.memberships.batching.enabled,confluence-inline-comments,confluence-inline-comments-dangling-comment,quick-reload-inline-comments-flags,confluence.retention.rules">
+            <meta name="ajs-atl-token" content="23c593631beb51c94b6d8fd88317986e8d7fe45f">
+            <meta name="ajs-confluence-flavour" content="VANILLA">
+            <meta name="ajs-user-date-pattern" content="y年M月d日">
+            <meta name="ajs-access-mode" content="READ_WRITE">
+            <meta name="ajs-render-mode" content="READ_WRITE">
+            <meta name="ajs-date.format" content="MMM dd, yyyy">
+    
+    <link rel="shortcut icon" href="https://www.midlane.top/wiki/s/-tas3ps/9012/8yg2g7/27/_/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="https://www.midlane.top/wiki/s/-tas3ps/9012/8yg2g7/27/_/favicon.ico">
+
+<link rel="search" type="application/opensearchdescription+xml" href="https://www.midlane.top/wiki/opensearch/osd.action" title="程序员的自我修养">
+    
+                    
+            <meta name="ajs-create-issue-metadata-show-discovery" content="false">
+            
+
+    <script>
+window.WRM=window.WRM||{};window.WRM._unparsedData=window.WRM._unparsedData||{};window.WRM._unparsedErrors=window.WRM._unparsedErrors||{};
+WRM._unparsedData["com.atlassian.confluence.plugins.confluence-license-banner:confluence-license-banner-resources.license-details"]="{\u0022daysBeforeLicenseExpiry\u0022:0,\u0022daysBeforeMaintenanceExpiry\u0022:0,\u0022showLicenseExpiryBanner\u0022:false,\u0022showMaintenanceExpiryBanner\u0022:false,\u0022renewUrl\u0022:null,\u0022salesUrl\u0022:null}";
+WRM._unparsedData["com.onresolve.confluence.groovy.groovyrunner:pluginInfoSettingsWebResources.settings-data-provider"]="{\u0022helpBaseUrl\u0022:\u0022https://docs.adaptavist.com/sr4c/8.17.0/\u0022,\u0022pluginVersion\u0022:\u00228.17.0\u0022,\u0022buildNumber\u0022:19221,\u0022appKey\u0022:\u0022com.onresolve.confluence.groovy.groovyrunner\u0022,\u0022animationsEnabled\u0022:true,\u0022staticResourcePrefix\u0022:\u0022/wiki/s/-tas3ps/9012/8yg2g7/_\u0022,\u0022editorSettings\u0022:{\u0022miniMapEnabled\u0022:true,\u0022hapiLinterEnabled\u0022:true}}";
+WRM._unparsedData["com.atlassian.applinks.applinks-plugin:applinks-common-exported.applinks-types"]="{\u0022crowd\u0022:\u0022\u4eba\u7fa4\u0022,\u0022confluence\u0022:\u0022Confluence\u0022,\u0022fecru\u0022:\u0022Fisheye / Crucible\u0022,\u0022stash\u0022:\u0022\u6682\u5b58\u0022,\u0022jira\u0022:\u0022Jira\u0022,\u0022refapp\u0022:\u0022\u76f8\u5173\u5e94\u7528\u7a0b\u5e8f\u0022,\u0022bamboo\u0022:\u0022\u7af9\u0022,\u0022generic\u0022:\u0022\u901a\u7528\u5e94\u7528\u7a0b\u5e8f\u0022}";
+WRM._unparsedData["com.atlassian.confluence.plugins.confluence-feature-discovery-plugin:confluence-feature-discovery-plugin-resources.test-mode"]="false";
+WRM._unparsedData["com.onresolve.confluence.groovy.groovyrunner:enhancedSearchWebResources.enhanced-search-settings-data-provider"]="{\u0022enhancedSearchBinocularEnabled\u0022:false,\u0022enhancedSearchSectionMessagesEnabled\u0022:true}";
+WRM._unparsedData["com.atlassian.applinks.applinks-plugin:applinks-common-exported.entity-types"]="{\u0022singular\u0022:{\u0022refapp.charlie\u0022:\u0022Charlie\u0022,\u0022fecru.project\u0022:\u0022Crucible\u9879\u76ee\u0022,\u0022fecru.repository\u0022:\u0022FishEye \u4ed3\u5e93\u0022,\u0022stash.project\u0022:\u0022Stash \u9879\u76ee\u0022,\u0022generic.entity\u0022:\u0022\u901a\u7528\u9879\u76ee\u0022,\u0022confluence.space\u0022:\u0022Confluence\u7a7a\u95f4\u0022,\u0022bamboo.project\u0022:\u0022Bamboo\u9879\u76ee\u0022,\u0022jira.project\u0022:\u0022Jira \u9879\u76ee\u0022},\u0022plural\u0022:{\u0022refapp.charlie\u0022:\u0022\u67e5\u7406\u65af\u0022,\u0022fecru.project\u0022:\u0022Crucible\u9879\u76ee\u0022,\u0022fecru.repository\u0022:\u0022FishEye \u4ed3\u5e93\u96c6\u0022,\u0022stash.project\u0022:\u0022Stash\u9879\u76ee\u0022,\u0022generic.entity\u0022:\u0022\u901a\u7528\u9879\u76ee\u0022,\u0022confluence.space\u0022:\u0022Confluence\u7a7a\u95f4\u0022,\u0022bamboo.project\u0022:\u0022Bamboo\u9879\u76ee\u0022,\u0022jira.project\u0022:\u0022Jira \u9879\u76ee\u0022}}";
+WRM._unparsedData["com.onresolve.confluence.groovy.groovyrunner:web-item-response-renderer.web-item-actions-data-provider"]="[]";
+WRM._unparsedData["com.atlassian.analytics.analytics-client:programmatic-analytics-init.programmatic-analytics-data-provider"]="false";
+WRM._unparsedData["com.atlassian.plugins.atlassian-plugins-webresource-plugin:context-path.context-path"]="\u0022/wiki\u0022";
+WRM._unparsedData["com.atlassian.analytics.analytics-client:policy-update-init.policy-update-data-provider"]="false";
+WRM._unparsedData["com.atlassian.applinks.applinks-plugin:applinks-common-exported.authentication-types"]="{\u0022com.atlassian.applinks.api.auth.types.BasicAuthenticationProvider\u0022:\u0022\u57fa\u672c\u8bbf\u95ee\u0022,\u0022com.atlassian.applinks.api.auth.types.TrustedAppsAuthenticationProvider\u0022:\u0022\u4fe1\u4efb\u7684\u5e94\u7528\u65e0\u6548\u0022,\u0022com.atlassian.applinks.api.auth.types.CorsAuthenticationProvider\u0022:\u0022\u6b4c\u73e5\u0022,\u0022com.atlassian.applinks.api.auth.types.OAuthAuthenticationProvider\u0022:\u0022Oauth\u0022,\u0022com.atlassian.applinks.api.auth.types.TwoLeggedOAuthAuthenticationProvider\u0022:\u0022Oauth\u0022,\u0022com.atlassian.applinks.api.auth.types.TwoLeggedOAuthWithImpersonationAuthenticationProvider\u0022:\u0022Oauth\u0022}";
+WRM._unparsedData["com.atlassian.confluence.plugins.confluence-search-ui-plugin:confluence-search-ui-plugin-resources.i18n-data"]="{\u0022search.ui.recent.link.text\u0022:\u0022\u67e5\u770b\u66f4\u591a\u6700\u8fd1\u8bbf\u95ee\u0022,\u0022search.ui.search.results.empty\u0022:\u0022\u6211\u4eec\u627e\u4e0d\u5230\u4efb\u4f55\u5339\u914d\u201c{0}\u201d\u7684\u5185\u5bb9\u3002\u0022,\u0022search.ui.filter.clear.selected\u0022:\u0022\u6e05\u9664\u6240\u9009\u9879\u76ee\u0022,\u0022search.ui.content.name.search.items.panel.load.all.top.items.button.text\u0022:\u0022\u663e\u793a\u66f4\u591a\u5e94\u7528\u7ed3\u679c......\u0022,\u0022search.ui.filter.contributor.button.text\u0022:\u0022\u8d21\u732e\u8005\u0022,\u0022search.ui.filter.space.current.label\u0022:\u0022\u5f53\u524d\u0022,\u0022search.ui.clear.input.button.text\u0022:\u0022\u6e05\u9664\u6587\u672c\u0022,\u0022search.ui.search.results.clear.button\u0022:\u0022\u6e05\u7a7a\u7b5b\u9009\u5668\u3002\u0022,\u0022help.search.ui.link.title\u0022:\u0022\u641c\u7d22\u6280\u5de7\u0022,\u0022search.ui.container.close.text\u0022:\u0022\u5173\u95ed\u0022,\u0022search.ui.filter.date.month.text\u0022:\u0022\u8fc7\u53bb\u4e00\u4e2a\u6708\u0022,\u0022search.ui.infinite.scroll.button.text\u0022:\u0022\u66f4\u591a\u7ed3\u679c\u0022,\u0022search.ui.filter.date.button.text\u0022:\u0022\u65e5\u671f\u0022,\u0022search.ui.filter.date.week.text\u0022:\u0022\u8fc7\u53bb\u4e00\u5468\u0022,\u0022search.ui.result.subtitle.calendar\u0022:\u0022\u56e2\u961f\u65e5\u7a0b\u8868\u0022,\u0022search.ui.filter.date.heading\u0022:\u0022\u4e0a\u6b21\u4fee\u6539\u0022,\u0022search.ui.filter.space.input.label\u0022:\u0022\u67e5\u627e\u7a7a\u95f4\u0022,\u0022search.ui.generic.error\u0022:\u0022\u51fa\u9519\u4e86\u3002\u5237\u65b0\u9875\u9762\uff0c\u6216\u8005\u5982\u679c\u6301\u7eed\u53d1\u751f\u8fd9\u79cd\u60c5\u51b5\uff0c\u8bf7\u8054\u7cfb\u60a8\u7684\u7ba1\u7406\u5458\u3002\u0022,\u0022search.ui.recent.spaces\u0022:\u0022\u6700\u8fd1\u7a7a\u95f4\u0022,\u0022search.ui.result.subtitle.space\u0022:\u0022\u7a7a\u95f4\u0022,\u0022search.ui.filter.space.category.input.label\u0022:\u0022\u67e5\u627e\u7a7a\u95f4\u7c7b\u522b......\u0022,\u0022search.ui.filter.space.archive.label\u0022:\u0022\u641c\u7d22\u5df2\u7ecf\u5f52\u6863\u7684\u7a7a\u95f4\u0022,\u0022search.ui.filter.label\u0022:\u0022\u7b5b\u9009\u5668\u0022,\u0022search.ui.filter.date.all.text\u0022:\u0022\u968f\u65f6\u0022,\u0022search.ui.filter.date.hour.text\u0022:\u0022\u8fc7\u53bb\u4e00\u5929\u0022,\u0022search.ui.filters.heading\u0022:\u0022\u7b5b\u9009\u65b9\u5f0f\u0022,\u0022search.ui.filter.label.input.label\u0022:\u0022\u67e5\u627e\u6807\u7b7e......\u0022,\u0022search.ui.recent.items.anonymous\u0022:\u0022\u5f00\u59cb\u63a2\u7d22\u3002 \u60a8\u7684\u641c\u7d22\u7ed3\u679c\u5c06\u663e\u793a\u5728\u6b64\u5904\u3002\u0022,\u0022search.ui.input.label\u0022:\u0022\u641c\u7d22\u0022,\u0022search.ui.input.aria.label\u0022:\u0022\u641c\u7d22\uff0c\u8f93\u5165\u65f6\uff0c\u641c\u7d22\u7ed3\u679c\u5c06\u5728\u4e0b\u65b9\u663e\u793a\u3002\u0022,\u0022search.ui.search.result\u0022:\u0022{0,choice,1#{0}\u4e2a\u641c\u7d22\u7ed3\u679c|1\u003c{0}\u4e2a\u641c\u7d22\u7ed3\u679c}\u0022,\u0022search.ui.filter.label.button.text\u0022:\u0022\u6807\u7b7e\u0022,\u0022search.ui.container.clear.ariaLabel\u0022:\u0022\u6e05\u9664\u0022,\u0022search.ui.input.alert\u0022:\u0022\u6309\u56de\u8f66\u952e(Enter)\u641c\u7d22\u0022,\u0022search.ui.filter.no.result.text\u0022:\u0022\u6211\u4eec\u627e\u4e0d\u5230\u4efb\u4f55\u7b26\u5408\u60a8\u641c\u7d22\u6761\u4ef6\u7684\u5185\u5bb9\u0022,\u0022search.ui.result.subtitle.user\u0022:\u0022\u7528\u6237\u8d44\u6599\u0022,\u0022search.ui.filter.contributor.input.label\u0022:\u0022\u67e5\u627e\u4eba\u5458......\u0022,\u0022search.ui.filter.content.type.button.text\u0022:\u0022\u7c7b\u578b\u0022,\u0022search.ui.filter.date.year.text\u0022:\u0022\u8fc7\u53bb\u4e00\u5e74\u0022,\u0022search.ui.advanced.search.link.text\u0022:\u0022\u9ad8\u7ea7\u641c\u7d22\u0022,\u0022search.ui.filter.space.button.text\u0022:\u0022\u7a7a\u95f4\u0022,\u0022search.ui.search.results.clear.line2\u0022:\u0022\u8bf7\u5c1d\u8bd5\u4e0d\u540c\u7684\u641c\u7d22\u5173\u952e\u5b57\u6216\u8005\u0022,\u0022search.ui.filter.space.category.button.text\u0022:\u0022\u7a7a\u95f4\u7c7b\u522b\u0022,\u0022search.ui.search.results.clear.line1\u0022:\u0022\u627e\u4e0d\u5230\u5339\u914d\u7684\u641c\u7d22\u7ed3\u679c\u0022,\u0022search.ui.content.name.search.items.panel.load.all.top.items.admin.button.text\u0022:\u0022\u663e\u793a\u66f4\u591a\u8bbe\u7f6e\u548c\u5e94\u7528\u7ed3\u679c...\u0022,\u0022search.ui.recent.pages\u0022:\u0022\u6700\u8fd1\u8bbf\u95ee\u0022,\u0022search.ui.search.result.anonymous\u0022:\u0022{0,choice,1#{0}\u4e2a\u641c\u7d22\u7ed3\u679c| 1 \u003c{0}\u4e2a\u641c\u7d22\u7ed3\u679c}\u3002 \u60a8\u6709\u5e10\u6237\u5417\uff1f{1}\u767b\u5f55{2}\u641c\u7d22\u66f4\u591a\u7ed3\u679c\u3002\u0022,\u0022search.ui.recent.items.empty\u0022:\u0022\u5f00\u59cb\u63a2\u7d22\u3002 \u60a8\u6700\u8fd1\u8bbf\u95ee\u8fc7\u7684\u9875\u9762\u548c\u7a7a\u95f4\u5c06\u663e\u793a\u5728\u6b64\u5904\u3002\u0022,\u0022search.ui.filter.space.init.heading\u0022:\u0022\u6700\u8fd1\u7a7a\u95f4\u0022}";
+WRM._unparsedData["com.atlassian.confluence.plugins.synchrony-interop:synchrony-status-banner-loader.synchrony-status"]="false";
+WRM._unparsedData["com.atlassian.applinks.applinks-plugin:applinks-common-exported.applinks-help-paths"]="{\u0022entries\u0022:{\u0022applinks.docs.root\u0022:\u0022https://confluence.atlassian.com/display/APPLINKS-091/\u0022,\u0022applinks.docs.diagnostics.troubleshoot.sslunmatched\u0022:\u0022SSL+and+application+link+troubleshooting+guide\u0022,\u0022applinks.docs.diagnostics.troubleshoot.oauthsignatureinvalid\u0022:\u0022OAuth+troubleshooting+guide\u0022,\u0022applinks.docs.diagnostics.troubleshoot.oauthtimestamprefused\u0022:\u0022OAuth+troubleshooting+guide\u0022,\u0022applinks.docs.delete.entity.link\u0022:\u0022Create+links+between+projects\u0022,\u0022applinks.docs.adding.application.link\u0022:\u0022Link+Atlassian+applications+to+work+together\u0022,\u0022applinks.docs.administration.guide\u0022:\u0022Application+Links+Documentation\u0022,\u0022applinks.docs.oauth.security\u0022:\u0022OAuth+security+for+application+links\u0022,\u0022applinks.docs.troubleshoot.application.links\u0022:\u0022Troubleshoot+application+links\u0022,\u0022applinks.docs.diagnostics.troubleshoot.unknownerror\u0022:\u0022Network+and+connectivity+troubleshooting+guide\u0022,\u0022applinks.docs.configuring.auth.trusted.apps\u0022:\u0022Configuring+Trusted+Applications+authentication+for+an+application+link\u0022,\u0022applinks.docs.diagnostics.troubleshoot.authlevelunsupported\u0022:\u0022OAuth+troubleshooting+guide\u0022,\u0022applinks.docs.diagnostics.troubleshoot.ssluntrusted\u0022:\u0022SSL+and+application+link+troubleshooting+guide\u0022,\u0022applinks.docs.diagnostics.troubleshoot.unknownhost\u0022:\u0022Network+and+connectivity+troubleshooting+guide\u0022,\u0022applinks.docs.delete.application.link\u0022:\u0022Link+Atlassian+applications+to+work+together\u0022,\u0022applinks.docs.adding.project.link\u0022:\u0022Configuring+Project+links+across+Applications\u0022,\u0022applinks.docs.link.applications\u0022:\u0022Link+Atlassian+applications+to+work+together\u0022,\u0022applinks.docs.diagnostics.troubleshoot.oauthproblem\u0022:\u0022OAuth+troubleshooting+guide\u0022,\u0022applinks.docs.diagnostics.troubleshoot.migration\u0022:\u0022Update+application+links+to+use+OAuth\u0022,\u0022applinks.docs.relocate.application.link\u0022:\u0022Link+Atlassian+applications+to+work+together\u0022,\u0022applinks.docs.administering.entity.links\u0022:\u0022Create+links+between+projects\u0022,\u0022applinks.docs.upgrade.application.link\u0022:\u0022OAuth+security+for+application+links\u0022,\u0022applinks.docs.diagnostics.troubleshoot.connectionrefused\u0022:\u0022Network+and+connectivity+troubleshooting+guide\u0022,\u0022applinks.docs.configuring.auth.oauth\u0022:\u0022OAuth+security+for+application+links\u0022,\u0022applinks.docs.insufficient.remote.permission\u0022:\u0022OAuth+security+for+application+links\u0022,\u0022applinks.docs.configuring.application.link.auth\u0022:\u0022OAuth+security+for+application+links\u0022,\u0022applinks.docs.diagnostics\u0022:\u0022Application+links+diagnostics\u0022,\u0022applinks.docs.configured.authentication.types\u0022:\u0022OAuth+security+for+application+links\u0022,\u0022applinks.docs.adding.entity.link\u0022:\u0022Create+links+between+projects\u0022,\u0022applinks.docs.diagnostics.troubleshoot.unexpectedresponse\u0022:\u0022Network+and+connectivity+troubleshooting+guide\u0022,\u0022applinks.docs.configuring.auth.basic\u0022:\u0022Configuring+Basic+HTTP+Authentication+for+an+Application+Link\u0022,\u0022applinks.docs.diagnostics.troubleshoot.authlevelmismatch\u0022:\u0022OAuth+troubleshooting+guide\u0022}}";
+if(window.WRM._dataArrived)window.WRM._dataArrived();</script>
+<link rel="stylesheet" href="./协程调度模块 - 类库与框架 - 程序员的自我修养_files/batch.css" data-wrm-key="_super,-com.atlassian.plugins.atlassian-plugins-webresource-rest:data-collector-perf-observer" data-wrm-batch-type="context" media="all">
+<link rel="stylesheet" href="./协程调度模块 - 类库与框架 - 程序员的自我修养_files/batch(1).css" data-wrm-key="atl.confluence.plugins.pagetree-desktop,main,viewcontent,atl.general,page,atl.comments,-_super" data-wrm-batch-type="context" media="all">
+<link rel="stylesheet" href="./协程调度模块 - 类库与框架 - 程序员的自我修养_files/custom.css" media="all">
+<script data-wrm-key="com.atlassian.plugins.atlassian-plugins-webresource-rest:data-collector-perf-observer" data-wrm-batch-type="resource" data-initially-rendered="">
+!function(){"use strict";if("PerformanceObserver"in window){const e=[];window.__observedResources=e;const r=e=>"script"===e?"script":"css";new PerformanceObserver((n=>{n.getEntries().filter((({initiatorType:e,name:r})=>{const n="script"===e||((e,r)=>"link"===e&&"css"===new URL(r).pathname.split(".").pop())(e,r),i=new URL(location.href).origin===new URL(r).origin;return n&&i})).forEach((({name:n,transferSize:i,encodedBodySize:s,initiatorType:o})=>{e.push([i,s,n,r(o)])}))})).observe({type:"resource"})}}();
+
+</script>
+<script src="./协程调度模块 - 类库与框架 - 程序员的自我修养_files/batch.js.下载" data-wrm-key="_super,-com.atlassian.plugins.atlassian-plugins-webresource-rest:data-collector-perf-observer" data-wrm-batch-type="context" data-initially-rendered=""></script>
+<script src="./协程调度模块 - 类库与框架 - 程序员的自我修养_files/batch(1).js.下载" data-wrm-key="atl.confluence.plugins.pagetree-desktop,main,viewcontent,atl.general,page,atl.comments,-_super" data-wrm-batch-type="context" data-initially-rendered=""></script><style type="text/css">.wiki-content .contentLayout2 .columnLayout .cell{padding-left:15px;padding-right:15px}.wiki-content .contentLayout2{margin:0 -15px}</style>
+<script type="module">WRM.requireLazily(["wr!com.atlassian.plugins.atlassian-plugins-webresource-rest:data-collector-async"])</script>
+    
+
+        
+    
+
+        
+        <meta name="ajs-site-title" content="程序员的自我修养">
+            
+    <style>
+    .no-after:after {
+        content: none;
+    }
+    .page-metadata { display: none; }
+</style>
+
+<script>
+    AJS.toInit(function(){
+        AJS.$('.aui-header-primary .aui-nav').append('<li><a href="/wiki/spacedirectory/view.action" class=" aui-nav-imagelink">空间目录</a></li>');
+        AJS.$('.aui-header-primary .aui-nav li').first().css("display", "none");
+        AJS.$('#poweredby').prepend('<li><a href="https://beian.miit.gov.cn">浙ICP备2021003588号</a></li>');
+        AJS.$('#poweredby > li').slice(-3).remove();
+        AJS.$('#poweredby > li').last().addClass('no-after');
+    });
+</script>
+
+<script>
+    AJS.toInit(function(){
+        AJS.$(document).ready(function () {
+            // 初始时回到顶部按钮为dysplay:none，根据滑动条位置控制是否显示回到顶部按钮
+            AJS.$(window).scroll(function () {
+                if (AJS.$(this).scrollTop() > 50) {
+                    AJS.$('#back-to-top').fadeIn();
+                } else {
+                    AJS.$('#back-to-top').fadeOut();
+                }
+            });
+            // 点击回到顶部
+            AJS.$('#back-to-top').click(function () {
+                AJS.$('body,html').animate({
+                    scrollTop: 0
+                }, 200);
+                return false;
+            });
+            // 鼠标悬停和离开时改变风格
+            AJS.$('#back-to-top').mouseover(function () {
+                AJS.$('#back-to-top').css("background-color", "#d3d3d3")
+            }).mouseout(function () {
+                AJS.$('#back-to-top').css("background-color", "transparent")});
+            // 去掉空任务报告里大大的勾和二级标题“任务报告”
+             AJS.$("div.blank-placeholder-box h2").hide();
+            AJS.$("div.blank-placeholder-box").removeClass("blank-placeholder-box");
+        });
+    });
+</script>
+
+
+<link rel="stylesheet" type="text/css" href="./协程调度模块 - 类库与框架 - 程序员的自我修养_files/jsmind.css"> 
+<script type="text/javascript" src="./协程调度模块 - 类库与框架 - 程序员的自我修养_files/jsmind.js.下载"></script>
+
+<script type="text/javascript" src="./协程调度模块 - 类库与框架 - 程序员的自我修养_files/viz.js.下载"></script>
+<script type="text/javascript" src="./协程调度模块 - 类库与框架 - 程序员的自我修养_files/full.render.js.下载"></script>
+
+    
+                <link rel="canonical" href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963">
+        <link rel="shortlink" href="https://www.midlane.top/wiki/x/o4SZ">
+    <meta name="wikilink" content="[libs:协程调度模块]">
+    <meta name="page-version" content="31">
+    <meta name="ajs-page-version" content="31">
+
+<script src="./协程调度模块 - 类库与框架 - 程序员的自我修养_files/batch(2).js.下载"></script><link href="./协程调度模块 - 类库与框架 - 程序员的自我修养_files/batch(2).css" rel="stylesheet"><script src="./协程调度模块 - 类库与框架 - 程序员的自我修养_files/batch(3).js.下载"></script><script src="./协程调度模块 - 类库与框架 - 程序员的自我修养_files/batch(4).js.下载"></script>
+            <meta name="ajs-use-watch" content="false">
+            <meta name="ajs-attachment-source-content-id" content="10060963">
+            <meta name="ajs-use-inline-tasks" content="true">
+            <meta name="ajs-heartbeat" content="true">
+            <meta name="ajs-action-locale" content="zh_CN">
+            <meta name="ajs-editor-plugin-resource-prefix" content="/wiki/s/-tas3ps/9012/8yg2g7/8.5.5/_">
+            <meta name="ajs-edit-mode" content="legacy">
+            <meta name="ajs-user-watching-own-content" content="false">
+            <meta name="ajs-new-page" content="false">
+            <meta name="ajs-editor-mode" content="richtext">
+            <meta name="ajs-auto-start" content="false">
+            <meta name="ajs-conf-revision" content="confluence$content$10060963.68">
+            <meta name="ajs-sync-revision-source" content="">
+            <meta name="ajs-draft-id" content="0">
+            <meta name="ajs-draft-share-id" content="">
+            <meta name="ajs-content-type" content="page">
+            <meta name="ajs-collaborative-editor-status" content="">
+            <meta name="ajs-existing-draft-id" content="0">
+            <meta name="ajs-content-id" content="10060963">
+            <meta name="ajs-form-name" content="inlinecommentform">
+            <meta name="ajs-can-attach-files" content="false">
+            <meta name="ajs-show-draft-message" content="false">
+            <meta name="ajs-shared-drafts" content="false">
+            <meta name="ajs-collaborative-content" content="false">
+            <meta name="ajs-min-editor-height" content="150">
+            <meta name="ajs-version-comment" content="">
+            <meta name="ajs-draft-type" content="page">
+                
+                <meta name="ajs-synchrony-token" content="">
+    <meta name="ajs-synchrony-base-url" content="">
+    <meta name="ajs-synchrony-app-id" content="">
+    <meta name="ajs-synchrony-expiry" content="">
+    <meta name="ajs-use-xhr-fallback" content="">
+
+            		    <meta name="ajs-max-thumb-width" content="300">
+		    <meta name="ajs-max-thumb-height" content="300">
+		    <meta name="ajs-can-send-email" content="false">
+		    <meta name="ajs-is-dev-mode" content="false">
+		    <meta name="ajs-draft-save-interval" content="30000">
+		    <meta name="ajs-show-hidden-user-macros" content="false">
+		    <meta name="ajs-can-view-profile" content="false">
+		    <meta name="ajs-is-admin" content="false">
+		    <meta name="ajs-is-dc-license" content="false">
+		    <meta name="ajs-heartbeat-interval" content="30000">
+	
+    <link href="./协程调度模块 - 类库与框架 - 程序员的自我修养_files/batch(3).css" rel="stylesheet"><script src="./协程调度模块 - 类库与框架 - 程序员的自我修养_files/batch(5).js.下载"></script><style type="text/css">.geDiagramContainer blockquote,
+.drawio-macro blockquote {
+color: #000 !important;
+margin:1em 40px 1em 40px !important;
+padding: 0px !important;
+}
+html body .geDiagramContainer ul, html body .geDiagramContainer ol,
+html body .drawio-macro ul, html body .drawio-macro ol {
+margin:1em 0px 1em 0px;
+padding-left: 40px;
+}
+.geDiagramContainer h1,
+.drawio-macro h1 {
+color: #000 !important;
+font-size: 2em;
+font-weight: bold !important;
+line-height: inherit !important;
+margin:0.67em 0px 0.67em 0px !important;
+}
+.geDiagramContainer h2,
+.drawio-macro h2 {
+color: #000 !important;
+font-size: 1.5em !important;
+font-weight: bold !important;
+line-height: inherit !important;
+margin:0.83em 0px 0.83em 0px !important;
+}
+.geDiagramContainer h3,
+.drawio-macro h3 {
+color: #000 !important;
+font-size: 1.17em !important;
+font-weight: bold !important;
+line-height: inherit !important;
+margin:1em 0px 1em 0px !important;
+}
+.geDiagramContainer h4,
+.drawio-macro h4 {
+color: #000 !important;
+font-size: 1em !important;
+font-weight: bold !important;
+line-height: inherit !important;
+margin:1.33em 0px 1.33em 0px !important;
+}
+.geDiagramContainer h5,
+.drawio-macro h5 {
+color: #000 !important;
+font-size: 0.83em !important;
+font-weight: bold !important;
+line-height: inherit !important;
+margin:1.67em 0px 1.67em 0px !important;
+}
+.geDiagramContainer h6,
+.drawio-macro h6 {
+color: #000 !important;
+font-size: 0.67em !important;
+font-weight: bold !important;
+line-height: inherit !important;
+margin:2.33em 0px 2.33em 0px !important;
+}
+html body .geDiagramContainer p,
+html body .drawio-macro p {
+margin: 1em 0 1em 0;
+}</style><link href="./协程调度模块 - 类库与框架 - 程序员的自我修养_files/batch(4).css" rel="stylesheet"><link href="./协程调度模块 - 类库与框架 - 程序员的自我修养_files/batch(5).css" rel="stylesheet"><link href="./协程调度模块 - 类库与框架 - 程序员的自我修养_files/com.atlassian.confluence.ext.newcode-macro-plugin_sh-theme-confluence.css" rel="stylesheet"><script src="./协程调度模块 - 类库与框架 - 程序员的自我修养_files/batch(6).js.下载"></script><script src="./协程调度模块 - 类库与框架 - 程序员的自我修养_files/batch(7).js.下载"></script></head><div id="photoShowViewer" class="photoshow" popover="manual">
+        
+        <div class="photoshow__viewer-viewport">
+          <div class="photoshow__viewer-canvas">
+            <img class="photoshow-image-no-antialiasing">
+          </div>
+          <div class="photoshow__view-mode-label" data-view-mode="m"></div>
+        </div>
+        
+      <i class="photoshow__image-details"></i><div class="photoshow__viewer-shadow"></div></div>
+
+    
+<body id="com-atlassian-confluence" class="theme-default  aui-layout aui-theme-default" data-aui-version="9.2.2">
+
+        
+            <div id="stp-licenseStatus-banner"></div>
+    <div id="page">
+<div id="full-height-container"><ul id="messageContainer"></ul>
+    <div id="header-precursor">
+        <div class="cell">
+            
+                            </div>
+    </div>
+        
+
+
+
+
+
+<header id="header" role="banner" class="fixed-header"><a class="aui-skip-link" aui-skip-link-auto-generated="" tabindex="1" href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963" title=" (输入“u” 然后“8”)">Skip to sidebar</a><a class="aui-skip-link" aui-skip-link-auto-generated="" tabindex="1" href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963">Skip to main content</a><a class="aui-skip-link" aui-skip-link-auto-generated="" tabindex="1" href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963">Skip to breadcrumbs</a><a class="aui-skip-link" aui-skip-link-auto-generated="" tabindex="1" href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963">Skip to search</a>
+            <a class="aui-skip-link" href="https://www.midlane.top/wiki/login.action?os_destination=%2Fpages%2Fviewpage.action%3FpageId%3D10060963" tabindex="1">登录</a>
+        <nav class="aui-header aui-dropdown2-trigger-group" aria-label="站点" resolved="" data-aui-responsive="true"><div class="aui-header-inner"><div class="aui-header-before"><button class=" aui-dropdown2-trigger app-switcher-trigger aui-dropdown2-trigger-arrowless" aria-controls="app-switcher" aria-haspopup="true" role="button" data-aui-trigger="" href="#app-switcher" resolved="" aria-expanded="false"><span class="aui-icon aui-icon-small aui-iconfont-appswitcher">已链接应用程序</span></button><div id="app-switcher" class="aui-dropdown2 aui-style-default aui-layer" role="menu" hidden="" data-is-user-admin="false" data-is-switcher="true" resolved="" tabindex="-1"><div class="aui-dropdown2-section"><ul class="nav-links"><li class="nav-link nav-link-local"><a href="https://www.midlane.top/wiki/" class="aui-dropdown2-radio aui-dropdown2-checked checked" title="https://www.midlane.top/wiki/" resolved="" aria-checked="true" tabindex="0"><span class="nav-link-label">程序员的自我修养</span></a></li><li class="nav-link"><a href="https://midlane.top/dsa/Algorithms.html" class="aui-dropdown2-radio" title="https://midlane.top/dsa/Algorithms.html" resolved="" aria-checked="false" tabindex="0"><span class="nav-link-label">算法演示</span></a></li></ul></div></div></div><div class="aui-header-primary"><span id="logo" class="aui-header-logo aui-header-logo-confluence"><a href="https://www.midlane.top/wiki/" aria-label="转到主页"><span class="aui-header-logo-device">程序员的自我修养</span></a></span><ul class="aui-nav" style="width: auto;" resolved="">
+                            <li style="display: none;">
+            
+    
+        
+<a id="space-menu-link" class=" aui-dropdown2-trigger aui-nav-link" aria-controls="space-menu-link-content" aria-haspopup="true" role="button" title="空间" tabindex="0" data-aui-trigger="" resolved="" aria-expanded="false" href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#space-menu-link-content">空间</a><div id="space-menu-link-content" class="aui-dropdown2 aui-style-default aui-dropdown2-in-header aui-layer" role="menu" hidden="" resolved="" tabindex="-1"></div>
+        </li>
+                    <li>
+            
+    
+        
+<a id="confluence-questions-link" href="https://www.midlane.top/wiki/questions?src=header" class=" aui-nav-imagelink" title="">
+            <span>问题</span>
+    </a>
+        </li>
+                                <li class="aui-buttons">
+            </li>
+<li><a href="https://www.midlane.top/wiki/spacedirectory/view.action" class=" aui-nav-imagelink">空间目录</a></li></ul>
+</div><div class="aui-header-secondary"><ul class="aui-nav" resolved="">
+                        <li>
+        <div id="search-ui" class="aui-quicksearch dont-default-focus header-quicksearch"><button id="quick-search-query-button" aria-label="搜索" aria-haspopup="dialog" aria-controls="search_drawer"></button><input id="quick-search-query" aria-label="搜索" placeholder="搜索" type="text" aria-haspopup="dialog" aria-controls="search_drawer" title=" (输入“g” 然后“g”或“/”)"><div id="quick-search-alert" role="alert">按回车键(Enter)搜索</div><aui-spinner size="small" resolved=""><div class="aui-spinner spinner"><svg focusable="false" size="20" height="20" width="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="9"></circle></svg></div></aui-spinner></div>
+    </li>
+        <li>
+            
+        <a id="help-menu-link" role="button" class="aui-nav-link aui-dropdown2-trigger aui-dropdown2-trigger-arrowless" href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" aria-haspopup="true" title="帮助" resolved="" aria-controls="help-menu-link-content" aria-expanded="false">
+        <span class="aui-icon aui-icon-small aui-iconfont-question-filled">帮助</span>
+    </a>
+    <nav id="help-menu-link-content" class="aui-dropdown2 aui-style-default aui-layer" resolved="" tabindex="-1">
+                    <div class="aui-dropdown2-section">
+                                    <strong></strong>
+                                <ul role="menu" aria-label="帮助" id="help-menu-link-pages" class="aui-list-truncate section-pages first">
+                                            <li role="presentation">
+        
+            
+<a role="menuitem" id="confluence-help-link" href="https://docs.atlassian.com/confluence/docs-85/" class="    " title="访问Confluence文档首页" target="_blank">
+        在线帮助
+</a>
+</li>
+                                            <li role="presentation">
+    
+            
+<a role="menuitem" id="keyboard-shortcuts-link" href="https://www.midlane.top/wiki" class="    " title="查看可用的键盘快捷方式 (输入“?”)">
+        快捷键
+</a>
+</li>
+                                            <li role="presentation">
+    
+            
+<a role="menuitem" id="feed-builder-link" href="https://www.midlane.top/wiki/dashboard/configurerssfeed.action" class="    " title="创建个性化的 RSS源。">
+        RSS源建立器
+</a>
+</li>
+                                            <li role="presentation">
+    
+            
+<a role="menuitem" id="whats-new-menu-link" href="https://confluence.atlassian.com/display/DOC/Confluence+8.5+Release+Notes" class="    " title="">
+        新功能
+</a>
+</li>
+                                            <li role="presentation">
+    
+            
+<a role="menuitem" id="gadget-directory-link" href="https://www.midlane.top/wiki" class="   user-item administration-link " title="浏览小工具">
+        可用的小工具
+</a>
+</li>
+                                            <li role="presentation">
+    
+            
+<a role="menuitem" id="confluence-about-link" href="https://www.midlane.top/wiki/aboutconfluencepage.action" class="    " title="获取关于Confluence的更多信息">
+        关于Confluence
+</a>
+</li>
+                                    </ul>
+            </div>
+            </nav>
+    
+    </li>
+        <li>
+                
+    
+    </li>
+        <li>
+            
+    </li>
+        <li>
+                                            </li><li>
+        
+            
+<a role="menuitem" id="login-link" href="https://www.midlane.top/wiki/login.action?os_destination=%2Fpages%2Fviewpage.action%3FpageId%3D10060963" class="   user-item login-link " title="">
+        登录
+</a>
+</li>
+                        
+    
+    </ul>
+</div></div><!-- .aui-header-inner--></nav><!-- .aui-header -->
+    <br class="clear">
+</header>
+    
+
+    
+    	<div class="ia-splitter">
+    		<div class="ia-splitter-left">
+    			<div class="ia-fixed-sidebar" role="complementary" aria-label="侧边栏" style="top: 40px; left: 0px; width: 285px; visibility: visible;">
+                                            
+                            <div class="acs-side-bar ia-scrollable-section"><div class="acs-side-bar-space-info tipsy-enabled" data-configure-tooltip="编辑空间详情"><div class="avatar"><div class="space-logo" data-key="libs" data-name="类库与框架" data-entity-type="confluence.space"><div class="avatar-img-container"><div class="avatar-img-wrapper"><a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060222&amp;src=sidebar" title="类库与框架"><img class="avatar-img" src="./协程调度模块 - 类库与框架 - 程序员的自我修养_files/default-space-logo.svg" alt="类库与框架"></a></div></div></div></div><div class="space-information-container"><div class="name"><a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060222&amp;src=sidebar" title="类库与框架">类库与框架</a></div><div class="flyout-handle icon aui-icon aui-icon-small aui-iconfont-edit"></div></div></div><div class="acs-side-bar-content"><div class="acs-nav-wrapper"><div class="acs-nav" data-has-create-permission="false" data-quick-links-state="null" data-page-tree-state="null" data-nav-type="page-tree"><div class="acs-nav-sections"><div class="main-links-section "><ul class="acs-nav-list"><li class="acs-nav-item wiki current-item" aria-current="true" data-collector-key="spacebar-pages"><a class="acs-nav-item-link tipsy-enabled" href="https://www.midlane.top/wiki/collector/pages.action?key=libs&amp;src=sidebar" data-collapsed-tooltip="页面"><span class="icon"></span><span class="acs-nav-item-label">页面</span></a></li><li class="acs-nav-item blog" data-collector-key="spacebar-blogs"><a class="acs-nav-item-link tipsy-enabled" href="https://www.midlane.top/wiki/pages/viewrecentblogposts.action?key=libs&amp;src=sidebar" data-collapsed-tooltip="博文"><span class="icon"></span><span class="acs-nav-item-label">博文</span></a></li><li class="acs-nav-item cq-space-sidebar-link" data-collector-key="cq.space.sidebar.link"><a class="acs-nav-item-link tipsy-enabled" href="https://www.midlane.top/wiki/display/libs/questions/all?src=sidebar" data-collapsed-tooltip="问题"><span class="icon"></span><span class="acs-nav-item-label">问题</span></a></li></ul></div><div class="quick-links-wrapper"></div></div></div></div><div class="ia-secondary-container tipsy-enabled" data-tree-type="page-tree"><div class="ia-secondary-header"><h2 class="ia-secondary-header-title page-tree"><span class="icon"></span><span class="label">页面树结构</span></h2></div><div class="ia-secondary-content"><div class="plugin_pagetree conf-macro output-inline" data-hasbody="false" data-macro-name="pagetree">
+
+        
+        
+    <ul role="list" class="plugin_pagetree_children_list plugin_pagetree_children_list_noleftspace">
+        <div class="plugin_pagetree_children" id="children10060222-0">
+        
+
+
+
+<ul role="list" class="plugin_pagetree_children_list" id="child_ul10060222-0">
+
+            
+
+            <li>
+    <div class="plugin_pagetree_childtoggle_container">
+                                            <a id="plusminus10060952-0" class="plugin_pagetree_childtoggle aui-icon aui-icon-small aui-iconfont-chevron-down" role="button" tabindex="0" href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963" data-type="toggle" data-page-id="10060952" data-tree-id="0" data-expanded="true" data-children-loaded="true" aria-expanded="true" aria-label="展开项目 从零开始重写sylar C++高性能分布式服务器框架">
+            </a>
+            </div>
+    <div class="plugin_pagetree_children_content">
+          
+        
+                    <span class="plugin_pagetree_children_span" id="childrenspan10060952-0">                        <a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060952&amp;src=contextnavpagetreemode">从零开始重写sylar C++高性能分布式服务器框架</a>
+        </span>
+            </div>
+
+        <div id="children10060952-0" class="plugin_pagetree_children_container">
+                                                                            <ul role="list" class="plugin_pagetree_children_list " id="child_ul10060952-0">
+                                        
+                                                                    <li>
+    <div class="plugin_pagetree_childtoggle_container">
+                    <span class="no-children icon"></span>
+            </div>
+    <div class="plugin_pagetree_children_content">
+          
+        
+                    <span class="plugin_pagetree_children_span" id="childrenspan16416843-0">                        <a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=16416843&amp;src=contextnavpagetreemode">项目依赖</a>
+        </span>
+            </div>
+
+        <div id="children16416843-0" class="plugin_pagetree_children_container">
+            </div>
+    </li>
+                                            <li>
+    <div class="plugin_pagetree_childtoggle_container">
+                    <span class="no-children icon"></span>
+            </div>
+    <div class="plugin_pagetree_children_content">
+          
+        
+                    <span class="plugin_pagetree_children_span" id="childrenspan10061019-0">                        <a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10061019&amp;src=contextnavpagetreemode">日志模块</a>
+        </span>
+            </div>
+
+        <div id="children10061019-0" class="plugin_pagetree_children_container">
+            </div>
+    </li>
+                                            <li>
+    <div class="plugin_pagetree_childtoggle_container">
+                    <span class="no-children icon"></span>
+            </div>
+    <div class="plugin_pagetree_children_content">
+          
+        
+                    <span class="plugin_pagetree_children_span" id="childrenspan16416856-0">                        <a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=16416856&amp;src=contextnavpagetreemode">环境变量模块</a>
+        </span>
+            </div>
+
+        <div id="children16416856-0" class="plugin_pagetree_children_container">
+            </div>
+    </li>
+                                            <li>
+    <div class="plugin_pagetree_childtoggle_container">
+                    <span class="no-children icon"></span>
+            </div>
+    <div class="plugin_pagetree_children_content">
+          
+        
+                    <span class="plugin_pagetree_children_span" id="childrenspan10061021-0">                        <a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10061021&amp;src=contextnavpagetreemode">配置模块</a>
+        </span>
+            </div>
+
+        <div id="children10061021-0" class="plugin_pagetree_children_container">
+            </div>
+    </li>
+                                            <li>
+    <div class="plugin_pagetree_childtoggle_container">
+                    <span class="no-children icon"></span>
+            </div>
+    <div class="plugin_pagetree_children_content">
+          
+        
+                    <span class="plugin_pagetree_children_span" id="childrenspan16416890-0">                        <a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=16416890&amp;src=contextnavpagetreemode">线程模块</a>
+        </span>
+            </div>
+
+        <div id="children16416890-0" class="plugin_pagetree_children_container">
+            </div>
+    </li>
+                                            <li>
+    <div class="plugin_pagetree_childtoggle_container">
+                    <span class="no-children icon"></span>
+            </div>
+    <div class="plugin_pagetree_children_content">
+          
+        
+                    <span class="plugin_pagetree_children_span" id="childrenspan10060957-0">                        <a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060957&amp;src=contextnavpagetreemode">协程模块</a>
+        </span>
+            </div>
+
+        <div id="children10060957-0" class="plugin_pagetree_children_container">
+            </div>
+    </li>
+                                            <li>
+    <div class="plugin_pagetree_childtoggle_container">
+                    <span class="no-children icon"></span>
+            </div>
+    <div class="plugin_pagetree_children_content">
+          
+        
+                    <span class="plugin_pagetree_children_span plugin_pagetree_current" id="childrenspan10060963-0">                        <a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963&amp;src=contextnavpagetreemode">协程调度模块</a>
+        </span>
+            </div>
+
+        <div id="children10060963-0" class="plugin_pagetree_children_container">
+            </div>
+    </li>
+                                            <li>
+    <div class="plugin_pagetree_childtoggle_container">
+                    <span class="no-children icon"></span>
+            </div>
+    <div class="plugin_pagetree_children_content">
+          
+        
+                    <span class="plugin_pagetree_children_span" id="childrenspan10061031-0">                        <a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10061031&amp;src=contextnavpagetreemode">IO协程调度模块</a>
+        </span>
+            </div>
+
+        <div id="children10061031-0" class="plugin_pagetree_children_container">
+            </div>
+    </li>
+                                            <li>
+    <div class="plugin_pagetree_childtoggle_container">
+                    <span class="no-children icon"></span>
+            </div>
+    <div class="plugin_pagetree_children_content">
+          
+        
+                    <span class="plugin_pagetree_children_span" id="childrenspan16417216-0">                        <a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=16417216&amp;src=contextnavpagetreemode">定时器模块</a>
+        </span>
+            </div>
+
+        <div id="children16417216-0" class="plugin_pagetree_children_container">
+            </div>
+    </li>
+                                            <li>
+    <div class="plugin_pagetree_childtoggle_container">
+                    <span class="no-children icon"></span>
+            </div>
+    <div class="plugin_pagetree_children_content">
+          
+        
+                    <span class="plugin_pagetree_children_span" id="childrenspan16417219-0">                        <a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=16417219&amp;src=contextnavpagetreemode">hook模块</a>
+        </span>
+            </div>
+
+        <div id="children16417219-0" class="plugin_pagetree_children_container">
+            </div>
+    </li>
+                                            <li>
+    <div class="plugin_pagetree_childtoggle_container">
+                    <span class="no-children icon"></span>
+            </div>
+    <div class="plugin_pagetree_children_content">
+          
+        
+                    <span class="plugin_pagetree_children_span" id="childrenspan26181744-0">                        <a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=26181744&amp;src=contextnavpagetreemode">Address模块</a>
+        </span>
+            </div>
+
+        <div id="children26181744-0" class="plugin_pagetree_children_container">
+            </div>
+    </li>
+                                            <li>
+    <div class="plugin_pagetree_childtoggle_container">
+                    <span class="no-children icon"></span>
+            </div>
+    <div class="plugin_pagetree_children_content">
+          
+        
+                    <span class="plugin_pagetree_children_span" id="childrenspan26181765-0">                        <a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=26181765&amp;src=contextnavpagetreemode">Socket模块</a>
+        </span>
+            </div>
+
+        <div id="children26181765-0" class="plugin_pagetree_children_container">
+            </div>
+    </li>
+                                            <li>
+    <div class="plugin_pagetree_childtoggle_container">
+                    <span class="no-children icon"></span>
+            </div>
+    <div class="plugin_pagetree_children_content">
+          
+        
+                    <span class="plugin_pagetree_children_span" id="childrenspan26181774-0">                        <a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=26181774&amp;src=contextnavpagetreemode">ByteArray类</a>
+        </span>
+            </div>
+
+        <div id="children26181774-0" class="plugin_pagetree_children_container">
+            </div>
+    </li>
+                                            <li>
+    <div class="plugin_pagetree_childtoggle_container">
+                    <span class="no-children icon"></span>
+            </div>
+    <div class="plugin_pagetree_children_content">
+          
+        
+                    <span class="plugin_pagetree_children_span" id="childrenspan26181779-0">                        <a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=26181779&amp;src=contextnavpagetreemode">Stream模块</a>
+        </span>
+            </div>
+
+        <div id="children26181779-0" class="plugin_pagetree_children_container">
+            </div>
+    </li>
+                                            <li>
+    <div class="plugin_pagetree_childtoggle_container">
+                    <span class="no-children icon"></span>
+            </div>
+    <div class="plugin_pagetree_children_content">
+          
+        
+                    <span class="plugin_pagetree_children_span" id="childrenspan26181782-0">                        <a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=26181782&amp;src=contextnavpagetreemode">TcpServer类</a>
+        </span>
+            </div>
+
+        <div id="children26181782-0" class="plugin_pagetree_children_container">
+            </div>
+    </li>
+                                            <li>
+    <div class="plugin_pagetree_childtoggle_container">
+                    <span class="no-children icon"></span>
+            </div>
+    <div class="plugin_pagetree_children_content">
+          
+        
+                    <span class="plugin_pagetree_children_span" id="childrenspan26181784-0">                        <a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=26181784&amp;src=contextnavpagetreemode">HTTP模块</a>
+        </span>
+            </div>
+
+        <div id="children26181784-0" class="plugin_pagetree_children_container">
+            </div>
+    </li>
+                                            <li>
+    <div class="plugin_pagetree_childtoggle_container">
+                    <span class="no-children icon"></span>
+            </div>
+    <div class="plugin_pagetree_children_content">
+          
+        
+                    <span class="plugin_pagetree_children_span" id="childrenspan26181842-0">                        <a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=26181842&amp;src=contextnavpagetreemode">守护进程</a>
+        </span>
+            </div>
+
+        <div id="children26181842-0" class="plugin_pagetree_children_container">
+            </div>
+    </li>
+                                                                </ul>
+                            
+            </div>
+    </li>
+            </ul>
+</div>
+    </ul>
+
+    <fieldset class="hidden">
+        <input type="hidden" name="treeId" value="">
+        <input type="hidden" name="treeRequestId" value="/wiki/plugins/pagetree/naturalchildren.action?decorator=none&amp;excerpt=false&amp;sort=position&amp;reverse=false&amp;disableLinks=false&amp;expandCurrent=true&amp;placement=sidebar">
+        <input type="hidden" name="treePageId" value="10060963">
+
+        <input type="hidden" name="noRoot" value="false">
+        <input type="hidden" name="rootPageId" value="10060222">
+
+        <input type="hidden" name="rootPage" value="">
+        <input type="hidden" name="startDepth" value="0">
+        <input type="hidden" name="spaceKey" value="libs">
+
+        <input type="hidden" name="i18n-pagetree.loading" value="载入中...">
+        <input type="hidden" name="i18n-pagetree.error.permission" value="无法载入页面树。看来你没有权限查看根页面。">
+        <input type="hidden" name="i18n-pagetree.eeror.general" value="检索页面树时发生问题。有关详细信息，请检查服务器的日志文件。">
+        <input type="hidden" name="loginUrl" value="/wiki/login.action?os_destination=%2Fpages%2Fviewpage.action%3FpageId%3D10060963&amp;permissionViolation=true">
+        <input type="hidden" name="mobile" value="false">
+        <input type="hidden" name="placement" value="sidebar">
+
+                <fieldset class="hidden">
+                                                <input type="hidden" name="ancestorId" value="10060952">
+                                    <input type="hidden" name="ancestorId" value="10060222">
+                                    </fieldset>
+    </fieldset>
+</div></div></div></div><div class="hidden"><a href="https://www.midlane.top/wiki/collector/pages.action?key=libs&amp;src=sidebar" id="space-pages-link" title=" (输入“g” 然后“s”)"></a><script type="text/x-template" title="logo-config-content"><h2>空间详情</h2><div class="personal-space-logo-hint">您的个人头像被作为您的个人空间的logo使用。<a href="/wiki/users/profile/editmyprofilepicture.action" target="_blank">更改您的个人头像</a>.</div></script></div></div><div class="space-tools-section"><div id="space-tools-menu-additional-items" class="hidden"><div data-label="浏览页面" data-class="" data-href="/wiki/pages/reorderpages.action?key=libs">浏览页面</div></div><button id="space-tools-menu-trigger" class=" aui-dropdown2-trigger aui-button aui-button-subtle tipsy-enabled aui-dropdown2-trigger-arrowless " aria-controls="space-tools-menu" aria-haspopup="true" role="button" data-aui-trigger="" resolved="" aria-expanded="false" data-collapsed-tooltip="空间管理"><span class="aui-icon aui-icon-small aui-iconfont-configure">设置</span><span class="aui-button-label">空间管理</span><span class="aui-icon "></span></button><div id="space-tools-menu" class="aui-dropdown2 aui-style-default space-tools-dropdown aui-layer" role="menu" hidden="" data-aui-alignment="top left" resolved="" tabindex="-1"><div class="aui-dropdown2-section space-tools-navigation"><ul class="aui-list-truncate"><li><a role="menuitem" tabindex="-1" class="" href="https://www.midlane.top/wiki/spaces/viewspacesummary.action?key=libs&amp;src=spacetools">概览</a></li><li><a role="menuitem" tabindex="-1" class="" href="https://www.midlane.top/wiki/pages/reorderpages.action?key=libs&amp;src=spacetools">内容工具</a></li></ul></div><div class="aui-dropdown2-section space-operations"><ul class="aui-list-truncate"><li><a role="menuitem" tabindex="-1" class="" href="https://www.midlane.top/wiki/pages/reorderpages.action?key=libs&amp;src=spacetools">浏览页面</a></li></ul></div></div><a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" role="button" class="expand-collapse-trigger aui-icon aui-icon-small aui-iconfont-chevron-double-left" aria-expanded="true" data-tooltip="收起侧边栏 ( [ )" aria-label="收起侧边栏 ( [ )"></a></div>
+                    
+                        			<div class="ia-splitter-handle tipsy-enabled" data-tooltip="收起侧边栏 ( [ )" original-title=" (输入“[”)"><div class="ia-splitter-handle-highlight confluence-icon-grab-handle"></div></div></div>
+    		</div>
+        <!-- \#header -->
+
+            
+    
+        <main role="main" id="main" class=" aui-page-panel" style="margin-left: 285px;">
+                        <div id="main-header-placeholder" style="margin: -10px 0px 20px; padding: 40px 0px 0px; height: 70px;"><h1 class="with-breadcrumbs" style="font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, &quot;Fira Sans&quot;, &quot;Droid Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif; font-size: 28px; font-style: normal; font-weight: 500; text-decoration: none solid rgb(23, 43, 77); letter-spacing: -0.28px; text-align: start; padding: 34.9333px 0px 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px;">
+                                                <a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963" style="font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, &quot;Fira Sans&quot;, &quot;Droid Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif; font-size: 28px; font-style: normal; font-weight: 500; margin: 0px; padding: 0px; color: rgb(23, 43, 77); text-decoration: none solid rgb(23, 43, 77); letter-spacing: -0.28px; text-align: start;">协程调度模块</a>
+                                    </h1></div><div id="main-header" style="position: fixed; width: 1652px; right: 0px; top: 40px; margin-top: 0px; padding: 10px 40px; z-index: 100;" class="overlay-header">
+                        
+    <div id="navigation" class="content-navigation view" role="region" aria-label="页面工具">
+                    <ul class="ajs-menu-bar">
+                                            
+        <li class="normal ajs-menu-item">
+        <a id="action-menu-link" class="action aui-dropdown2-trigger-arrowless aui-button aui-button-subtle ajs-menu-title aui-dropdown2-trigger" href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" aria-haspopup="true" aria-label="更多选项" data-container="#navigation" resolved="" aria-controls="action-menu" aria-expanded="false">
+            <span>
+                                    <span class="aui-icon aui-icon-small aui-iconfont-more" aria-label="更多选项"></span>
+                                
+            </span>
+        </a>         <div id="action-menu" class="aui-dropdown2 aui-style-default aui-layer most-right-menu-item" role="menu" aria-labelledby="action-menu-link" resolved="" tabindex="-1">
+                            <div class="aui-dropdown2-section">
+                    <ul id="action-menu-primary" class="section-primary first" role="presentation">
+                                                    <li role="presentation">
+
+    
+        
+    
+                                                                        
+    
+    
+            <a id="view-attachments-link" href="https://www.midlane.top/wiki/pages/viewpageattachments.action?pageId=10060963" rel="nofollow" class="action-view-attachments" accesskey="t" title="查看附件 (输入“t”)" role="menuitem">
+
+                        <span>
+                                <u>t</u>附件(0)
+            </span>        </a>
+    </li>
+                                        </ul>
+                </div>
+                            <div class="aui-dropdown2-section">
+                    <ul id="action-menu-secondary" class="section-secondary" role="presentation">
+                                                    <li role="presentation">
+
+    
+        
+    
+                                                                        
+    
+    
+            <a id="view-page-info-link" href="https://www.midlane.top/wiki/pages/viewinfo.action?pageId=10060963" rel="nofollow" class="action-view-info" title="" role="menuitem">
+
+                        <span>
+                                页面信息
+            </span>        </a>
+    </li>
+                                                <li role="presentation">
+
+    
+        
+    
+                                                                        
+    
+    
+            <a id="view-resolved-comments" href="https://www.midlane.top/wiki" rel="nofollow" class="" title="" role="menuitem">
+
+                        <span>
+                                已解决评论
+            </span>        </a>
+    </li>
+                                                <li role="presentation">
+
+    
+        
+    
+                                                                        
+    
+    
+            <a id="view-in-hierarchy-link" href="https://www.midlane.top/wiki/pages/reorderpages.action?key=libs&amp;openId=10060963#selectedPageInHierarchy" rel="nofollow" class="" title="" role="menuitem">
+
+                        <span>
+                                以层级方式查看
+            </span>        </a>
+    </li>
+                                                <li role="presentation">
+
+    
+        
+    
+                                                                        
+    
+    
+            <a id="action-view-source-link" href="https://www.midlane.top/wiki/plugins/viewsource/viewpagesrc.action?pageId=10060963" rel="nofollow" class="action-view-source popup-link" title="" role="menuitem">
+
+                        <span>
+                                查看页面源代码
+            </span>        </a>
+    </li>
+                                        </ul>
+                </div>
+                    </div>
+    </li>
+            </ul>
+    </div>
+
+            
+            <div id="title-heading" class="pagetitle with-breadcrumbs">
+                
+                                    <div id="breadcrumb-section">
+                        
+    
+    
+    <nav aria-label="导航项">
+        <ol id="breadcrumbs">
+                                                            
+                                
+            <li class="first">
+                                
+                                    <span class=""><a href="https://www.midlane.top/wiki/collector/pages.action?key=libs&amp;src=breadcrumbs-collector">页面</a></span>
+                                                                                                                    
+                                
+            </li><li>
+                                
+                                    <span class=""><a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060222&amp;src=breadcrumbs">类库与框架</a></span>
+                                                                                                                    
+                                
+            </li><li>
+                                
+                                    <span class=""><a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060952&amp;src=breadcrumbs-parent">从零开始重写sylar C++高性能分布式服务器框架</a></span>
+                                                                                                    </li></ol>
+    </nav>
+
+
+                    </div>
+                
+                
+                
+            <div id="page-metadata-banner" style="visibility: visible;"><ul class="banner"><li id="system-content-items" class="noprint hidden"><a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963" title="未限制" id="content-metadata-page-restrictions-hidden" class="hidden"></a></li><li class="page-metadata-item noprinthas-button" id="content-metadata-jira-wrapper"><a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963" title="" id="content-metadata-jira" class="aui-button aui-button-subtle content-metadata-jira tipsy-disabled hidden" resolved=""><span>JIRA 链接</span></a></li></ul></div>
+        
+
+                <h1 id="title-text" class="with-breadcrumbs" style="display: none;">
+                                                <a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963">协程调度模块</a>
+                                    </h1>
+            </div>
+        </div><!-- \#main-header -->
+        
+        
+
+        <div id="sidebar-container">
+                                                </div><!-- \#sidebar-container -->
+
+        
+    
+
+        
+
+
+
+
+            
+    
+
+                                
+    
+
+    
+    
+        
+    
+    
+                    
+    
+
+    
+
+    
+            
+        
+
+    
+    
+
+    
+            
+        
+
+
+
+    
+<div id="content" class="page view">
+    
+
+
+<div id="action-messages">
+                        </div>
+
+
+
+            <script type="text/x-template" title="searchResultsGrid">
+    <table class="aui">
+        <thead>
+            <tr class="header">
+                <th class="search-result-title">页面标题</th>
+                <th class="search-result-space">空间</th>
+                <th class="search-result-date">更新于</th>
+            </tr>
+        </thead>
+    </table>
+</script>
+<script type="text/x-template" title="searchResultsGridCount">
+    <p class="search-result-count">{0}</p>
+</script>
+<script type="text/x-template" title="searchResultsGridRow">
+    <tr class="search-result">
+        <td class="search-result-title"><a href="{1}" class="content-type-{2}"><span>{0}</span></a></td>
+        <td class="search-result-space"><a class="space" href="/wiki/display/{4}/" title="{3}">{3}</a></td>
+        <td class="search-result-date"><span class="date" title="{6}">{5}</span></td>
+    </tr>
+</script>
+        
+    
+            
+
+        
+                            
+    
+
+                    
+
+        
+        <div class="page-metadata">
+    <ul>
+        <li class="page-metadata-modification-info">
+            
+        
+    
+    
+        
+    
+        
+            
+            由<span class="author">     <a href="https://www.midlane.top/wiki/display/~admin" aria-label="创建： zhongluqiang" class="url fn">zhongluqiang</a></span>创建, 最后修改于<a class="last-modified" aria-label="已于 7月 12, 2021修改，选择以显示变更" title="查看变更" href="https://www.midlane.top/wiki/pages/diffpagesbyversion.action?pageId=10060963&amp;selectedPageVersions=30&amp;selectedPageVersions=31">7月 12, 2021</a>
+            </li>
+    </ul>
+</div>
+        
+                                            
+        <div id="main-content" class="wiki-content">
+                           
+        <div class="contentLayout2">
+<div class="columnLayout two-right-sidebar" data-layout="two-right-sidebar">
+<div class="cell normal" data-type="normal">
+<div class="innerCell">
+<p>实现了一个N-M的协程调度器，N个线程运行M个协程，协程可以在线程之间进行切换，也可以绑定到指定线程运行。本章对应源码：<a href="https://github.com/zhongluqiang/sylar-from-scratch/releases/tag/v1.5.0" class="external-link" rel="nofollow">https://github.com/zhongluqiang/sylar-from-scratch/releases/tag/v1.5.0</a>。</p><p>学习协程调度之前必须完全掌握sylar的协程模块，参考<a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060957">协程模块</a>。</p><p>实现协程调度之后，可以解决前一章协程模块中子协程不能运行另一个子协程的缺陷，子协程可以通过向调度器添加调度任务的方式来运行另一个子协程。</p><p>协程调度最难理解的地方是当caller线程也参与调度时调度协程和主线程切换的情况，注意对照源码进行理解。</p><h1 id="id-协程调度模块-协程调度概述">协程调度概述</h1><p>当你有很多协程时，如何把这些协程都消耗掉，这就是协程调度。</p><p>在前面的协程模块中，对于每个协程，都需要用户手动调用协程的resume方法将协程运行起来，然后等协程运行结束并返回，再运行下一个协程。这种运行协程的方式其实是用户自己在挑选协程执行，相当于用户在充当调度器，显然不够灵活.</p><p>引入协程调度后，则可以先创建一个协程调度器，然后把这些要调度的协程传递给调度器，由调度器负责把这些协程一个一个消耗掉。</p><p>从某种程度来看，协程调度其实非常简单，简单到用下面的代码就可以实现一个调度器，这个调度器可以添加调度任务，运行调度任务，并且还是完全公平调度的，先添加的任务先执行，后添加的任务后执行。</p><p><br></p><div class="code panel pdl conf-macro output-block" style="border-width: 1px;" data-hasbody="true" data-macro-name="code"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: cpp; gutter: false; theme: Confluence" data-theme="Confluence">/**
+ * @file simple_fiber_scheduler.cc
+ * @brief 一个简单的协程调度器实现
+ * @version 0.1
+ * @date 2021-07-10
+ */
+
+#include "sylar/sylar.h"
+
+/**
+ * @brief 简单协程调度类，支持添加调度任务以及运行调度任务
+ */
+class Scheduler {
+public:
+    /**
+     * @brief 添加协程调度任务
+     */
+    void schedule(sylar::Fiber::ptr task) {
+        m_tasks.push_back(task);
+    }
+
+    /**
+     * @brief 执行调度任务
+     */
+    void run() {
+        sylar::Fiber::ptr task;
+        auto it = m_tasks.begin();
+
+        while(it != m_tasks.end()) {
+            task = *it;
+            m_tasks.erase(it++);
+            task-&gt;resume();
+        }
+    }
+private:
+    /// 任务队列
+    std::list&lt;sylar::Fiber::ptr&gt; m_tasks;
+};
+
+void test_fiber(int i) {
+    std::cout &lt;&lt; "hello world " &lt;&lt; i &lt;&lt; std::endl;
+}
+
+int main() {
+    /// 初始化当前线程的主协程
+    sylar::Fiber::GetThis();
+
+    /// 创建调度器
+    Scheduler sc;
+
+    /// 添加调度任务
+    for(auto i = 0; i &lt; 10; i++) {
+        sylar::Fiber::ptr fiber(new sylar::Fiber(
+            std::bind(test_fiber, i)
+        ));
+        sc.schedule(fiber);
+    }
+
+    /// 执行调度任务
+    sc.run();
+
+    return 0;
+}</pre>
+</div></div><p>不要觉得上面这个调度器扯淡，除了不支持多线程，sylar的协程调度器和它的设计思路完全相同，甚至，上面的实现可以看成是sylar的协程调度器的一个特例，当sylar的协程调度器只使用main函数所在线程进行调度时，它的工作原理和上面的完全一样，只不过代码看起来更花里胡哨一些。</p><p>接下来将从上面这个调度器开始，来分析一些和协程调度器相关的概念。</p><p>首先是关于调度任务的定义，对于协程调度器来说，协程当然可以作为调度任务，但实际上，函数也应可以，因为函数也是可执行的对象，调度器应当支持直接调度一个函数。这在代码实现上也很简单，只需要将函数包装成协程即可，协程调度器的实现重点还是以协程为基础。</p><p>接下来是多线程，通过前面协程模块的知识我们可以知道，一个线程同一时刻只能运行一个协程，所以，作为协程调度器，势必要用到多线程来提高调度的效率，因为有多个线程就意味着有多个协程可以同时执行，这显然是要好过单线程的。</p><p>既然多线程可以提高协程调度的效率，那么，能不能把调度器所在的线程（称为caller线程）也加入进来作为调度线程呢？比如典型地，在main函数中定义的调度器，能不能把main函数所在的线程也用来执行调度任务呢？答案是肯定的，在实现相同调度能力的情况下（指能够同时调度的协程数量），线程数越小，线程切换的开销也就越小，效率就更高一些，所以，调度器所在的线程，也应该支持用来执行调度任务。甚至，调度器完全可以不创建新的线程，而只使用caller线程来进行协程调度，比如只使用main函数所在的线程来进行协程调度。</p><p>接下来是调度器如何运行，这里可以简单地认为，调度器创建后，内部首先会创建一个调度线程池，调度开始后，所有调度线程按顺序从任务队列里取任务执行，调度线程数越多，能够同时调度的任务也就越多，当所有任务都调度完后，调度线程就停下来等新的任务进来。</p><p>接下来是添加调度任务，添加调度任务的本质就是往调度器的任务队列里塞任务，但是，只添加调度任务是不够的，还应该有一种方式用于通知调度线程有新的任务加进来了，因为调度线程并不一定知道有新任务进来了。当然调度线程也可以不停地轮询有没有新任务，但是这样CPU占用率会很高。</p><p>接下来是调度器的停止。调度器应该支持停止调度的功能，以便回收调度线程的资源，只有当所有的调度线程都结束后，调度器才算真正停止。</p><p><br></p><p>通过上面的描述，一个协程调度器的大概设计也就出炉了：</p><p>调度器内部维护一个任务队列和一个调度线程池。开始调度后，线程池从任务队列里按顺序取任务执行。调度线程可以包含caller线程。当全部任务都执行完了，线程池停止调度，等新的任务进来。添加新任务后，通知线程池有新的任务进来了，线程池重新开始运行调度。停止调度时，各调度线程退出，调度器停止工作。</p><h1 id="id-协程调度模块-sylar协程调度模块设计">sylar协程调度模块设计</h1><p>sylar的协程调度模块支持多线程，支持使用caller线程进行调度，支持添加函数或协程作为调度对象，并且支持将函数或协程绑定到一个具体的线程上执行。</p><p>首先是协程调度器的初始化。sylar的协程调度器在初始化时支持传入线程数和一个布尔型的use_caller参数，表示是否使用caller线程。在使用caller线程的情况下，线程数自动减一，并且调度器内部会初始化一个属于caller线程的调度协程并保存起来（比如，在main函数中创建的调度器，如果use_caller为true，那调度器会初始化一个属于main函数线程的调度协程）。</p><p>调度器创建好后，即可调用调度器的schedule方法向调度器添加调度任务，但此时调度器并不会立刻执行这些任务，而是将它们保存到内部的一个任务队列中。</p><p>接下来是调用start方法启动调度。start方法调用后会创建调度线程池，线程数量由初始化时的线程数和use_caller确定。调度线程一旦创建，就会立刻从任务队列里取任务执行。比较特殊的一点是，如果初始化时指定线程数为1且use_caller为true，那么start方法什么也不做，因为不需要创建新线程用于调度。并且，由于没有创建新的调度线程，那只能由caller线程的调度协程来负责调度协程，而caller线程的调度协程的执行时机与start方法并不在同一个地方。</p><p>接下来是调度协程，对应run方法。调度协程负责从调度器的任务队列中取任务执行。取出的任务即子协程，这里调度协程和子协程的切换模型即为前一章介绍的非对称模型，每个子协程执行完后都必须返回调度协程，由调度协程重新从任务队列中取新的协程并执行。如果任务队列空了，那么调度协程会切换到一个idle协程，这个idle协程什么也不做，等有新任务进来时，idle协程才会退出并回到调度协程，重新开始下一轮调度。</p><p>在非caller线程里，调度协程就是调度线程的主线程，但在caller线程里，调度协程并不是caller线程的主协程，而是相当于caller线程的子协程，这在协程切换时会有大麻烦（这点是sylar协程调度模块最难理解的地方），如何处理这个问题将在下面的章节专门进行讨论。</p><p>接下来是添加调度任务，对应schedule方法，这个方法支持传入协程或函数，并且支持一个线程号参数，表示是否将这个协程或函数绑定到一个具体的线程上执行。如果任务队列为空，那么在添加任务之后，要调用一次tickle方法以通知各调度线程的调度协程有新任务来了。</p><p>在执行调度任务时，还可以通过调度器的GetThis()方法获取到当前调度器，再通过schedule方法继续添加新的任务，这就变相实现了在子协程中创建并运行新的子协程的功能。</p><p>接下来是调度器的停止。调度器的停止行为要分两种情况讨论，首先是use_caller为false的情况，这种情况下，由于没有使用caller线程进行调度，那么只需要简单地等各个调度线程的调度协程退出就行了。如果use_caller为true，表示caller线程也要参于调度，这时，调度器初始化时记录的属于caller线程的调度协程就要起作用了，在调度器停止前，应该让这个caller线程的调度协程也运行一次，让caller线程完成调度工作后再退出。如果调度器只使用了caller线程进行调度，那么所有的调度任务要在调度器停止时才会被调度。</p><h1 id="id-协程调度模块-调度协程切换问题">调度协程切换问题</h1><p>这里分两种典型情况来讨论一下调度协程的切换情况，其他情况可以看成以下两种情况的组合，原理是一样的。</p><p>1. 线程数为1，且use_caller为true，对应只使用main函数线程进行协程调度的情况。</p><p>2. 线程数为1，且use_caller为false，对应额外创建一个线程进行协程调度、main函数线程不参与调度的情况。</p><p><br></p><p>这里先说情况2。情况2比较好理解，因为有单独的线程用于协程调度，那只需要让新线程的入口函数作为调度协程，从任务队列里取任务执行就行了，main函数与调度协程完全不相关，main函数只需要向调度器添加任务，然后在适当的时机停止调度器即可。当调度器停止时，main函数要等待调度线程结束后再退出，参考下面的图示：</p><div class="panel conf-macro output-block" style="border-style: none;border-width: 1px;" data-hasbody="true" data-macro-name="graphviz"><div class="panelContent">
+<div id="graphviz_container_use_caller_false"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="592pt" height="426pt" viewBox="0.00 0.00 591.69 426.00">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 422)">
+<title>%0</title>
+<polygon fill="#ffffff" stroke="transparent" points="-4,4 -4,-422 587.6921,-422 587.6921,4 -4,4"></polygon>
+<!-- start -->
+<g id="node1" class="node">
+<title>start</title>
+<text text-anchor="middle" x="98.9945" y="-395.8" font-family="Times,serif" font-size="14.00" fill="#000000">main函数开始</text>
+</g>
+<!-- main1 -->
+<g id="node2" class="node">
+<title>main1</title>
+<ellipse fill="#d3d3d3" stroke="#000000" cx="98.9945" cy="-328" rx="61.9466" ry="18"></ellipse>
+<text text-anchor="middle" x="98.9945" y="-323.8" font-family="Times,serif" font-size="14.00" fill="#000000">创建调度器</text>
+</g>
+<!-- start&#45;&gt;main1 -->
+<g id="edge1" class="edge">
+<title>start-&gt;main1</title>
+<path fill="none" stroke="#000000" d="M98.9945,-381.8594C98.9945,-373.2681 98.9945,-364.6768 98.9945,-356.0854"></path>
+<polygon fill="#000000" stroke="#000000" points="102.4946,-356 98.9945,-346 95.4946,-356 102.4946,-356"></polygon>
+</g>
+<!-- main2 -->
+<g id="node3" class="node">
+<title>main2</title>
+<ellipse fill="#d3d3d3" stroke="#000000" cx="98.9945" cy="-256" rx="57.3725" ry="18"></ellipse>
+<text text-anchor="middle" x="98.9945" y="-251.8" font-family="Times,serif" font-size="14.00" fill="#000000">开始调度</text>
+</g>
+<!-- main1&#45;&gt;main2 -->
+<g id="edge2" class="edge">
+<title>main1-&gt;main2</title>
+<path fill="none" stroke="#000000" d="M98.9945,-309.8594C98.9945,-301.2681 98.9945,-292.6768 98.9945,-284.0854"></path>
+<polygon fill="#000000" stroke="#000000" points="102.4946,-284 98.9945,-274 95.4946,-284 102.4946,-284"></polygon>
+</g>
+<!-- main3 -->
+<g id="node4" class="node">
+<title>main3</title>
+<ellipse fill="#d3d3d3" stroke="#000000" cx="98.9945" cy="-184" rx="71.0461" ry="18"></ellipse>
+<text text-anchor="middle" x="98.9945" y="-179.8" font-family="Times,serif" font-size="14.00" fill="#000000">添加调度任务</text>
+</g>
+<!-- main2&#45;&gt;main3 -->
+<g id="edge3" class="edge">
+<title>main2-&gt;main3</title>
+<path fill="none" stroke="#000000" d="M98.9945,-237.8594C98.9945,-229.2681 98.9945,-220.6768 98.9945,-212.0854"></path>
+<polygon fill="#000000" stroke="#000000" points="102.4946,-212 98.9945,-202 95.4946,-212 102.4946,-212"></polygon>
+</g>
+<!-- scheduler1 -->
+<g id="node7" class="node">
+<title>scheduler1</title>
+<ellipse fill="#d3d3d3" stroke="#000000" cx="394.2382" cy="-256" rx="50.3877" ry="18"></ellipse>
+<text text-anchor="middle" x="394.2382" y="-251.8" font-family="Times,serif" font-size="14.00" fill="#000000">调度协程</text>
+</g>
+<!-- main2&#45;&gt;scheduler1 -->
+<g id="edge13" class="edge">
+<title>main2-&gt;scheduler1</title>
+<path fill="none" stroke="#000000" d="M156.6214,-256C207.5952,-256 281.7188,-256 333.5838,-256"></path>
+<polygon fill="#000000" stroke="#000000" points="333.6466,-259.5001 343.6466,-256 333.6465,-252.5001 333.6466,-259.5001"></polygon>
+<text text-anchor="middle" x="260.6946" y="-260.2" font-family="Times,serif" font-size="14.00" fill="#000000">创建调度线程</text>
+</g>
+<!-- main4 -->
+<g id="node5" class="node">
+<title>main4</title>
+<ellipse fill="#d3d3d3" stroke="#000000" cx="98.9945" cy="-101" rx="98.9891" ry="29.3315"></ellipse>
+<text text-anchor="start" x="70.0306" y="-105.2" font-family="Times,serif" font-size="14.00" fill="#000000">停止调度</text>
+<text text-anchor="start" x="36.9948" y="-88.4" font-family="Times,serif" font-size="14.00" fill="#000000">(等待调度线程退出)</text>
+</g>
+<!-- main3&#45;&gt;main4 -->
+<g id="edge4" class="edge">
+<title>main3-&gt;main4</title>
+<path fill="none" stroke="#000000" d="M98.9945,-165.6107C98.9945,-157.2911 98.9945,-148.9716 98.9945,-140.652"></path>
+<polygon fill="#000000" stroke="#000000" points="102.4946,-140.5039 98.9945,-130.5039 95.4946,-140.5039 102.4946,-140.5039"></polygon>
+</g>
+<!-- end -->
+<g id="node6" class="node">
+<title>end</title>
+<text text-anchor="middle" x="98.9945" y="-13.8" font-family="Times,serif" font-size="14.00" fill="#000000">main函数结束</text>
+</g>
+<!-- main4&#45;&gt;end -->
+<g id="edge5" class="edge">
+<title>main4-&gt;end</title>
+<path fill="none" stroke="#000000" d="M98.9945,-71.3644C98.9945,-63.0208 98.9945,-54.6772 98.9945,-46.3336"></path>
+<polygon fill="#000000" stroke="#000000" points="102.4946,-46.1562 98.9945,-36.1563 95.4946,-46.1563 102.4946,-46.1562"></polygon>
+</g>
+<!-- child1 -->
+<g id="node12" class="node">
+<title>child1</title>
+<ellipse fill="#d3d3d3" stroke="#000000" cx="542.8842" cy="-225" rx="40.6167" ry="18"></ellipse>
+<text text-anchor="middle" x="542.8842" y="-220.8" font-family="Times,serif" font-size="14.00" fill="#000000">子协程1</text>
+</g>
+<!-- scheduler1&#45;&gt;child1 -->
+<g id="edge6" class="edge">
+<title>scheduler1-&gt;child1</title>
+<path fill="none" stroke="#000000" d="M437.6323,-246.9502C455.8528,-243.1503 477.0918,-238.721 495.6998,-234.8403"></path>
+<polygon fill="#000000" stroke="#000000" points="496.6562,-238.2162 505.731,-232.7483 495.2271,-231.3636 496.6562,-238.2162"></polygon>
+</g>
+<!-- scheduler2 -->
+<g id="node8" class="node">
+<title>scheduler2</title>
+<ellipse fill="#d3d3d3" stroke="#000000" cx="394.2382" cy="-202" rx="50.3877" ry="18"></ellipse>
+<text text-anchor="middle" x="394.2382" y="-197.8" font-family="Times,serif" font-size="14.00" fill="#000000">调度协程</text>
+</g>
+<!-- child2 -->
+<g id="node13" class="node">
+<title>child2</title>
+<ellipse fill="#d3d3d3" stroke="#000000" cx="542.8842" cy="-168" rx="40.6167" ry="18"></ellipse>
+<text text-anchor="middle" x="542.8842" y="-163.8" font-family="Times,serif" font-size="14.00" fill="#000000">子协程2</text>
+</g>
+<!-- scheduler2&#45;&gt;child2 -->
+<g id="edge8" class="edge">
+<title>scheduler2-&gt;child2</title>
+<path fill="none" stroke="#000000" d="M436.8341,-192.257C455.4506,-187.9988 477.3365,-182.9928 496.3764,-178.6378"></path>
+<polygon fill="#000000" stroke="#000000" points="497.3631,-182.0026 506.3309,-176.3609 495.8022,-175.1788 497.3631,-182.0026"></polygon>
+</g>
+<!-- scheduler3 -->
+<g id="node9" class="node">
+<title>scheduler3</title>
+<ellipse fill="#d3d3d3" stroke="#000000" cx="394.2382" cy="-148" rx="50.3877" ry="18"></ellipse>
+<text text-anchor="middle" x="394.2382" y="-143.8" font-family="Times,serif" font-size="14.00" fill="#000000">调度协程</text>
+</g>
+<!-- child3 -->
+<g id="node14" class="node">
+<title>child3</title>
+<ellipse fill="#d3d3d3" stroke="#000000" cx="542.8842" cy="-109" rx="40.6167" ry="18"></ellipse>
+<text text-anchor="middle" x="542.8842" y="-104.8" font-family="Times,serif" font-size="14.00" fill="#000000">子协程3</text>
+</g>
+<!-- scheduler3&#45;&gt;child3 -->
+<g id="edge10" class="edge">
+<title>scheduler3-&gt;child3</title>
+<path fill="none" stroke="#000000" d="M434.8563,-137.3431C454.2698,-132.2496 477.5756,-126.1349 497.5627,-120.8909"></path>
+<polygon fill="#000000" stroke="#000000" points="498.5898,-124.24 507.3742,-118.3167 496.8133,-117.4691 498.5898,-124.24"></polygon>
+</g>
+<!-- scheduler4 -->
+<g id="node10" class="node">
+<title>scheduler4</title>
+<ellipse fill="#d3d3d3" stroke="#000000" cx="394.2382" cy="-94" rx="50.3877" ry="18"></ellipse>
+<text text-anchor="middle" x="394.2382" y="-89.8" font-family="Times,serif" font-size="14.00" fill="#000000">调度协程</text>
+</g>
+<!-- scheduler_end -->
+<g id="node11" class="node">
+<title>scheduler_end</title>
+<ellipse fill="#d3d3d3" stroke="#000000" cx="394.2382" cy="-22" rx="70.6766" ry="18"></ellipse>
+<text text-anchor="middle" x="394.2382" y="-17.8" font-family="Times,serif" font-size="14.00" fill="#000000">调度线程结束</text>
+</g>
+<!-- scheduler4&#45;&gt;scheduler_end -->
+<g id="edge12" class="edge">
+<title>scheduler4-&gt;scheduler_end</title>
+<path fill="none" stroke="#000000" d="M394.2382,-75.8594C394.2382,-67.2681 394.2382,-58.6768 394.2382,-50.0854"></path>
+<polygon fill="#000000" stroke="#000000" points="397.7383,-50 394.2382,-40 390.7383,-50 397.7383,-50"></polygon>
+</g>
+<!-- child1&#45;&gt;scheduler2 -->
+<g id="edge7" class="edge">
+<title>child1-&gt;scheduler2</title>
+<path fill="none" stroke="#000000" d="M504.193,-219.0133C487.8173,-216.4795 468.4185,-213.4779 450.5084,-210.7067"></path>
+<polygon fill="#000000" stroke="#000000" points="450.8735,-207.2216 440.4559,-209.1513 449.803,-214.1393 450.8735,-207.2216"></polygon>
+</g>
+<!-- child2&#45;&gt;scheduler3 -->
+<g id="edge9" class="edge">
+<title>child2-&gt;scheduler3</title>
+<path fill="none" stroke="#000000" d="M503.6347,-162.7191C487.6403,-160.5671 468.8341,-158.0367 451.3681,-155.6867"></path>
+<polygon fill="#000000" stroke="#000000" points="451.6481,-152.1929 441.2707,-154.3281 450.7146,-159.1304 451.6481,-152.1929"></polygon>
+</g>
+<!-- child3&#45;&gt;scheduler4 -->
+<g id="edge11" class="edge">
+<title>child3-&gt;scheduler4</title>
+<path fill="none" stroke="#000000" d="M503.0314,-104.9784C487.7157,-103.4329 469.8915,-101.6342 453.157,-99.9456"></path>
+<polygon fill="#000000" stroke="#000000" points="453.2113,-96.4333 442.9104,-98.9116 452.5085,-103.398 453.2113,-96.4333"></polygon>
+</g>
+</g>
+</svg></div>
+<script type="text/javascript">//<![CDATA[
+
+    AJS.$(document).ready(function() {
+        if(!window.viz) {
+            console.log(' new Viz()');
+            window.viz = new Viz();
+        }
+console.time(`graphviz_container_use_caller_false`);
+        window.viz.renderSVGElement(`digraph {
+    rankdir=LR;
+    node [style=filled];
+    compound=true;
+
+    subgraph sub1 {
+        start [label="main函数开始" shape=none style=""];
+        main1 [label = "创建调度器"];
+        main2 [label = "开始调度"];
+        main3 [label = "添加调度任务"];
+        main4 [label = <停止调度<BR/>(等待调度线程退出)>];
+        end [label="main函数结束" shape=none style=""];
+        rank=same;
+        start -> main1 -> main2 -> main3 -> main4 -> end;
+    }
+    subgraph sbu2 {
+        scheduler1 [label="调度协程" style=filled];
+        scheduler2 [label="调度协程" style=filled];
+        scheduler3 [label="调度协程" style=filled];
+        scheduler4 [label="调度协程" style=filled]
+        scheduler_end [label="调度线程结束"]
+        child1 [label="子协程1"]
+        child2 [label="子协程2"]
+        child3 [label="子协程3"]
+        
+        {rank=same; scheduler1 scheduler2 scheduler3 scheduler4 scheduler_end}
+        {rank=same; child1 child2 child3}
+    }
+    scheduler1->child1->scheduler2->child2->scheduler3->child3->scheduler4->scheduler_end;
+    main2->scheduler1[label="创建调度线程"];
+}`)
+        .then(function(element) {
+            AJS.$('#'+`graphviz_container_use_caller_false`).append(element);
+        })
+        .catch(error => {
+            window.viz = new Viz();
+            console.error(error);
+        });
+console.timeEnd(`graphviz_container_use_caller_false`);
+    });
+
+//]]>
+</script>
+</div></div><br><p></p><p>情况1则比较复杂，因为没有额外的线程进行协程调度，那只能用main函数所在的线程来进行调度，而梳理一下main函数线程要运行的协程，会发现有以下三类协程：</p><p>1.&nbsp; main函数对应的主协程</p><p>2.&nbsp;调度协程</p><p>3.&nbsp;待调度的任务协程</p><p>在main函数线程里这三类协程运行的顺序是这样的：</p><p>1.&nbsp;main函数主协程运行，创建调度器</p><p>2. 仍然是main函数主协程运行，向调度器添加一些调度任务</p><p>3. 开始协程调度，main函数主协程让出执行权，切换到调度协程，调度协程从任务队列里按顺序执行所有的任务</p><p>4. 每次执行一个任务，调度协程都要让出执行权，再切到该任务的协程里去执行，任务执行结束后，还要再切回调度协程，继续下一个任务的调度</p><p>5. 所有任务都执行完后，调度协程还要让出执行权并切回main函数主协程，以保证程序能顺利结束。</p><p><br></p><p>上面的过程也可以总结为：main函数先攒下一波协程，然后切到调度协程里去执行，等把这些协程都消耗完后，再从调度协程切回来，像下面这样：</p><div class="panel conf-macro output-block" style="border-style: none;border-width: 1px;" data-hasbody="true" data-macro-name="graphviz"><div class="panelContent">
+<div id="graphviz_container_use_caller_true"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="622pt" height="447pt" viewBox="0.00 0.00 622.07 447.00">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 443)">
+<title>%0</title>
+<polygon fill="#ffffff" stroke="transparent" points="-4,4 -4,-443 618.0664,-443 618.0664,4 -4,4"></polygon>
+<!-- start -->
+<g id="node1" class="node">
+<title>start</title>
+<text text-anchor="middle" x="87.1864" y="-416.8" font-family="Times,serif" font-size="14.00" fill="#000000">main函数开始</text>
+</g>
+<!-- main1 -->
+<g id="node2" class="node">
+<title>main1</title>
+<ellipse fill="#d3d3d3" stroke="#000000" cx="87.1864" cy="-349" rx="61.9466" ry="18"></ellipse>
+<text text-anchor="middle" x="87.1864" y="-344.8" font-family="Times,serif" font-size="14.00" fill="#000000">创建调度器</text>
+</g>
+<!-- start&#45;&gt;main1 -->
+<g id="edge1" class="edge">
+<title>start-&gt;main1</title>
+<path fill="none" stroke="#000000" d="M87.1864,-402.8594C87.1864,-394.2681 87.1864,-385.6768 87.1864,-377.0854"></path>
+<polygon fill="#000000" stroke="#000000" points="90.6865,-377 87.1864,-367 83.6865,-377 90.6865,-377"></polygon>
+</g>
+<!-- main2 -->
+<g id="node3" class="node">
+<title>main2</title>
+<ellipse fill="#d3d3d3" stroke="#000000" cx="87.1864" cy="-266" rx="87.3732" ry="29.3315"></ellipse>
+<text text-anchor="start" x="53.5528" y="-270.2" font-family="Times,serif" font-size="14.00" fill="#000000">开始调度</text>
+<text text-anchor="start" x="33.5363" y="-253.4" font-family="Times,serif" font-size="14.00" fill="#000000">(实际什么也没做)</text>
+</g>
+<!-- main1&#45;&gt;main2 -->
+<g id="edge2" class="edge">
+<title>main1-&gt;main2</title>
+<path fill="none" stroke="#000000" d="M87.1864,-330.6107C87.1864,-322.2911 87.1864,-313.9716 87.1864,-305.652"></path>
+<polygon fill="#000000" stroke="#000000" points="90.6865,-305.5039 87.1864,-295.5039 83.6865,-305.5039 90.6865,-305.5039"></polygon>
+</g>
+<!-- main3 -->
+<g id="node4" class="node">
+<title>main3</title>
+<ellipse fill="#d3d3d3" stroke="#000000" cx="87.1864" cy="-183" rx="71.0461" ry="18"></ellipse>
+<text text-anchor="middle" x="87.1864" y="-178.8" font-family="Times,serif" font-size="14.00" fill="#000000">添加调度任务</text>
+</g>
+<!-- main2&#45;&gt;main3 -->
+<g id="edge3" class="edge">
+<title>main2-&gt;main3</title>
+<path fill="none" stroke="#000000" d="M87.1864,-236.3644C87.1864,-228.0208 87.1864,-219.6772 87.1864,-211.3336"></path>
+<polygon fill="#000000" stroke="#000000" points="90.6865,-211.1562 87.1864,-201.1563 83.6865,-211.1563 90.6865,-211.1562"></polygon>
+</g>
+<!-- main4 -->
+<g id="node5" class="node">
+<title>main4</title>
+<ellipse fill="#d3d3d3" stroke="#000000" cx="87.1864" cy="-111" rx="50.9881" ry="18"></ellipse>
+<text text-anchor="start" x="58.2225" y="-106.8" font-family="Times,serif" font-size="14.00" fill="#000000">停止调度</text>
+</g>
+<!-- main3&#45;&gt;main4 -->
+<g id="edge4" class="edge">
+<title>main3-&gt;main4</title>
+<path fill="none" stroke="#000000" d="M87.1864,-164.8594C87.1864,-156.2681 87.1864,-147.6768 87.1864,-139.0854"></path>
+<polygon fill="#000000" stroke="#000000" points="90.6865,-139 87.1864,-129 83.6865,-139 90.6865,-139"></polygon>
+</g>
+<!-- end -->
+<g id="node6" class="node">
+<title>end</title>
+<text text-anchor="middle" x="87.1864" y="-34.8" font-family="Times,serif" font-size="14.00" fill="#000000">main函数结束</text>
+</g>
+<!-- main4&#45;&gt;end -->
+<g id="edge5" class="edge">
+<title>main4-&gt;end</title>
+<path fill="none" stroke="#000000" d="M87.1864,-92.9539C87.1864,-84.4073 87.1864,-75.8607 87.1864,-67.3142"></path>
+<polygon fill="#000000" stroke="#000000" points="90.6865,-67.2812 87.1864,-57.2813 83.6865,-67.2813 90.6865,-67.2812"></polygon>
+</g>
+<!-- scheduler1 -->
+<g id="node7" class="node">
+<title>scheduler1</title>
+<ellipse fill="#d3d3d3" stroke="#000000" cx="445.2571" cy="-180" rx="50.3877" ry="18"></ellipse>
+<text text-anchor="middle" x="445.2571" y="-175.8" font-family="Times,serif" font-size="14.00" fill="#000000">调度协程</text>
+</g>
+<!-- main4&#45;&gt;scheduler1 -->
+<g id="edge12" class="edge">
+<title>main4-&gt;scheduler1</title>
+<path fill="none" stroke="#000000" d="M132.1737,-119.669C197.9666,-132.3473 320.2707,-155.9152 390.9711,-169.5391"></path>
+<polygon fill="#000000" stroke="#000000" points="390.5334,-173.0191 401.015,-171.4746 391.8579,-166.1455 390.5334,-173.0191"></polygon>
+<text text-anchor="middle" x="284.7182" y="-170.2" font-family="Times,serif" font-size="14.00" fill="#000000">切到调度协程</text>
+</g>
+<!-- child1 -->
+<g id="node11" class="node">
+<title>child1</title>
+<ellipse fill="#d3d3d3" stroke="#000000" cx="573.2585" cy="-149" rx="40.6167" ry="18"></ellipse>
+<text text-anchor="middle" x="573.2585" y="-144.8" font-family="Times,serif" font-size="14.00" fill="#000000">子协程1</text>
+</g>
+<!-- scheduler1&#45;&gt;child1 -->
+<g id="edge6" class="edge">
+<title>scheduler1-&gt;child1</title>
+<path fill="none" stroke="#000000" d="M487.1695,-169.8494C500.068,-166.7256 514.3308,-163.2714 527.4752,-160.088"></path>
+<polygon fill="#000000" stroke="#000000" points="528.3725,-163.472 537.2677,-157.7164 526.7248,-156.6687 528.3725,-163.472"></polygon>
+</g>
+<!-- scheduler2 -->
+<g id="node8" class="node">
+<title>scheduler2</title>
+<ellipse fill="#d3d3d3" stroke="#000000" cx="445.2571" cy="-126" rx="50.3877" ry="18"></ellipse>
+<text text-anchor="middle" x="445.2571" y="-121.8" font-family="Times,serif" font-size="14.00" fill="#000000">调度协程</text>
+</g>
+<!-- child2 -->
+<g id="node12" class="node">
+<title>child2</title>
+<ellipse fill="#d3d3d3" stroke="#000000" cx="573.2585" cy="-92" rx="40.6167" ry="18"></ellipse>
+<text text-anchor="middle" x="573.2585" y="-87.8" font-family="Times,serif" font-size="14.00" fill="#000000">子协程2</text>
+</g>
+<!-- scheduler2&#45;&gt;child2 -->
+<g id="edge8" class="edge">
+<title>scheduler2-&gt;child2</title>
+<path fill="none" stroke="#000000" d="M485.7575,-115.2422C499.3132,-111.6415 514.5023,-107.607 528.3725,-103.9227"></path>
+<polygon fill="#000000" stroke="#000000" points="529.4306,-107.2631 538.1969,-101.3131 527.6335,-100.4977 529.4306,-107.2631"></polygon>
+</g>
+<!-- scheduler3 -->
+<g id="node9" class="node">
+<title>scheduler3</title>
+<ellipse fill="#d3d3d3" stroke="#000000" cx="445.2571" cy="-72" rx="50.3877" ry="18"></ellipse>
+<text text-anchor="middle" x="445.2571" y="-67.8" font-family="Times,serif" font-size="14.00" fill="#000000">调度协程</text>
+</g>
+<!-- child3 -->
+<g id="node13" class="node">
+<title>child3</title>
+<ellipse fill="#d3d3d3" stroke="#000000" cx="573.2585" cy="-33" rx="40.6167" ry="18"></ellipse>
+<text text-anchor="middle" x="573.2585" y="-28.8" font-family="Times,serif" font-size="14.00" fill="#000000">子协程3</text>
+</g>
+<!-- scheduler3&#45;&gt;child3 -->
+<g id="edge10" class="edge">
+<title>scheduler3-&gt;child3</title>
+<path fill="none" stroke="#000000" d="M483.6617,-60.2987C498.2804,-55.8446 515.0322,-50.7406 530.0653,-46.1603"></path>
+<polygon fill="#000000" stroke="#000000" points="531.1107,-49.5007 539.6564,-43.238 529.0704,-42.8046 531.1107,-49.5007"></polygon>
+</g>
+<!-- scheduler4 -->
+<g id="node10" class="node">
+<title>scheduler4</title>
+<ellipse fill="#d3d3d3" stroke="#000000" cx="445.2571" cy="-18" rx="50.3877" ry="18"></ellipse>
+<text text-anchor="middle" x="445.2571" y="-13.8" font-family="Times,serif" font-size="14.00" fill="#000000">调度协程</text>
+</g>
+<!-- scheduler4&#45;&gt;main4 -->
+<g id="edge13" class="edge">
+<title>scheduler4-&gt;main4</title>
+<path fill="none" stroke="#000000" d="M404.3863,-28.6152C338.6372,-45.6919 209.526,-79.2253 137.9647,-97.8116"></path>
+<polygon fill="#000000" stroke="#000000" points="137.0607,-94.4302 128.2617,-100.3317 138.8204,-101.2054 137.0607,-94.4302"></polygon>
+<text text-anchor="start" x="219.978" y="-104" font-family="Times,serif" font-size="14.00" fill="#000000">全部任务执行结束后</text>
+<text text-anchor="start" x="192.3728" y="-87.2" font-family="Times,serif" font-size="14.00" fill="#000000">调度协程返回main函数主协程</text>
+</g>
+<!-- child1&#45;&gt;scheduler2 -->
+<g id="edge7" class="edge">
+<title>child1-&gt;scheduler2</title>
+<path fill="none" stroke="#000000" d="M535.3113,-142.1814C524.4031,-140.2214 512.2774,-138.0426 500.5492,-135.9352"></path>
+<polygon fill="#000000" stroke="#000000" points="500.847,-132.4327 490.3856,-134.1089 499.609,-139.3224 500.847,-132.4327"></polygon>
+</g>
+<!-- child2&#45;&gt;scheduler3 -->
+<g id="edge9" class="edge">
+<title>child2-&gt;scheduler3</title>
+<path fill="none" stroke="#000000" d="M534.702,-85.9756C524.2815,-84.3474 512.7861,-82.5513 501.6067,-80.8045"></path>
+<polygon fill="#000000" stroke="#000000" points="501.889,-77.3063 491.4685,-79.2205 500.8083,-84.2223 501.889,-77.3063"></polygon>
+</g>
+<!-- child3&#45;&gt;scheduler4 -->
+<g id="edge11" class="edge">
+<title>child3-&gt;scheduler4</title>
+<path fill="none" stroke="#000000" d="M533.7357,-28.3685C524.1435,-27.2444 513.6875,-26.0191 503.4326,-24.8174"></path>
+<polygon fill="#000000" stroke="#000000" points="503.6237,-21.3159 493.2843,-23.6281 502.8089,-28.2683 503.6237,-21.3159"></polygon>
+</g>
+</g>
+</svg></div>
+<script type="text/javascript">//<![CDATA[
+
+    AJS.$(document).ready(function() {
+        if(!window.viz) {
+            console.log(' new Viz()');
+            window.viz = new Viz();
+        }
+console.time(`graphviz_container_use_caller_true`);
+        window.viz.renderSVGElement(`digraph {
+    rankdir=LR;
+    node [style=filled];
+    compound=true;
+
+    subgraph sub1 {
+        start [label="main函数开始" shape=none style=""];
+        main1 [label = "创建调度器"];
+        main2 [label = <开始调度<BR/>(实际什么也没做)>];
+        main3 [label = "添加调度任务"];
+        main4 [label = <停止调度<BR/>>];
+        end [label="main函数结束" shape=none style=""];
+        rank=same;
+        start -> main1 -> main2 -> main3 -> main4 -> end;
+    }
+    subgraph sbu2 {
+        scheduler1 [label="调度协程" style=filled];
+        scheduler2 [label="调度协程" style=filled];
+        scheduler3 [label="调度协程" style=filled];
+        scheduler4 [label="调度协程" style=filled]
+        child1 [label="子协程1"]
+        child2 [label="子协程2"]
+        child3 [label="子协程3"]
+
+        {rank=same; scheduler1 scheduler2 scheduler3 scheduler4}
+        {rank=same; child1 child2 child3}
+    }
+    scheduler1->child1->scheduler2->child2->scheduler3->child3->scheduler4;
+    main4 -> scheduler1 [label="切到调度协程"];
+    scheduler4 -> main4 [label=<全部任务执行结束后<BR/>调度协程返回main函数主协程>];
+}`)
+        .then(function(element) {
+            AJS.$('#'+`graphviz_container_use_caller_true`).append(element);
+        })
+        .catch(error => {
+            window.viz = new Viz();
+            console.error(error);
+        });
+console.timeEnd(`graphviz_container_use_caller_true`);
+    });
+
+//]]>
+</script>
+</div></div>从这个图看，是不是本文开头的简单调度器实现有几分神似？<p></p><p>然而，回顾一下前面协程模块就会发现，上面这种协程切换实际是有问题的，参考下面这张图：</p><div class="panel conf-macro output-block" style="border-style: none;border-width: 1px;" data-hasbody="true" data-macro-name="graphviz"><div class="panelContent">
+<div id="graphviz_container_asm_fiber_bad_bad"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="326pt" height="403pt" viewBox="0.00 0.00 325.56 403.00">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 399)">
+<title>asymmetric_fiber</title>
+<polygon fill="#ffffff" stroke="transparent" points="-4,4 -4,-399 321.5637,-399 321.5637,4 -4,4"></polygon>
+<!-- start -->
+<g id="node1" class="node">
+<title>start</title>
+<text text-anchor="middle" x="38.3937" y="-372.8" font-family="Times,serif" font-size="14.00" fill="#000000">开始</text>
+</g>
+<!-- main1 -->
+<g id="node2" class="node">
+<title>main1</title>
+<ellipse fill="#d3d3d3" stroke="#000000" cx="38.3937" cy="-305" rx="38.2876" ry="18"></ellipse>
+<text text-anchor="middle" x="38.3937" y="-300.8" font-family="Times,serif" font-size="14.00" fill="#000000">主协程</text>
+</g>
+<!-- start&#45;&gt;main1 -->
+<g id="edge1" class="edge">
+<title>start-&gt;main1</title>
+<path fill="none" stroke="#000000" d="M38.3937,-358.8594C38.3937,-350.2681 38.3937,-341.6768 38.3937,-333.0854"></path>
+<polygon fill="#000000" stroke="#000000" points="41.8938,-333 38.3937,-323 34.8938,-333 41.8938,-333"></polygon>
+</g>
+<!-- sub1 -->
+<g id="node7" class="node">
+<title>sub1</title>
+<ellipse fill="none" stroke="#000000" cx="156.3676" cy="-305" rx="40.6167" ry="18"></ellipse>
+<text text-anchor="middle" x="156.3676" y="-300.8" font-family="Times,serif" font-size="14.00" fill="#000000">子协程1</text>
+</g>
+<!-- main1&#45;&gt;sub1 -->
+<g id="edge2" class="edge">
+<title>main1-&gt;sub1</title>
+<path fill="none" stroke="#000000" d="M77.0228,-305C86.0044,-305 95.7038,-305 105.1341,-305"></path>
+<polygon fill="#000000" stroke="#000000" points="105.2148,-308.5001 115.2148,-305 105.2147,-301.5001 105.2148,-308.5001"></polygon>
+</g>
+<!-- main2 -->
+<g id="node3" class="node">
+<title>main2</title>
+<ellipse fill="#d3d3d3" stroke="#000000" cx="38.3937" cy="-251" rx="38.2876" ry="18"></ellipse>
+<text text-anchor="middle" x="38.3937" y="-246.8" font-family="Times,serif" font-size="14.00" fill="#000000">主协程</text>
+</g>
+<!-- sub2 -->
+<g id="node8" class="node">
+<title>sub2</title>
+<ellipse fill="none" stroke="#000000" cx="156.3676" cy="-251" rx="40.6167" ry="18"></ellipse>
+<text text-anchor="middle" x="156.3676" y="-246.8" font-family="Times,serif" font-size="14.00" fill="#000000">子协程2</text>
+</g>
+<!-- main2&#45;&gt;sub2 -->
+<g id="edge4" class="edge">
+<title>main2-&gt;sub2</title>
+<path fill="none" stroke="#000000" d="M77.0228,-251C86.0044,-251 95.7038,-251 105.1341,-251"></path>
+<polygon fill="#000000" stroke="#000000" points="105.2148,-254.5001 115.2148,-251 105.2147,-247.5001 105.2148,-254.5001"></polygon>
+</g>
+<!-- main3 -->
+<g id="node4" class="node">
+<title>main3</title>
+<ellipse fill="#d3d3d3" stroke="#000000" cx="38.3937" cy="-197" rx="38.2876" ry="18"></ellipse>
+<text text-anchor="middle" x="38.3937" y="-192.8" font-family="Times,serif" font-size="14.00" fill="#000000">主协程</text>
+</g>
+<!-- sub3 -->
+<g id="node9" class="node">
+<title>sub3</title>
+<ellipse fill="none" stroke="#000000" cx="156.3676" cy="-197" rx="40.6167" ry="18"></ellipse>
+<text text-anchor="middle" x="156.3676" y="-192.8" font-family="Times,serif" font-size="14.00" fill="#000000">子协程3</text>
+</g>
+<!-- main3&#45;&gt;sub3 -->
+<g id="edge6" class="edge">
+<title>main3-&gt;sub3</title>
+<path fill="none" stroke="#000000" d="M77.0228,-197C86.0044,-197 95.7038,-197 105.1341,-197"></path>
+<polygon fill="#000000" stroke="#000000" points="105.2148,-200.5001 115.2148,-197 105.2147,-193.5001 105.2148,-200.5001"></polygon>
+</g>
+<!-- main4 -->
+<g id="node5" class="node">
+<title>main4</title>
+<ellipse fill="#d3d3d3" stroke="#000000" cx="38.3937" cy="-90" rx="38.2876" ry="18"></ellipse>
+<text text-anchor="middle" x="38.3937" y="-85.8" font-family="Times,serif" font-size="14.00" fill="#000000">主协程</text>
+</g>
+<!-- end -->
+<g id="node6" class="node">
+<title>end</title>
+<text text-anchor="middle" x="38.3937" y="-13.8" font-family="Times,serif" font-size="14.00" fill="#000000">结束</text>
+</g>
+<!-- main4&#45;&gt;end -->
+<g id="edge11" class="edge">
+<title>main4-&gt;end</title>
+<path fill="none" stroke="#000000" d="M38.3937,-71.9539C38.3937,-63.4073 38.3937,-54.8607 38.3937,-46.3142"></path>
+<polygon fill="#000000" stroke="#000000" points="41.8938,-46.2812 38.3937,-36.2813 34.8938,-46.2813 41.8938,-46.2812"></polygon>
+</g>
+<!-- sub1&#45;&gt;main2 -->
+<g id="edge3" class="edge">
+<title>sub1-&gt;main2</title>
+<path fill="none" stroke="#000000" d="M127.6494,-291.8549C111.9837,-284.6842 92.411,-275.7252 75.5894,-268.0255"></path>
+<polygon fill="#000000" stroke="#000000" points="76.6028,-264.6402 66.0533,-263.6606 73.6893,-271.0051 76.6028,-264.6402"></polygon>
+</g>
+<!-- sub2&#45;&gt;main3 -->
+<g id="edge5" class="edge">
+<title>sub2-&gt;main3</title>
+<path fill="none" stroke="#000000" d="M127.6494,-237.8549C111.9837,-230.6842 92.411,-221.7252 75.5894,-214.0255"></path>
+<polygon fill="#000000" stroke="#000000" points="76.6028,-210.6402 66.0533,-209.6606 73.6893,-217.0051 76.6028,-210.6402"></polygon>
+</g>
+<!-- sub4 -->
+<g id="node11" class="node">
+<title>sub4</title>
+<ellipse fill="none" stroke="#000000" cx="276.7558" cy="-162" rx="40.6167" ry="18"></ellipse>
+<text text-anchor="middle" x="276.7558" y="-157.8" font-family="Times,serif" font-size="14.00" fill="#000000">子协程4</text>
+</g>
+<!-- sub3&#45;&gt;sub4 -->
+<g id="edge7" class="edge">
+<title>sub3-&gt;sub4</title>
+<path fill="none" stroke="#000000" d="M190.544,-187.064C203.6336,-183.2585 218.7558,-178.8621 232.645,-174.8242"></path>
+<polygon fill="#000000" stroke="#000000" points="233.8687,-178.1134 242.494,-171.9608 231.9144,-171.3917 233.8687,-178.1134"></polygon>
+</g>
+<!-- sub5 -->
+<g id="node10" class="node">
+<title>sub5</title>
+<ellipse fill="none" stroke="#000000" cx="156.3676" cy="-143" rx="40.6167" ry="18"></ellipse>
+<text text-anchor="middle" x="156.3676" y="-138.8" font-family="Times,serif" font-size="14.00" fill="#000000">子协程5</text>
+</g>
+<!-- sub6 -->
+<g id="node12" class="node">
+<title>sub6</title>
+<ellipse fill="none" stroke="#000000" cx="276.7558" cy="-102" rx="40.6167" ry="18"></ellipse>
+<text text-anchor="middle" x="276.7558" y="-97.8" font-family="Times,serif" font-size="14.00" fill="#000000">子协程6</text>
+</g>
+<!-- sub5&#45;&gt;sub6 -->
+<g id="edge9" class="edge">
+<title>sub5-&gt;sub6</title>
+<path fill="none" stroke="#000000" d="M188.9464,-131.9048C202.9987,-127.1191 219.6145,-121.4603 234.5901,-116.3602"></path>
+<polygon fill="#000000" stroke="#000000" points="235.8133,-119.6411 244.151,-113.1041 233.5566,-113.0148 235.8133,-119.6411"></polygon>
+</g>
+<!-- sub4&#45;&gt;sub5 -->
+<g id="edge8" class="edge">
+<title>sub4-&gt;sub5</title>
+<path fill="none" stroke="#000000" d="M238.2854,-155.9285C227.6398,-154.2484 215.9473,-152.403 204.8128,-150.6458"></path>
+<polygon fill="#000000" stroke="#000000" points="205.2136,-147.1658 194.7902,-149.064 204.1223,-154.0802 205.2136,-147.1658"></polygon>
+</g>
+<!-- sub6&#45;&gt;main4 -->
+<g id="edge10" class="edge">
+<title>sub6-&gt;main4</title>
+<path fill="none" stroke="#000000" stroke-dasharray="1,5" d="M236.1606,-99.9563C194.845,-97.8763 130.7974,-94.6519 86.8505,-92.4395"></path>
+<polygon fill="#000000" stroke="#000000" points="86.854,-88.9353 76.6907,-91.928 86.502,-95.9265 86.854,-88.9353"></polygon>
+<text text-anchor="middle" x="156.3676" y="-103.2" font-family="Times,serif" font-size="14.00" fill="#000000">无法切回主协程</text>
+</g>
+</g>
+</svg></div>
+<script type="text/javascript">//<![CDATA[
+
+    AJS.$(document).ready(function() {
+        if(!window.viz) {
+            console.log(' new Viz()');
+            window.viz = new Viz();
+        }
+console.time(`graphviz_container_asm_fiber_bad_bad`);
+        window.viz.renderSVGElement(`digraph asymmetric_fiber {
+    rankdir=LR;
+    
+    start [label="开始" shape=none style=""];
+    main1 [label = "主协程" style=filled];
+    main2 [label = "主协程" style=filled];
+    main3 [label = "主协程" style=filled];
+    main4 [label = "主协程" style=filled];
+    end [label="结束" shape=none style=""];
+    {rank=same; start main1 main2 main3 main4 end;}
+    
+
+    sub1 [label="子协程1"];
+    sub2 [label="子协程2"];
+    sub3 [label="子协程3"];
+    sub5 [label="子协程5"];
+    {rank=same; sub1 sub2 sub3 sub5;}
+
+    sub4 [label="子协程4"];
+    sub6 [label="子协程6"];
+    {rank=same; sub4 sub6;}
+
+    start -> main1;
+    main1 -> sub1;
+    sub1 -> main2;
+    main2 -> sub2;
+    sub2 -> main3;
+    main3 -> sub3;
+    sub3 -> sub4;
+    sub4 -> sub5;
+    sub5 -> sub6;
+    sub6 -> main4 [label="无法切回主协程" style=dotted];
+    main4 -> end;
+}`)
+        .then(function(element) {
+            AJS.$('#'+`graphviz_container_asm_fiber_bad_bad`).append(element);
+        })
+        .catch(error => {
+            window.viz = new Viz();
+            console.error(error);
+        });
+console.timeEnd(`graphviz_container_asm_fiber_bad_bad`);
+    });
+
+//]]>
+</script>
+</div></div><br><p></p><p>在非对称协程里，子协程只能和线程主协程切换，而不能和另一个子协程切换。在上面的情况1中，线程主协程是main函数对应的协程，另外的两类协程，也就是调度协程和任务协程，都是子协程，也就是说，调度协程不能直接和任务协程切换，一旦切换，程序的main函数协程就跑飞了。</p><p>解决单线程环境下caller线程主协程-调度协程-任务协程之间的上下文切换，是sylar协程调度实现的关键。</p><p>其实，子协程和子协程切换导致线程主协程跑飞的关键原因在于，每个线程只有两个线程局部变量用于保存当前的协程上下文信息。也就是说线程任何时候都最多只能知道两个协程的上下文，其中一个是当前正在运行协程的上下文，另一个是线程主协程的上下文，如果子协程和子协程切换，那这两个上下文都会变成子协程的上下文，线程主协程的上下文丢失了，程序也就跑飞了。如果不改变这种局部，就只能线程主协程去充当调度协程，这就相当于又回到了让用户充当调度器的情况。</p><p>那么，如何改变这种情况呢？其实非常简单，只需要给每个线程增加一个线程局部变量用于保存调度协程的上下文就可以了，这样，每个线程可以同时保存三个协程的上下文，一个是当前正在执行的协程上下文，另一个是线程主协程的上下文，最后一个是调度协程的上下文。有了这三个上下文，协程就可以根据自己的身份来选择和每次和哪个协程进行交换，具体操作如下：</p><p>1. 给协程类增加一个bool类型的成员m_runInScheduler，用于记录该协程是否通过调度器来运行。</p><p>2. 创建协程时，根据协程的身份指定对应的协程类型，具体来说，只有想让调度器调度的协程的m_runInScheduler值为true，线程主协程和线程调度协程的m_runInScheduler都为false。</p><p>3. resume一个协程时，如果如果这个协程的m_runInScheduler值为true，表示这个协程参与调度器调度，那它应该和三个线程局部变量中的调度协程上下文进行切换，同理，在协程yield时，也应该恢复调度协程的上下文，表示从子协程切换回调度协程；</p><p>4. 如果协程的m_runInScheduler值为false，表示这个协程不参与调度器调度，那么在resume协程时，直接和线程主协程切换就可以了，yield也一样，应该恢复线程主协程的上下文。m_runInScheduler值为false的协程上下文切换完全和调度协程无关，可以脱离调度器使用。</p><p>经过上面的改造了，就可以解决单线程环境下caller线程主协程-调度协程-任务协程之间的上下文切换问题了，假设caller线程主协程的上下文为main_ctx，调度协程的上下文为scheduler_ctx，任务协程上下文为child_ctx，那么单线程下的协程切换将像下面这样（图片显示不全的话请缩小显示比例）：</p><div class="panel conf-macro output-block" style="border-style: none;border-width: 1px;" data-hasbody="true" data-macro-name="graphviz"><div class="panelContent">
+<div id="graphviz_container_use_caller_true_detailed"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="876pt" height="446pt" viewBox="0.00 0.00 875.66 446.00">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 442)">
+<title>%0</title>
+<polygon fill="#ffffff" stroke="transparent" points="-4,4 -4,-442 871.662,-442 871.662,4 -4,4"></polygon>
+<!-- start -->
+<g id="node1" class="node">
+<title>start</title>
+<text text-anchor="middle" x="87.1864" y="-415.8" font-family="Times,serif" font-size="14.00" fill="#000000">main函数开始</text>
+</g>
+<!-- main1 -->
+<g id="node2" class="node">
+<title>main1</title>
+<ellipse fill="#d3d3d3" stroke="#000000" cx="87.1864" cy="-348" rx="61.9466" ry="18"></ellipse>
+<text text-anchor="middle" x="87.1864" y="-343.8" font-family="Times,serif" font-size="14.00" fill="#000000">创建调度器</text>
+</g>
+<!-- start&#45;&gt;main1 -->
+<g id="edge1" class="edge">
+<title>start-&gt;main1</title>
+<path fill="none" stroke="#000000" d="M87.1864,-401.8594C87.1864,-393.2681 87.1864,-384.6768 87.1864,-376.0854"></path>
+<polygon fill="#000000" stroke="#000000" points="90.6863,-376 87.1864,-366 83.6863,-376 90.6863,-376"></polygon>
+</g>
+<!-- main2 -->
+<g id="node3" class="node">
+<title>main2</title>
+<ellipse fill="#d3d3d3" stroke="#000000" cx="87.1864" cy="-265" rx="87.3732" ry="29.3315"></ellipse>
+<text text-anchor="start" x="53.5528" y="-269.2" font-family="Times,serif" font-size="14.00" fill="#000000">开始调度</text>
+<text text-anchor="start" x="33.5363" y="-252.4" font-family="Times,serif" font-size="14.00" fill="#000000">(实际什么也没做)</text>
+</g>
+<!-- main1&#45;&gt;main2 -->
+<g id="edge2" class="edge">
+<title>main1-&gt;main2</title>
+<path fill="none" stroke="#000000" d="M87.1864,-329.6107C87.1864,-321.2911 87.1864,-312.9716 87.1864,-304.652"></path>
+<polygon fill="#000000" stroke="#000000" points="90.6865,-304.5039 87.1864,-294.5039 83.6865,-304.5039 90.6865,-304.5039"></polygon>
+</g>
+<!-- main3 -->
+<g id="node4" class="node">
+<title>main3</title>
+<ellipse fill="#d3d3d3" stroke="#000000" cx="87.1864" cy="-182" rx="71.0461" ry="18"></ellipse>
+<text text-anchor="middle" x="87.1864" y="-177.8" font-family="Times,serif" font-size="14.00" fill="#000000">添加调度任务</text>
+</g>
+<!-- main2&#45;&gt;main3 -->
+<g id="edge3" class="edge">
+<title>main2-&gt;main3</title>
+<path fill="none" stroke="#000000" d="M87.1864,-235.3644C87.1864,-227.0208 87.1864,-218.6772 87.1864,-210.3336"></path>
+<polygon fill="#000000" stroke="#000000" points="90.6865,-210.1562 87.1864,-200.1563 83.6865,-210.1563 90.6865,-210.1562"></polygon>
+</g>
+<!-- main4 -->
+<g id="node5" class="node">
+<title>main4</title>
+<ellipse fill="#d3d3d3" stroke="#000000" cx="87.1864" cy="-110" rx="50.9881" ry="18"></ellipse>
+<text text-anchor="start" x="58.2225" y="-105.8" font-family="Times,serif" font-size="14.00" fill="#000000">停止调度</text>
+</g>
+<!-- main3&#45;&gt;main4 -->
+<g id="edge4" class="edge">
+<title>main3-&gt;main4</title>
+<path fill="none" stroke="#000000" d="M87.1864,-163.8594C87.1864,-155.2681 87.1864,-146.6768 87.1864,-138.0854"></path>
+<polygon fill="#000000" stroke="#000000" points="90.6863,-138 87.1864,-128 83.6863,-138 90.6863,-138"></polygon>
+</g>
+<!-- end -->
+<g id="node6" class="node">
+<title>end</title>
+<text text-anchor="middle" x="87.1864" y="-33.8" font-family="Times,serif" font-size="14.00" fill="#000000">main函数结束</text>
+</g>
+<!-- main4&#45;&gt;end -->
+<g id="edge5" class="edge">
+<title>main4-&gt;end</title>
+<path fill="none" stroke="#000000" d="M87.1864,-91.9539C87.1864,-83.4073 87.1864,-74.8607 87.1864,-66.3142"></path>
+<polygon fill="#000000" stroke="#000000" points="90.6863,-66.2813 87.1864,-56.2813 83.6863,-66.2812 90.6863,-66.2813"></polygon>
+</g>
+<!-- scheduler1 -->
+<g id="node7" class="node">
+<title>scheduler1</title>
+<ellipse fill="#d3d3d3" stroke="#000000" cx="476.7095" cy="-202" rx="50.3877" ry="18"></ellipse>
+<text text-anchor="middle" x="476.7095" y="-197.8" font-family="Times,serif" font-size="14.00" fill="#000000">调度协程</text>
+</g>
+<!-- main4&#45;&gt;scheduler1 -->
+<g id="edge12" class="edge">
+<title>main4-&gt;scheduler1</title>
+<path fill="none" stroke="#000000" d="M129.6137,-120.0207C201.4167,-136.9796 346.661,-171.2843 424.5575,-189.6824"></path>
+<polygon fill="#000000" stroke="#000000" points="424.0929,-193.1689 434.6297,-192.0613 425.702,-186.3564 424.0929,-193.1689"></polygon>
+<text text-anchor="start" x="261.5608" y="-205" font-family="Times,serif" font-size="14.00" fill="#000000">切到调度协程</text>
+<text text-anchor="start" x="192.3728" y="-188.2" font-family="Times,serif" font-size="14.00" fill="#000000">swapcontext(main_ctx, scheduler_ctx)</text>
+</g>
+<!-- child1 -->
+<g id="node11" class="node">
+<title>child1</title>
+<ellipse fill="#d3d3d3" stroke="#000000" cx="826.8541" cy="-189" rx="40.6167" ry="18"></ellipse>
+<text text-anchor="middle" x="826.8541" y="-184.8" font-family="Times,serif" font-size="14.00" fill="#000000">子协程1</text>
+</g>
+<!-- scheduler1&#45;&gt;child1 -->
+<g id="edge6" class="edge">
+<title>scheduler1-&gt;child1</title>
+<path fill="none" stroke="#000000" d="M526.8767,-200.1374C593.1104,-197.6783 709.1118,-193.3715 775.7909,-190.8959"></path>
+<polygon fill="#000000" stroke="#000000" points="776.1906,-194.3835 786.0538,-190.5148 775.9308,-187.3883 776.1906,-194.3835"></polygon>
+<text text-anchor="start" x="544.903" y="-203.2" font-family="Times,serif" font-size="14.00" fill="#000000">swapcontext(scheduler_ctx, child1_ctx)</text>
+</g>
+<!-- scheduler2 -->
+<g id="node8" class="node">
+<title>scheduler2</title>
+<ellipse fill="#d3d3d3" stroke="#000000" cx="476.7095" cy="-135" rx="50.3877" ry="18"></ellipse>
+<text text-anchor="middle" x="476.7095" y="-130.8" font-family="Times,serif" font-size="14.00" fill="#000000">调度协程</text>
+</g>
+<!-- child2 -->
+<g id="node12" class="node">
+<title>child2</title>
+<ellipse fill="#d3d3d3" stroke="#000000" cx="826.8541" cy="-102" rx="40.6167" ry="18"></ellipse>
+<text text-anchor="middle" x="826.8541" y="-97.8" font-family="Times,serif" font-size="14.00" fill="#000000">子协程2</text>
+</g>
+<!-- scheduler2&#45;&gt;child2 -->
+<g id="edge8" class="edge">
+<title>scheduler2-&gt;child2</title>
+<path fill="none" stroke="#000000" d="M525.3956,-130.4115C591.5702,-124.1748 709.3292,-113.0763 776.4056,-106.7546"></path>
+<polygon fill="#000000" stroke="#000000" points="777.0926,-110.2055 786.7201,-105.7825 776.4357,-103.2363 777.0926,-110.2055"></polygon>
+<text text-anchor="start" x="544.903" y="-131.2" font-family="Times,serif" font-size="14.00" fill="#000000">swapcontext(scheduler_ctx, child2_ctx)</text>
+</g>
+<!-- scheduler3 -->
+<g id="node9" class="node">
+<title>scheduler3</title>
+<ellipse fill="#d3d3d3" stroke="#000000" cx="476.7095" cy="-78" rx="50.3877" ry="18"></ellipse>
+<text text-anchor="middle" x="476.7095" y="-73.8" font-family="Times,serif" font-size="14.00" fill="#000000">调度协程</text>
+</g>
+<!-- child3 -->
+<g id="node13" class="node">
+<title>child3</title>
+<ellipse fill="#d3d3d3" stroke="#000000" cx="826.8541" cy="-35" rx="40.6167" ry="18"></ellipse>
+<text text-anchor="middle" x="826.8541" y="-30.8" font-family="Times,serif" font-size="14.00" fill="#000000">子协程3</text>
+</g>
+<!-- scheduler3&#45;&gt;child3 -->
+<g id="edge10" class="edge">
+<title>scheduler3-&gt;child3</title>
+<path fill="none" stroke="#000000" d="M511.6931,-65.0845C522.2343,-61.666 533.9226,-58.3372 544.903,-56.2 624.5108,-40.7056 718.8006,-36.3807 775.6639,-35.2617"></path>
+<polygon fill="#000000" stroke="#000000" points="775.8952,-38.7584 785.8339,-35.0881 775.7756,-31.7594 775.8952,-38.7584"></polygon>
+<text text-anchor="start" x="544.903" y="-61.2" font-family="Times,serif" font-size="14.00" fill="#000000">swapcontext(scheduler_ctx, child3_ctx)</text>
+</g>
+<!-- scheduler4 -->
+<g id="node10" class="node">
+<title>scheduler4</title>
+<ellipse fill="#d3d3d3" stroke="#000000" cx="476.7095" cy="-18" rx="50.3877" ry="18"></ellipse>
+<text text-anchor="middle" x="476.7095" y="-13.8" font-family="Times,serif" font-size="14.00" fill="#000000">调度协程</text>
+</g>
+<!-- scheduler4&#45;&gt;main4 -->
+<g id="edge13" class="edge">
+<title>scheduler4-&gt;main4</title>
+<path fill="none" stroke="#000000" d="M433.7389,-27.3218C377.9735,-39.5203 277.7031,-61.7983 192.3728,-82.6 174.5179,-86.9526 155.0254,-91.9589 137.7251,-96.4916"></path>
+<polygon fill="#000000" stroke="#000000" points="136.6016,-93.168 127.8212,-99.0971 138.3826,-99.9376 136.6016,-93.168"></polygon>
+<text text-anchor="start" x="235.7042" y="-119.8" font-family="Times,serif" font-size="14.00" fill="#000000">全部任务执行结束后</text>
+<text text-anchor="start" x="208.099" y="-103" font-family="Times,serif" font-size="14.00" fill="#000000">调度协程返回main函数主协程</text>
+<text text-anchor="start" x="192.3728" y="-86.2" font-family="Times,serif" font-size="14.00" fill="#000000">swapcontext(scheduler_ctx, main_ctx)</text>
+</g>
+<!-- child1&#45;&gt;scheduler2 -->
+<g id="edge7" class="edge">
+<title>child1-&gt;scheduler2</title>
+<path fill="none" stroke="#000000" d="M795.127,-177.542C786.4425,-174.7683 776.9635,-172.0681 768.0462,-170.2 670.4554,-149.7554 643.6521,-160.8043 544.903,-147 540.498,-146.3842 535.9419,-145.6958 531.3702,-144.9685"></path>
+<polygon fill="#000000" stroke="#000000" points="531.8254,-141.4964 521.39,-143.3276 530.6897,-148.4037 531.8254,-141.4964"></polygon>
+<text text-anchor="start" x="544.903" y="-174.2" font-family="Times,serif" font-size="14.00" fill="#000000">swapcontext(child1_ctx, scheduler_ctx)</text>
+</g>
+<!-- child2&#45;&gt;scheduler3 -->
+<g id="edge9" class="edge">
+<title>child2-&gt;scheduler3</title>
+<path fill="none" stroke="#000000" d="M790.2934,-93.7455C782.9592,-92.3496 775.2831,-91.0722 768.0462,-90.2 688.6291,-80.629 596.2564,-78.2252 537.178,-77.7872"></path>
+<polygon fill="#000000" stroke="#000000" points="536.9265,-74.2858 526.9066,-77.7284 536.8864,-81.2857 536.9265,-74.2858"></polygon>
+<text text-anchor="start" x="544.903" y="-94.2" font-family="Times,serif" font-size="14.00" fill="#000000">swapcontext(child2_ctx, scheduler_ctx)</text>
+</g>
+<!-- child3&#45;&gt;scheduler4 -->
+<g id="edge11" class="edge">
+<title>child3-&gt;scheduler4</title>
+<path fill="none" stroke="#000000" d="M800.3482,-21.1744C790.4829,-16.7465 779.0154,-12.4183 768.0462,-10.2 687.46,6.0971 591.7981,-1.4372 532.6667,-9.1155"></path>
+<polygon fill="#000000" stroke="#000000" points="531.8655,-5.6917 522.422,-10.495 532.7996,-12.6291 531.8655,-5.6917"></polygon>
+<text text-anchor="start" x="544.903" y="-15.2" font-family="Times,serif" font-size="14.00" fill="#000000">swapcontext(child3_ctx, scheduler_ctx)</text>
+</g>
+</g>
+</svg></div>
+<script type="text/javascript">//<![CDATA[
+
+    AJS.$(document).ready(function() {
+        if(!window.viz) {
+            console.log(' new Viz()');
+            window.viz = new Viz();
+        }
+console.time(`graphviz_container_use_caller_true_detailed`);
+        window.viz.renderSVGElement(`digraph {
+    rankdir=LR;
+    node [style=filled];
+    compound=true;
+
+    subgraph sub1 {
+        start [label="main函数开始" shape=none style=""];
+        main1 [label = "创建调度器"];
+        main2 [label = <开始调度<BR/>(实际什么也没做)>];
+        main3 [label = "添加调度任务"];
+        main4 [label = <停止调度<BR/>>];
+        end [label="main函数结束" shape=none style=""];
+        rank=same;
+        start -> main1 -> main2 -> main3 -> main4 -> end;
+    }
+    subgraph sbu2 {
+        scheduler1 [label="调度协程" style=filled];
+        scheduler2 [label="调度协程" style=filled];
+        scheduler3 [label="调度协程" style=filled];
+        scheduler4 [label="调度协程" style=filled]
+        child1 [label="子协程1"]
+        child2 [label="子协程2"]
+        child3 [label="子协程3"]
+
+        {rank=same; scheduler1 scheduler2 scheduler3 scheduler4}
+        {rank=same; child1 child2 child3}
+    }
+    scheduler1->child1 [label=<swapcontext(scheduler_ctx, child1_ctx)>];
+    child1->scheduler2 [label=<swapcontext(child1_ctx, scheduler_ctx)>];
+    scheduler2->child2 [label=<swapcontext(scheduler_ctx, child2_ctx)>];
+    child2->scheduler3 [label=<swapcontext(child2_ctx, scheduler_ctx)>];
+    scheduler3->child3 [label=<swapcontext(scheduler_ctx, child3_ctx)>];
+    child3->scheduler4 [label=<swapcontext(child3_ctx, scheduler_ctx)>];
+    main4 -> scheduler1 [label=<切到调度协程<BR/>swapcontext(main_ctx, scheduler_ctx)>];
+    scheduler4 -> main4 [label=<全部任务执行结束后<BR/>调度协程返回main函数主协程<BR/>swapcontext(scheduler_ctx, main_ctx)>];
+}`)
+        .then(function(element) {
+            AJS.$('#'+`graphviz_container_use_caller_true_detailed`).append(element);
+        })
+        .catch(error => {
+            window.viz = new Viz();
+            console.error(error);
+        });
+console.timeEnd(`graphviz_container_use_caller_true_detailed`);
+    });
+
+//]]>
+</script>
+</div></div><br><p></p><h1 id="id-协程调度模块-其他情况的讨论">其他情况的讨论</h1><p>讨论几种情况：</p><p>1.&nbsp; 调度器的退出问题。调度器内部有一个协程任务队列，调度器调度的实质就是内部的线程池从这个任务队列拿任务并执行，那么，停止调度时，如果任务队列还有任务剩余，要怎么处理？这里可以简化处理，强制规定只有所有的任务都完成调度时，调度器才可以退出，如果有一个任务没有执行完，那调度器就不能退出。</p><p><br></p><p>2. 任务协程执行过程中主动调用yield让出了执行权，调度器要怎么处理？半路yield的协程显然并没有执行完，一种处理方法是调度器来帮协程擦屁股，在检测到协程从resume返回时，如果状态仍为READY，那么就把协程重新扔回任务列，使其可以再次被调度，这样保证一个协程可以执行结束。但这种策略是画蛇添足的，从生活经验的角度来看，一个成熟的协程肯定要学会自我管理，既然你自己yield了，那么你就应该自己管理好自己，而不是让别人来帮你，这样才算是一个成熟的协程。对于主动yield的协程，我们的策略是，调度器直接认为这个任务已经调度完了，不再将其加入任务队列。如果协程想完整地运行，那么在yield之前，协程必须先把自己再扔回当前调度器的任务队列里，然后再执行yield，这样才能确保后面还会再来调度这个协程。</p><p>这里规定了一点，协程在主动执行yield前，必须先将自己重新添加到调度器的任务队列中。如果协程不顾后果地执行yield，最后的后果就是协程将永远无法再被执行，也就是所说的逃逸状态。（sylar的处理方法比较折衷一些，sylar定义了两种yield操作，一种是yield to ready，这种yield调度器会再次将协程加入任务队列并等待调度，另一种是yield to hold，这种yield调度器不会再将协程加入任务队列，协程在yield之前必须自己先将自己加入到协程的调度队列中，否则协程就处于逃逸状态。再说一点，sylar定义的yield to ready，在整个sylar框架内一次都没用到，看来sylar也同意，一个成熟的协程要学会自我管理。）</p><p><br></p><p>3. 只使用调度器所在的线程进行调度，典型的就是main函数中定义调度器并且只使用main函数线程执行调度任务。这种场景下，可以认为是main函数先攒下一波协程，然后切到调度协程，把这些协程消耗完后再从调度协程切回main函数协程。每个协程在运行时也可以继续创建新的协程并加入调度。如果所有协程都调度完了，并且没有创建新的调度任务，那么下一步就是讨论idle该如何处理。</p><p><br></p><p>4. idle如何处理，也就是当调度器没有协程可调度时，调度协程该怎么办。直觉上来看这里应该有一些同步手段，比如，没有调度任务时，调度协程阻塞住，比如阻塞在一个idle协程上，等待新任务加入后退出idle协程，恢复调度。然而这种方案是无法实现的，因为每个线程同一时间只能有一个协程在执行，如果调度线程阻塞在idle协程上，那么除非idle协程自行让出执行权，否则其他的协程都得不到执行，这里就造成了一个先有鸡还是先有蛋的问题：只有创建新任务idle协程才会退出，只有idle协程退出才能创建新任务。为了解决这个问题，sylar采取了一个简单粗暴的办法，如果任务队列空了，调度协程会不停地检测任务队列，看有没有新任务，俗称忙等待，CPU使用率爆表。这点可以从sylar的源码上发现，一是Scheduler的tickle函数什么也不做，因为根本不需要通知调度线程是否有新任务，二是idle协程在协程调度器未停止的情况下只会yield to hold，而调度协程又会将idle协程重新swapIn，相当于idle啥也不做直接返回。这个问题在sylar框架内无解，只有一种方法可以规避掉，那就是设置autostop标志，这个标志会使得调度器在调度完所有任务后自动退出。在后续的IOManager中，上面的问题会得到一定的改善，并且tickle和idle可以实现得更加巧妙一些，以应对IO事件。</p><p><br></p><p>5. 只有main函数线程参与调度时的调度执行时机。前面说过，当只有main函数线程参与调度时，可以认为是主线程先攒下一波协程，然后切到调度协程开始调度这些协程，等所有的协程都调度完了，调度协程进idle状态，这个状态下调度器只能执行忙等待，啥也做不了。这也就是说，主线程main函数一旦开启了协程调度，就无法回头了，位于开始调度点之后的代码都执行不到。对于这个问题，sylar把调度器的开始点放在了stop方法中，也就是，调度开始即结束，干完活就下班。IOManager也是类似，除了可以调用stop方法外，IOManager类的析构函数也有一个stop方法，可以保证所有的任务都会被调度到。</p><p><br></p><p>6.&nbsp; 额外创建了调度线程时的调度执行时机。如果不额外创建线程，也就是线程数为1并且use caller，那所有的调度任务都在stop()时才会进行调度。但如果额外创建了线程，那么，在添加完调度任务之后任务马上就可以在另一个线程中调度执行。归纳起来，如果只使用caller线程进行调度，那所有的任务协程都在stop之后排队调度，如果有额外线程，那任务协程在刚添加到任务队列时就可以得到调度。</p><p><br></p><p>7. 协程中的异常要怎么处理，子协程抛出了异常该怎么办？这点其实非常好办，类比一下线程即可，你会在线程外面处理线程抛出的异常吗？答案是不会，所以协程抛出的异常我们也不处理，直接让程序按默认的处理方式来处理即可。一个成熟的协程应该自己处理掉自己的异常，而不是让调度器来帮忙。顺便说一下，sylar的协程调度器处理了协程抛出的异常，并且给异常结束的协程设置了一个EXCEPT状态，这看似贴心，但从长远的角度来看，其实是非常不利于协程的健康成长的。</p><p><br></p><p>8. 关于协程调度器的优雅停止。sylar停止调度器的策略如下：</p><ol><li>&nbsp;设置m_stopping标志，该标志表示正在停止</li><li>检测是否使用了caller线程进行调度，如果使用了caller线程进行调度，那要保证stop方法是由caller线程发起的</li><li>通知其他调度线程的调度协程退出调度</li><li>通知当前线程的调度协程退出调度</li><li>如果使用了caller线程进行调度，那执行一次caller线程的调度协程（只使用caller线程时的协程调度全仰仗这个操作）</li><li>等caller线程的调度协程返回</li><li>等所有调度线程结束</li></ol><h1 id="id-协程调度模块-Sylar协程调度模块实现">Sylar协程调度模块实现</h1><p>这部分请对照源码：<a href="https://github.com/zhongluqiang/sylar-from-scratch/releases/tag/v1.5.0" class="external-link" rel="nofollow">https://github.com/zhongluqiang/sylar-from-scratch/releases/tag/v1.5.0</a>。</p><p>首先是对协程模块的改造，增加m_runInScheduler成员，表示当前协程是否参与调度器调度，在协程的resume和yield时，根据协程的运行环境确定是和线程主协程进行交换还是和调度协程进行交换：</p><div class="code panel pdl conf-macro output-block" style="border-width: 1px;" data-hasbody="true" data-macro-name="code"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: cpp; gutter: false; theme: Confluence" data-theme="Confluence">Fiber::Fiber(std::function&lt;void()&gt; cb, size_t stacksize, bool run_in_scheduler)
+    : m_id(s_fiber_id++)
+    , m_cb(cb)
+    , m_runInScheduler(run_in_scheduler) {
+    ++s_fiber_count;
+    m_stacksize = stacksize ? stacksize : g_fiber_stack_size-&gt;getValue();
+    m_stack     = StackAllocator::Alloc(m_stacksize);
+
+    if (getcontext(&amp;m_ctx)) {
+        SYLAR_ASSERT2(false, "getcontext");
+    }
+
+    m_ctx.uc_link          = nullptr;
+    m_ctx.uc_stack.ss_sp   = m_stack;
+    m_ctx.uc_stack.ss_size = m_stacksize;
+
+    makecontext(&amp;m_ctx, &amp;Fiber::MainFunc, 0);
+
+    SYLAR_LOG_DEBUG(g_logger) &lt;&lt; "Fiber::Fiber() id = " &lt;&lt; m_id;
+}
+
+void Fiber::resume() {
+    SYLAR_ASSERT(m_state != TERM &amp;&amp; m_state != RUNNING);
+    SetThis(this);
+    m_state = RUNNING;
+
+    // 如果协程参与调度器调度，那么应该和调度器的主协程进行swap，而不是线程主协程
+    if (m_runInScheduler) {
+        if (swapcontext(&amp;(Scheduler::GetMainFiber()-&gt;m_ctx), &amp;m_ctx)) {
+            SYLAR_ASSERT2(false, "swapcontext");
+        }
+    } else {
+        if (swapcontext(&amp;(t_thread_fiber-&gt;m_ctx), &amp;m_ctx)) {
+            SYLAR_ASSERT2(false, "swapcontext");
+        }
+    }
+}
+
+void Fiber::yield() {
+    /// 协程运行完之后会自动yield一次，用于回到主协程，此时状态已为结束状态
+    SYLAR_ASSERT(m_state == RUNNING || m_state == TERM);
+    SetThis(t_thread_fiber.get());
+    if (m_state != TERM) {
+        m_state = READY;
+    }
+
+    // 如果协程参与调度器调度，那么应该和调度器的主协程进行swap，而不是线程主协程
+    if (m_runInScheduler) {
+        if (swapcontext(&amp;m_ctx, &amp;(Scheduler::GetMainFiber()-&gt;m_ctx))) {
+            SYLAR_ASSERT2(false, "swapcontext");
+        }
+    } else {
+        if (swapcontext(&amp;m_ctx, &amp;(t_thread_fiber-&gt;m_ctx))) {
+            SYLAR_ASSERT2(false, "swapcontext");
+        }
+    }
+}</pre>
+</div></div><p><br></p><p>然后是对调度任务的定义，如下，这里任务类型可以是协程/函数二选一，并且可指定调度线程。</p><div class="code panel pdl conf-macro output-block" style="border-width: 1px;" data-hasbody="true" data-macro-name="code"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: cpp; gutter: false; theme: Confluence" data-theme="Confluence">/**
+ * @brief 调度任务，协程/函数二选一，可指定在哪个线程上调度
+ */
+struct ScheduleTask {
+    Fiber::ptr fiber;
+    std::function&lt;void()&gt; cb;
+    int thread;
+
+    ScheduleTask(Fiber::ptr f, int thr) {
+        fiber  = f;
+        thread = thr;
+    }
+    ScheduleTask(Fiber::ptr *f, int thr) {
+        fiber.swap(*f);
+        thread = thr;
+    }
+    ScheduleTask(std::function&lt;void()&gt; f, int thr) {
+        cb     = f;
+        thread = thr;
+    }
+    ScheduleTask() { thread = -1; }
+
+    void reset() {
+        fiber  = nullptr;
+        cb     = nullptr;
+        thread = -1;
+    }
+};</pre>
+</div></div><p><br></p><p>接下来是调度器的成员变量，包括以下成员：</p><div class="code panel pdl conf-macro output-block" style="border-width: 1px;" data-hasbody="true" data-macro-name="code"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: cpp; gutter: false; theme: Confluence" data-theme="Confluence">/// 协程调度器名称
+std::string m_name;
+/// 互斥锁
+MutexType m_mutex;
+/// 线程池
+std::vector&lt;Thread::ptr&gt; m_threads;
+/// 任务队列
+std::list&lt;ScheduleTask&gt; m_tasks;
+/// 线程池的线程ID数组
+std::vector&lt;int&gt; m_threadIds;
+/// 工作线程数量，不包含use_caller的主线程
+size_t m_threadCount = 0;
+/// 活跃线程数
+std::atomic&lt;size_t&gt; m_activeThreadCount = {0};
+/// idle线程数
+std::atomic&lt;size_t&gt; m_idleThreadCount = {0};
+
+/// 是否use caller
+bool m_useCaller;
+/// use_caller为true时，调度器所在线程的调度协程
+Fiber::ptr m_rootFiber;
+/// use_caller为true时，调度器所在线程的id
+int m_rootThread = 0;
+
+/// 是否正在停止
+bool m_stopping = false;</pre>
+</div></div><p><br></p><p>接下来是协程调度模块的全局变量和线程局部变量，这里只有以下两个线程局部变量：</p><div class="code panel pdl conf-macro output-block" style="border-width: 1px;" data-hasbody="true" data-macro-name="code"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: cpp; gutter: false; theme: Confluence" data-theme="Confluence">/// 当前线程的调度器，同一个调度器下的所有线程指同同一个调度器实例
+static thread_local Scheduler *t_scheduler = nullptr;
+/// 当前线程的调度协程，每个线程都独有一份，包括caller线程
+static thread_local Fiber *t_scheduler_fiber = nullptr;</pre>
+</div></div><p>t_scheduler_fiber保存当前线程的调度协程，加上Fiber模块的t_fiber和t_thread_fiber，每个线程总共可以记录三个协程的上下文信息。</p><p><br></p><p>接下来是调度器的构造方法，如下：</p><div class="code panel pdl conf-macro output-block" style="border-width: 1px;" data-hasbody="true" data-macro-name="code"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: cpp; gutter: false; theme: Confluence" data-theme="Confluence">/**
+ * @brief 创建调度器
+ * @param[in] threads 线程数
+ * @param[in] use_caller 是否将当前线程也作为调度线程
+ * @param[in] name 名称
+ */
+Scheduler::Scheduler(size_t threads, bool use_caller, const std::string &amp;name) {
+    SYLAR_ASSERT(threads &gt; 0);
+
+    m_useCaller = use_caller;
+    m_name      = name;
+
+    if (use_caller) {
+        --threads;
+        sylar::Fiber::GetThis();
+        SYLAR_ASSERT(GetThis() == nullptr);
+        t_scheduler = this;
+
+        /**
+         * 在user_caller为true的情况下，初始化caller线程的调度协程
+         * caller线程的调度协程不会被调度器调度，而且，caller线程的调度协程停止时，应该返回caller线程的主协程
+         */
+        m_rootFiber.reset(new Fiber(std::bind(&amp;Scheduler::run, this), 0, false));
+
+        sylar::Thread::SetName(m_name);
+        t_scheduler_fiber = m_rootFiber.get();
+        m_rootThread      = sylar::GetThreadId();
+        m_threadIds.push_back(m_rootThread);
+    } else {
+        m_rootThread = -1;
+    }
+    m_threadCount = threads;
+}
+
+Scheduler *Scheduler::GetThis() { 
+    return t_scheduler; 
+}</pre>
+</div></div><p><br></p><p>接下来是两个get方法，用于获取当前线程的调度器的调度协程，这两个都是静态方法：</p><div class="code panel pdl conf-macro output-block" style="border-width: 1px;" data-hasbody="true" data-macro-name="code"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: cpp; gutter: false; theme: Confluence" data-theme="Confluence">Scheduler *Scheduler::GetThis() { 
+    return t_scheduler; 
+}
+
+Fiber *Scheduler::GetMainFiber() { 
+    return t_scheduler_fiber;
+}</pre>
+</div></div><p><br></p><p>接下来是协程调度器的start方法实现，这里主要初始化调度线程池，如果只使用caller线程进行调度，那这个方法啥也不做：</p><div class="code panel pdl conf-macro output-block" style="border-width: 1px;" data-hasbody="true" data-macro-name="code"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: cpp; gutter: false; theme: Confluence" data-theme="Confluence">void Scheduler::start() {
+    SYLAR_LOG_DEBUG(g_logger) &lt;&lt; "start";
+    MutexType::Lock lock(m_mutex);
+    if (m_stopping) {
+        SYLAR_LOG_ERROR(g_logger) &lt;&lt; "Scheduler is stopped";
+        return;
+    }
+    SYLAR_ASSERT(m_threads.empty());
+    m_threads.resize(m_threadCount);
+    for (size_t i = 0; i &lt; m_threadCount; i++) {
+        m_threads[i].reset(new Thread(std::bind(&amp;Scheduler::run, this),
+                                      m_name + "_" + std::to_string(i)));
+        m_threadIds.push_back(m_threads[i]-&gt;getId());
+    }
+}</pre>
+</div></div><p><br></p><p>接下来判断调度器是否已经停止的方法，只有当所有的任务都被执行完了，调度器才可以停止：</p><div class="code panel pdl conf-macro output-block" style="border-width: 1px;" data-hasbody="true" data-macro-name="code"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: cpp; gutter: false; theme: Confluence" data-theme="Confluence">bool Scheduler::stopping() {
+    MutexType::Lock lock(m_mutex);
+    return m_stopping &amp;&amp; m_tasks.empty() &amp;&amp; m_activeThreadCount == 0;
+}</pre>
+</div></div><p><br></p><p>接下来是调度器的tickle和idle实现，可以看到这两个方法并没有什么卵用：</p><div class="code panel pdl conf-macro output-block" style="border-width: 1px;" data-hasbody="true" data-macro-name="code"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: cpp; gutter: false; theme: Confluence" data-theme="Confluence">void Scheduler::tickle() { 
+    SYLAR_LOG_DEBUG(g_logger) &lt;&lt; "ticlke"; 
+}
+
+void Scheduler::idle() {
+    SYLAR_LOG_DEBUG(g_logger) &lt;&lt; "idle";
+    while (!stopping()) {
+        sylar::Fiber::GetThis()-&gt;yield();
+    }
+}</pre>
+</div></div><p><br></p><p>接下来是调度协程的实现，内部有一个while(true)循环，不停地从任务队列取任务并执行，由于Fiber类改造过，每个被调度器执行的协程在结束时都会回到调度协程，所以这里不用担心跑飞问题，当任务队列为空时，代码会进idle协程，但idle协程啥也不做直接就yield了，状态还是READY状态，所以这里其实就是个忙等待，CPU占用率爆炸，只有当调度器检测到停止标志时，idle协程才会真正结束，调度协程也会检测到idle协程状态为TERM，并且随之退出整个调度协程。这里还可以看出一点，对于一个任务协程，只要其从resume中返回了，那不管它的状态是TERM还是READY，调度器都不会自动将其再次加入调度，因为前面说过，一个成熟的协程是要学会自我管理的。</p><div class="code panel pdl conf-macro output-block" style="border-width: 1px;" data-hasbody="true" data-macro-name="code"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: cpp; gutter: false; theme: Confluence" data-theme="Confluence">void Scheduler::run() {
+    SYLAR_LOG_DEBUG(g_logger) &lt;&lt; "run";
+    setThis();
+    if (sylar::GetThreadId() != m_rootThread) {
+        t_scheduler_fiber = sylar::Fiber::GetThis().get();
+    }
+
+    Fiber::ptr idle_fiber(new Fiber(std::bind(&amp;Scheduler::idle, this)));
+    Fiber::ptr cb_fiber;
+
+    ScheduleTask task;
+    while (true) {
+        task.reset();
+        bool tickle_me = false; // 是否tickle其他线程进行任务调度
+        {
+            MutexType::Lock lock(m_mutex);
+            auto it = m_tasks.begin();
+            // 遍历所有调度任务
+            while (it != m_tasks.end()) {
+                if (it-&gt;thread != -1 &amp;&amp; it-&gt;thread != sylar::GetThreadId()) {
+                    // 指定了调度线程，但不是在当前线程上调度，标记一下需要通知其他线程进行调度，然后跳过这个任务，继续下一个
+                    ++it;
+                    tickle_me = true;
+                    continue;
+                }
+
+                // 找到一个未指定线程，或是指定了当前线程的任务
+                SYLAR_ASSERT(it-&gt;fiber || it-&gt;cb);
+                if (it-&gt;fiber) {
+                    // 任务队列时的协程一定是READY状态，谁会把RUNNING或TERM状态的协程加入调度呢？
+                    SYLAR_ASSERT(it-&gt;fiber-&gt;getState() == Fiber::READY);
+                }
+                // 当前调度线程找到一个任务，准备开始调度，将其从任务队列中剔除，活动线程数加1
+                task = *it;
+                m_tasks.erase(it++);
+                ++m_activeThreadCount;
+                break;
+            }
+            // 当前线程拿完一个任务后，发现任务队列还有剩余，那么tickle一下其他线程
+            tickle_me |= (it != m_tasks.end());
+        }
+
+        if (tickle_me) {
+            tickle();
+        }
+
+        if (task.fiber) {
+            // resume协程，resume返回时，协程要么执行完了，要么半路yield了，总之这个任务就算完成了，活跃线程数减一
+            task.fiber-&gt;resume();
+            --m_activeThreadCount;
+            task.reset();
+        } else if (task.cb) {
+            if (cb_fiber) {
+                cb_fiber-&gt;reset(task.cb);
+            } else {
+                cb_fiber.reset(new Fiber(task.cb));
+            }
+            task.reset();
+            cb_fiber-&gt;resume();
+            --m_activeThreadCount;
+            cb_fiber.reset();
+        } else {
+            // 进到这个分支情况一定是任务队列空了，调度idle协程即可
+            if (idle_fiber-&gt;getState() == Fiber::TERM) {
+                // 如果调度器没有调度任务，那么idle协程会不停地resume/yield，不会结束，如果idle协程结束了，那一定是调度器停止了
+                SYLAR_LOG_DEBUG(g_logger) &lt;&lt; "idle fiber term";
+                break;
+            }
+            ++m_idleThreadCount;
+            idle_fiber-&gt;resume();
+            --m_idleThreadCount;
+        }
+    }
+    SYLAR_LOG_DEBUG(g_logger) &lt;&lt; "Scheduler::run() exit";
+}</pre>
+</div></div><p><br></p><p>最后是调度器的stop方法，在使用了caller线程的情况下，调度器依赖stop方法来执行caller线程的调度协程，如果调度器只使用了caller线程来调度，那调度器真正开始执行调度的位置就是这个stop方法。</p><p><br></p><div class="code panel pdl conf-macro output-block" style="border-width: 1px;" data-hasbody="true" data-macro-name="code"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: cpp; gutter: false; theme: Confluence" data-theme="Confluence">void Scheduler::stop() {
+    SYLAR_LOG_DEBUG(g_logger) &lt;&lt; "stop";
+    if (stopping()) {
+        return;
+    }
+    m_stopping = true;
+
+    /// 如果use caller，那只能由caller线程发起stop
+    if (m_useCaller) {
+        SYLAR_ASSERT(GetThis() == this);
+    } else {
+        SYLAR_ASSERT(GetThis() != this);
+    }
+
+    for (size_t i = 0; i &lt; m_threadCount; i++) {
+        tickle();
+    }
+
+    if (m_rootFiber) {
+        tickle();
+    }
+
+    /// 在use caller情况下，调度器协程结束时，应该返回caller协程
+    if (m_rootFiber) {
+        m_rootFiber-&gt;resume();
+        SYLAR_LOG_DEBUG(g_logger) &lt;&lt; "m_rootFiber end";
+    }
+
+    std::vector&lt;Thread::ptr&gt; thrs;
+    {
+        MutexType::Lock lock(m_mutex);
+        thrs.swap(m_threads);
+    }
+    for (auto &amp;i : thrs) {
+        i-&gt;join();
+    }
+}</pre>
+</div></div><h1 id="id-协程调度模块-注意事项">注意事项</h1><p>sylar的协程调度模块因为存任务队列空闲时调度线程忙等待的问题，所以实际上并不实用，真正实用的是后面基于Scheduler实现的IOManager。由于任务队列的任务是按顺序执行的，如果有一个任务占用了比较长时间，那其他任务的执行会受到影响，如果任务执行的是像while(1)这样的循环，那线程数不够时，后面的任务都不会得到执行。另外，当前还没有实现hook功能，像sleep和等待IO就绪这样的操作也会阻塞协程调度。</p></div>
+</div>
+<div class="cell aside" data-type="aside">
+<div class="innerCell">
+<p></p><div class="toc-macro client-side-toc-macro conf-macro output-block hidden-outline" data-headerelements="H1,H2,H3,H4,H5,H6,H7" data-hasbody="false" data-macro-name="toc"><ul style=""><li><span class="toc-item-body" data-outline="1"><span class="toc-outline">1</span><a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#id-%E5%8D%8F%E7%A8%8B%E8%B0%83%E5%BA%A6%E6%A8%A1%E5%9D%97-%E5%8D%8F%E7%A8%8B%E8%B0%83%E5%BA%A6%E6%A6%82%E8%BF%B0" class="toc-link">协程调度概述</a></span></li><li><span class="toc-item-body" data-outline="2"><span class="toc-outline">2</span><a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#id-%E5%8D%8F%E7%A8%8B%E8%B0%83%E5%BA%A6%E6%A8%A1%E5%9D%97-sylar%E5%8D%8F%E7%A8%8B%E8%B0%83%E5%BA%A6%E6%A8%A1%E5%9D%97%E8%AE%BE%E8%AE%A1" class="toc-link">sylar协程调度模块设计</a></span></li><li><span class="toc-item-body" data-outline="3"><span class="toc-outline">3</span><a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#id-%E5%8D%8F%E7%A8%8B%E8%B0%83%E5%BA%A6%E6%A8%A1%E5%9D%97-%E8%B0%83%E5%BA%A6%E5%8D%8F%E7%A8%8B%E5%88%87%E6%8D%A2%E9%97%AE%E9%A2%98" class="toc-link">调度协程切换问题</a></span></li><li><span class="toc-item-body" data-outline="4"><span class="toc-outline">4</span><a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#id-%E5%8D%8F%E7%A8%8B%E8%B0%83%E5%BA%A6%E6%A8%A1%E5%9D%97-%E5%85%B6%E4%BB%96%E6%83%85%E5%86%B5%E7%9A%84%E8%AE%A8%E8%AE%BA" class="toc-link">其他情况的讨论</a></span></li><li><span class="toc-item-body" data-outline="5"><span class="toc-outline">5</span><a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#id-%E5%8D%8F%E7%A8%8B%E8%B0%83%E5%BA%A6%E6%A8%A1%E5%9D%97-Sylar%E5%8D%8F%E7%A8%8B%E8%B0%83%E5%BA%A6%E6%A8%A1%E5%9D%97%E5%AE%9E%E7%8E%B0" class="toc-link">Sylar协程调度模块实现</a></span></li><li><span class="toc-item-body" data-outline="6"><span class="toc-outline">6</span><a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#id-%E5%8D%8F%E7%A8%8B%E8%B0%83%E5%BA%A6%E6%A8%A1%E5%9D%97-%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9" class="toc-link">注意事项</a></span></li></ul></div><p></p></div>
+</div>
+</div>
+</div>
+
+                
+        
+    
+        </div>
+
+                        
+    
+
+
+
+<div id="likes-and-labels-container"><div id="likes-section" class="no-print" style="display: none;"><span class="like-summary"></span></div><div id="labels-section" class="pageSection group">
+    <div class="labels-section-content content-column" entityid="10060963" entitytype="page">
+	<div class="labels-content">
+		
+    <ul class="label-list label-list-right ">
+            <li class="no-labels-message">
+            无标签
+        </li>
+            </ul>
+
+    </div>
+</div>
+</div></div>
+        
+		
+            
+
+
+
+
+            
+        
+
+
+
+
+
+
+
+
+                        
+    
+<div id="comments-section" class="pageSection group">
+        
+    
+
+
+
+</div>
+        
+
+
+                
+    
+            
+</div>
+
+    
+
+    
+
+
+
+
+    
+    
+
+    
+    
+    
+
+
+    
+<div id="space-tools-web-items" class="hidden">
+                <div data-label="概览" data-href="/wiki/spaces/viewspacesummary.action?key=libs">概览</div>
+            <div data-label="内容工具" data-href="/wiki/pages/reorderpages.action?key=libs">内容工具</div>
+    </div>
+        
+
+
+
+            </main><!-- \#main -->
+            
+    
+    
+        
+            
+            
+
+<div id="footer" role="contentinfo" style="margin-left: 285px;">
+    <section class="footer-body">
+
+                                                    
+        
+
+        <ul id="poweredby"><li><a href="https://beian.miit.gov.cn/">浙ICP备2021003588号</a></li>
+            <li class="noprint no-after">基于 <a href="https://www.atlassian.com/software/confluence" class="hover-footer-link" rel="nofollow">Atlassian Confluence</a> <span id="footer-build-information">8.5.5</span> 技术构建</li>
+            
+            
+            
+        </ul>
+
+        
+
+        <div id="footer-logo"><a href="https://www.atlassian.com/" rel="nofollow">Atlassian</a></div>
+
+                    <button id="back-to-top" style="position: fixed; bottom: 12px; right: 12px; width: 40px; height: 40px; color: rgb(133, 144, 166); background-color: transparent; border-radius: 4px; border: none; outline: none;">
+    <svg fill="currentColor" viewBox="0 0 24 24" width="24" height="24">
+        <path d="M16.036 19.59a1 1 0 0 1-.997.995H9.032a.996.996 0 0 1-.997-.996v-7.005H5.03c-1.1 0-1.36-.633-.578-1.416L11.33 4.29a1.003 1.003 0 0 1 1.412 0l6.878 6.88c.782.78.523 1.415-.58 1.415h-3.004v7.005z">
+        </path>
+    </svg>
+</button>
+
+        
+    </section>
+</div>
+
+    
+</div>
+
+</div><!-- \#full-height-container -->
+</div><!-- \#page -->
+
+    <span style="display:none;" id="confluence-server-performance">{"serverDuration": 79, "requestCorrelationId": "749fbad91c8ca6ac"}</span>
+
+
+    
+<iframe src="./协程调度模块 - 类库与框架 - 程序员的自我修养_files/sr-analytics.html" sandbox="allow-scripts allow-same-origin" style="display: none" name="sr-analytics" referrerpolicy="same-origin"></iframe><iframe src="./协程调度模块 - 类库与框架 - 程序员的自我修养_files/sr-analytics(1).html" sandbox="allow-scripts allow-same-origin" style="display: none" name="sr-analytics" referrerpolicy="same-origin"></iframe><div id="editor-preload-container" style="display: none;">
+ 
+
+<div class="hidden">
+        
+
+
+<content tag="breadcrumbs">
+    
+    
+    <nav aria-label="导航项">
+        <ol id="quickedit-breadcrumbs">
+                                                            
+                                
+            <li class="first">
+                                
+                                    <span class=""><a href="https://www.midlane.top/wiki/display/libs" target="_blank">类库与框架</a></span>
+                                                                                                                    
+                                
+            </li><li>
+                                
+                                    <span class=""><a href="https://www.midlane.top/wiki/collector/pages.action?key=libs" target="_blank">页面</a></span>
+                                                                                                                    
+                                
+            </li><li>
+                                
+                                    <span class=""><a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060222" target="_blank">类库与框架</a></span>
+                                                                                                                    
+                                
+            </li><li>
+                                
+                                    <span class=""><a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060952" target="_blank">从零开始重写sylar C++高性能分布式服务器框架</a></span>
+                                                                                                                    
+                                
+            </li><li>
+                                
+                                    <span class="edited-page-title"><a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963" target="_blank">协程调度模块</a></span>
+                                                                                                    </li></ol>
+    </nav>
+
+</content>
+</div>
+
+
+        
+    <div id="anonymous-warning" class="aui-message aui-message-warning closeable">你还没有登录。你所做的任何更改会将作者标记为<span class="smalltext">匿名用户</span>。 如果你已经拥有帐户，请<a href="https://www.midlane.top/wiki/login.action?os_destination=%2Fpages%2Fviewpage.action">登录</a>。</div>
+
+
+
+<script type="text/x-template" title="editor-css" id="editor-css-resources">
+    <link rel="stylesheet" href="/wiki/s/5186a7ead72ffec13fa2e6ed086e2318-CDN/-tas3ps/9012/8yg2g7/5db5c558fd4261de1b5d071c89fec10e/_/download/contextbatch/css/editor-content/batch.css" data-wrm-key="editor-content" data-wrm-batch-type="context" media="all">
+<link rel="stylesheet" href="/wiki/s/-tas3ps/9012/8yg2g7/27/_/styles/custom.css" media="all">
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+
+<div class="editor-container">
+
+        
+            
+<div id="link-browser-tab-items" class="hidden">
+                <div title="搜索" data-weight="10">search</div>
+            <div title="文件" data-weight="30">attachments</div>
+            <div title="Web链接" data-weight="40">weblink</div>
+            <div title="高级" data-weight="50">advanced</div>
+    </div>
+
+            <div id="image-properties-tab-items" class="hidden">
+                <div title="效果" data-weight="10">image-effects</div>
+            <div title="描述" data-weight="20">image-attributes</div>
+    </div>
+            
+
+ 
+
+
+
+
+
+
+
+
+
+
+<div id="toolbar">
+    <div id="rte-toolbar" class="aui-toolbar aui-toolbar2">
+
+        <div class="aui-toolbar2-primary toolbar-primary" role="toolbar" aria-label="编辑工具">
+            <ul class="aui-buttons rte-toolbar-group-formatting">
+                            <li id="format-dropdown" class="toolbar-item toolbar-dropdown">
+                    <div class="aui-dd-parent">
+                        <a id="format-dropdown-display" href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" class="toolbar-trigger aui-dd-trigger aui-button" data-control-id="formatselect" resolved="">
+                            <span class="dropdown-text">正文</span>
+                                        
+    
+    <span class="icon aui-icon aui-icon-small aui-iconfont-dropdown "></span>
+                        </a>
+                        <ul id="format-dropdown-display-menu" class="aui-dropdown hidden">
+                            <li class="dropdown-item format-p" data-format="p" data-tooltip="正文 (Ctrl+0)">
+    <a class="item-link" href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#">正文</a>
+</li>
+                                <li class="dropdown-item format-h1" data-format="h1" data-tooltip="标题 1 (Ctrl+1)">
+    <a class="item-link" href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#">标题 1</a>
+</li>
+                                <li class="dropdown-item format-h2" data-format="h2" data-tooltip="标题 2 (Ctrl+2)">
+    <a class="item-link" href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#">标题 2</a>
+</li>
+                                <li class="dropdown-item format-h3" data-format="h3" data-tooltip="标题 3 (Ctrl+3)">
+    <a class="item-link" href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#">标题 3</a>
+</li>
+                                <li class="dropdown-item format-h4" data-format="h4" data-tooltip="标题 4 (Ctrl+4)">
+    <a class="item-link" href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#">标题 4</a>
+</li>
+                                <li class="dropdown-item format-h5" data-format="h5" data-tooltip="标题 5 (Ctrl+5)">
+    <a class="item-link" href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#">标题 5</a>
+</li>
+                                <li class="dropdown-item format-h6" data-format="h6" data-tooltip="标题 6 (Ctrl+6)">
+    <a class="item-link" href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#">标题 6</a>
+</li>
+                                <li class="dropdown-item format-pre" data-format="pre" data-tooltip="预格式化 (Ctrl+7)">
+    <a class="item-link" href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#">预格式化</a>
+</li>
+                                <li class="dropdown-item format-blockquote" data-format="blockquote" data-tooltip="引用 (Ctrl+8)">
+    <a class="item-link" href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#">引用</a>
+</li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+
+            <ul class="aui-buttons rte-toolbar-group-style">
+                
+            <li class="toolbar-item aui-button aui-button-subtle" id="rte-button-bold" data-tooltip="粗体 (Ctrl+B)" resolved="">
+    <a class="toolbar-trigger" href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" data-control-id="bold">
+                    
+    
+    <span class="icon aui-icon aui-icon-small aui-iconfont-editor-bold ">粗体</span>
+    </a>
+</li>
+                
+            <li class="toolbar-item aui-button aui-button-subtle" id="rte-button-italic" data-tooltip="斜体 (Ctrl+I)" resolved="">
+    <a class="toolbar-trigger" href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" data-control-id="italic">
+                    
+    
+    <span class="icon aui-icon aui-icon-small aui-iconfont-editor-italic ">斜体</span>
+    </a>
+</li>
+                
+            <li class="toolbar-item aui-button aui-button-subtle" id="rte-button-underline" data-tooltip="下划线 (Ctrl+U)" resolved="">
+    <a class="toolbar-trigger" href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" data-control-id="underline">
+                    
+    
+    <span class="icon aui-icon aui-icon-small aui-iconfont-editor-underline ">下划线</span>
+    </a>
+</li>
+                            <li id="color-picker-control" class="toolbar-item toolbar-splitbutton">
+                    <a class="toolbar-trigger aui-button" href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" id="rte-button-color" data-color="003366" data-tooltip="颜色" resolved=""><span class="icon aui-icon aui-icon-small aui-iconfont-editor-color ">颜色选择器</span><span class="selected-color"></span></a><div class="aui-dd-parent"><a class="toolbar-trigger aui-dd-trigger aui-button" href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" id="rte-button-color-selector" data-control-id="colorSelector" data-tooltip="更多颜色" resolved=""><span class="icon aui-icon aui-icon-small aui-iconfont-dropdown ">更多颜色</span></a><div class="color-picker-container"><div class="color-picker aui-dropdown hidden"><ul><li><a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" aria-label="黑色" data-tooltip="黑色" style="background-color: #000000" data-color="000000">&nbsp;</a></li><li><a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" aria-label="深橙黄色" data-tooltip="深橙黄色" style="background-color: #993300" data-color="993300">&nbsp;</a></li><li><a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" aria-label="深橄榄绿色" data-tooltip="深橄榄绿色" style="background-color: #333300" data-color="333300">&nbsp;</a></li><li><a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" aria-label="深绿色" data-tooltip="深绿色" style="background-color: #003300" data-color="003300">&nbsp;</a></li><li><a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" aria-label="藏青色" data-tooltip="藏青色" style="background-color: #003366" data-color="003366">&nbsp;</a></li><li><a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" aria-label="海蓝色" data-tooltip="海蓝色" style="background-color: #000080" data-color="000080">&nbsp;</a></li><li><a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" aria-label="靛蓝色" data-tooltip="靛蓝色" style="background-color: #333399" data-color="333399">&nbsp;</a></li><li><a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" aria-label="深灰色" data-tooltip="深灰色" style="background-color: #333333" data-color="333333">&nbsp;</a></li><li><a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" aria-label="褐红色" data-tooltip="褐红色" style="background-color: #800000" data-color="800000">&nbsp;</a></li><li><a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" aria-label="橙色" data-tooltip="橙色" style="background-color: #FF6600" data-color="FF6600">&nbsp;</a></li><li><a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" aria-label="橄榄绿色" data-tooltip="橄榄绿色" style="background-color: #808000" data-color="808000">&nbsp;</a></li><li><a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" aria-label="绿色" data-tooltip="绿色" style="background-color: #008000" data-color="008000">&nbsp;</a></li><li><a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" aria-label="蓝绿色" data-tooltip="蓝绿色" style="background-color: #008080" data-color="008080">&nbsp;</a></li><li><a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" aria-label="蓝色" data-tooltip="蓝色" style="background-color: #0000FF" data-color="0000FF">&nbsp;</a></li><li><a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" aria-label="灰蓝色" data-tooltip="灰蓝色" style="background-color: #666699" data-color="666699">&nbsp;</a></li><li><a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" aria-label="灰色" data-tooltip="灰色" style="background-color: #7A869A" data-color="7A869A">&nbsp;</a></li><li><a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" aria-label="红色" data-tooltip="红色" style="background-color: #FF0000" data-color="FF0000">&nbsp;</a></li><li><a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" aria-label="琥珀色" data-tooltip="琥珀色" style="background-color: #FF9900" data-color="FF9900">&nbsp;</a></li><li><a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" aria-label="黄绿色" data-tooltip="黄绿色" style="background-color: #99CC00" data-color="99CC00">&nbsp;</a></li><li><a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" aria-label="海绿色" data-tooltip="海绿色" style="background-color: #339966" data-color="339966">&nbsp;</a></li><li><a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" aria-label="青绿色" data-tooltip="青绿色" style="background-color: #33CCCC" data-color="33CCCC">&nbsp;</a></li><li><a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" aria-label="宝蓝色" data-tooltip="宝蓝色" style="background-color: #3366FF" data-color="3366FF">&nbsp;</a></li><li><a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" aria-label="紫色" data-tooltip="紫色" style="background-color: #800080" data-color="800080">&nbsp;</a></li><li><a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" aria-label="中灰色" data-tooltip="中灰色" style="background-color: #A5ADBA" data-color="A5ADBA">&nbsp;</a></li><li><a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" aria-label="洋红色" data-tooltip="洋红色" style="background-color: #FF00FF" data-color="FF00FF">&nbsp;</a></li><li><a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" aria-label="金色" data-tooltip="金色" style="background-color: #FFCC00" data-color="FFCC00">&nbsp;</a></li><li><a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" aria-label="黄色" data-tooltip="黄色" style="background-color: #FFFF00" data-color="FFFF00">&nbsp;</a></li><li><a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" aria-label="绿黄色" data-tooltip="绿黄色" style="background-color: #00FF00" data-color="00FF00">&nbsp;</a></li><li><a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" aria-label="湖绿色" data-tooltip="湖绿色" style="background-color: #00FFFF" data-color="00FFFF">&nbsp;</a></li><li><a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" aria-label="天蓝色" data-tooltip="天蓝色" style="background-color: #00CCFF" data-color="00CCFF">&nbsp;</a></li><li><a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" aria-label="红紫色" data-tooltip="红紫色" style="background-color: #993366" data-color="993366">&nbsp;</a></li><li><a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" aria-label="浅灰色" data-tooltip="浅灰色" style="background-color: #C1C7D0" data-color="C1C7D0">&nbsp;</a></li><li><a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" aria-label="粉色" data-tooltip="粉色" style="background-color: #FF99CC" data-color="FF99CC">&nbsp;</a></li><li><a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" aria-label="桃红色" data-tooltip="桃红色" style="background-color: #FFCC99" data-color="FFCC99">&nbsp;</a></li><li><a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" aria-label="浅黄色" data-tooltip="浅黄色" style="background-color: #FFFF99" data-color="FFFF99">&nbsp;</a></li><li><a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" aria-label="浅绿色" data-tooltip="浅绿色" style="background-color: #CCFFCC" data-color="CCFFCC">&nbsp;</a></li><li><a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" aria-label="浅蓝绿色" data-tooltip="浅蓝绿色" style="background-color: #CCFFFF" data-color="CCFFFF">&nbsp;</a></li><li><a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" aria-label="浅天蓝色" data-tooltip="浅天蓝色" style="background-color: #99CCFF" data-color="99CCFF">&nbsp;</a></li><li><a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" aria-label="绛紫色" data-tooltip="绛紫色" style="background-color: #CC99FF" data-color="CC99FF">&nbsp;</a></li><li><a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" aria-label="白色" data-tooltip="白色" style="background-color: #FFFFFF" data-color="FFFFFF">&nbsp;</a></li></ul></div></div></div>
+                </li>
+                <li id="more-menu" class="toolbar-item toolbar-dropdown">
+                    <div class="aui-dd-parent">
+                        <a id="rte-button-more" href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" class="toolbar-trigger aui-dd-trigger aui-button" data-tooltip="更多" resolved="">
+                                        
+    
+    <span class="icon aui-icon aui-icon-small aui-iconfont-editor-styles ">格式</span>
+                                            
+    
+    <span class="icon aui-icon aui-icon-small aui-iconfont-dropdown "></span>
+                        </a>
+                        <div id="rte-button-more-menu" class="aui-dropdown grouped hidden">
+                            <div class="grouped-dropdown-item">
+                                <ul>
+                                                        <li class="dropdown-item more-menu-trigger" data-control-id="strikethrough" data-tooltip="删除线 (Ctrl+Shift+S)">
+    <a id="rte-strikethrough" class="item-link" href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#">
+                    
+    
+    <span class="icon aui-icon aui-icon-small aui-iconfont-check hidden"></span>
+删除线
+    </a>
+</li>
+                                                             <li class="dropdown-item more-menu-trigger" data-control-id="sub" data-tooltip="">
+    <a id="rte-sub" class="item-link" href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#">
+                    
+    
+    <span class="icon aui-icon aui-icon-small aui-iconfont-check hidden"></span>
+下标
+    </a>
+</li>
+                                                             <li class="dropdown-item more-menu-trigger" data-control-id="sup" data-tooltip="">
+    <a id="rte-sup" class="item-link" href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#">
+                    
+    
+    <span class="icon aui-icon aui-icon-small aui-iconfont-check hidden"></span>
+上标
+    </a>
+</li>
+                                                    <li class="dropdown-item more-menu-trigger" data-control-id="monospace" data-tooltip="用等宽字体格式化文本">
+    <a id="rte-monospace" class="item-link" href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#">
+                    
+    
+    <span class="icon aui-icon aui-icon-small aui-iconfont-check hidden"></span>
+等宽
+    </a>
+</li>
+
+                                                                                                                </ul>
+                            </div>
+                            <div class="grouped-dropdown-item">
+                                <ul>
+                                    <li class="dropdown-item more-menu-trigger no-icon" data-format="removeformat" data-tooltip="当前选中文本清除格式">
+<a id="rte-removeformat" class="item-link" href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#">
+    清除格式
+</a>
+</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </li>
+            </ul>
+
+            <ul class="aui-buttons rte-toolbar-group-lists">
+                
+            <li class="toolbar-item aui-button aui-button-subtle" id="rte-button-bullist" data-tooltip="无序列表 (Ctrl+Shift+B)" resolved="">
+    <a class="toolbar-trigger" href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" data-control-id="bullist">
+                    
+    
+    <span class="icon aui-icon aui-icon-small aui-iconfont-editor-list-bullet ">无序列表</span>
+    </a>
+</li>
+                    
+            <li class="toolbar-item aui-button aui-button-subtle" id="rte-button-numlist" data-tooltip="有序列表 (Ctrl+Shift+N)" resolved="">
+    <a class="toolbar-trigger" href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" data-control-id="numlist">
+                    
+    
+    <span class="icon aui-icon aui-icon-small aui-iconfont-editor-list-number ">有序列表</span>
+    </a>
+</li>
+            </ul>
+                            <ul class="aui-buttons rte-toolbar-group-task-lists">
+                    
+            <li class="toolbar-item aui-button aui-button-subtle" id="rte-button-tasklist" data-tooltip="任务列表 ([ then ])" resolved="">
+    <a class="toolbar-trigger" href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" data-control-id="tasklist">
+                    
+    
+    <span class="icon aui-icon aui-icon-small aui-iconfont-editor-task ">任务列表</span>
+    </a>
+</li>
+                </ul>
+            
+            <ul class="aui-buttons rte-toolbar-group-indentation">
+                
+            <li class="toolbar-item aui-button aui-button-subtle" id="rte-button-outdent" data-tooltip="减小缩进" resolved="">
+    <a class="toolbar-trigger" href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" data-control-id="outdent">
+                    
+    
+    <span class="icon aui-icon aui-icon-small aui-iconfont-indent-left ">减小缩进</span>
+    </a>
+</li>
+                    
+            <li class="toolbar-item aui-button aui-button-subtle" id="rte-button-indent" data-tooltip="增大缩进" resolved="">
+    <a class="toolbar-trigger" href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" data-control-id="indent">
+                    
+    
+    <span class="icon aui-icon aui-icon-small aui-iconfont-indent-right ">增大缩进</span>
+    </a>
+</li>
+            </ul>
+
+            <ul class="aui-buttons rte-toolbar-group-justification">
+                
+            <li class="toolbar-item aui-button aui-button-subtle" id="rte-button-justifyleft" data-tooltip="左对齐" resolved="">
+    <a class="toolbar-trigger" href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" data-control-id="justifyleft">
+                    
+    
+    <span class="icon aui-icon aui-icon-small aui-iconfont-editor-align-left ">左对齐</span>
+    </a>
+</li>
+                    
+            <li class="toolbar-item aui-button aui-button-subtle" id="rte-button-justifycenter" data-tooltip="居中" resolved="">
+    <a class="toolbar-trigger" href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" data-control-id="justifycenter">
+                    
+    
+    <span class="icon aui-icon aui-icon-small aui-iconfont-editor-align-center ">居中</span>
+    </a>
+</li>
+                    
+            <li class="toolbar-item aui-button aui-button-subtle" id="rte-button-justifyright" data-tooltip="右对齐" resolved="">
+    <a class="toolbar-trigger" href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" data-control-id="justifyright">
+                    
+    
+    <span class="icon aui-icon aui-icon-small aui-iconfont-editor-align-right ">右对齐</span>
+    </a>
+</li>
+            </ul>
+
+                            <ul class="aui-buttons hidden" id="page-layout-2-group">
+                    <li id="page-layout-2" class="toolbar-item" data-tooltip="页面布局">
+                        <a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" class="aui-button aui-button-subtle toolbar-trigger" id="rte-button-pagelayout-2" resolved="">
+                                        
+    
+    <span class="icon aui-icon aui-icon-small aui-iconfont-editor-layout ">页面布局</span>
+                        </a>
+                    </li>
+                </ul>
+            
+
+            <ul class="aui-buttons rte-toolbar-group-files hidden"></ul>
+
+            <ul class="aui-buttons rte-toolbar-group-link no-separator">
+                <li class="toolbar-item" data-tooltip="插入链接 (Ctrl+K)">
+                    <a id="rte-button-link" class="toolbar-trigger aui-button aui-button-subtle" href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" data-control-id="linkbrowserButton" aria-label="插入链接" resolved="">
+                                    
+    
+    <span class="icon aui-icon aui-icon-small aui-iconfont-link "></span>
+                        <span class="trigger-text">链接</span>
+                    </a>
+                </li>
+            </ul>
+
+            <ul class="aui-buttons rte-toolbar-group-table no-separator">
+                <li class="toolbar-item toolbar-dropdown" id="insert-table-dropdown">
+                    <div class="aui-dd-parent">
+                        <a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" class="toolbar-trigger aui-dd-trigger aui-button aui-button-subtle" id="rte-button-insert-table" data-tooltip="插入表格" aria-label="插入表格" resolved="">
+                                        
+    
+    <span class="icon aui-icon aui-icon-small aui-iconfont-editor-table "></span>
+                            <span class="dropdown-text">表格</span>
+                                        
+    
+    <span class="icon aui-icon aui-icon-small aui-iconfont-dropdown "></span>
+                        </a>
+
+                        <div id="table-picker-container" class="hidden aui-box-shadow">
+                            <div class="table-picker-box" data-tooltip="按住 Shift 键，创建无表头表格。使用上/下箭头键修改行数，使用左/右箭头键修改列数，按 Enter 键则可插入表格。">
+                                <div class="table-picker-background">
+                                    <div class="picker picker-cell"></div>
+                                    <div class="picker picker-heading heading"></div>
+                                    <div class="picker picker-selected-cell"></div>
+                                    <div class="picker picker-selected-heading heading"></div>
+                                </div>
+                                <p class="desc" role="status" aria-live="polite"></p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+                                    
+            
+            <ul class="aui-buttons rte-toolbar-group-insert no-separator">
+                <li class="toolbar-item toolbar-dropdown" id="insert-menu">
+                    <div class="aui-dd-parent">
+                        <a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" class="toolbar-trigger aui-dd-trigger aui-button aui-button-subtle" id="rte-button-insert" data-tooltip="插入更多内容" aria-label="插入更多内容" resolved="">
+                                        
+    
+    <span class="icon aui-icon aui-icon-small aui-iconfont-add "></span>
+                            <span class="dropdown-text">插入</span>
+                                        
+    
+    <span class="icon aui-icon aui-icon-small aui-iconfont-dropdown "></span>
+                        </a>
+
+                        <div id="insert-menu-options" class="aui-dropdown grouped hidden">
+                            <div class="grouped-dropdown-item">
+                                <span class="assistive">插入内容</span>
+                                <ul id="content-insert-list">
+                                    
+        
+                <li class="dropdown-item content-image" data-command="mceConfimage" data-tooltip="插入文件和图片 (Ctrl+M)">
+<a id="rte-insert-image" class="item-link" href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#">
+                
+    
+    <span class="icon aui-icon aui-icon-small aui-iconfont-image "></span>
+ 文件和图片
+</a>
+</li>
+                                            
+        
+                <li class="dropdown-item content-link" data-control-id="linkbrowserButton" data-tooltip="插入链接 (Ctrl+K)">
+<a id="rte-insert-link" class="item-link" href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#">
+                
+    
+    <span class="icon aui-icon aui-icon-small aui-iconfont-link "></span>
+ 链接
+</a>
+</li>
+                                            
+        
+                <li class="dropdown-item content-wikimarkup" data-command="InsertWikiMarkup" data-tooltip="插入Wiki标记 (Ctrl+Shift+D)">
+<a id="rte-insert-wikimarkup" class="item-link" href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#">
+                
+    
+    <span class="icon aui-icon aui-icon-small aui-iconfont-code "></span>
+ Wiki标记
+</a>
+</li>
+                                            
+    
+                <li class="dropdown-item content-hr" data-command="InsertHorizontalRule" data-tooltip="插入水平线(----)">
+<a id="rte-insert-hr" class="item-link" href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#">
+                
+    
+    <span class="icon aui-icon aui-icon-small aui-iconfont-horizontal-rule "></span>
+ 水平线
+</a>
+</li>
+                                                                                
+        
+                <li class="dropdown-item content-tasklist" data-command="InsertInlineTaskListNoToggle" data-tooltip="插入任务列表 ([ then ])">
+<a id="rte-insert-tasklist" class="item-link" href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#">
+                
+    
+    <span class="icon aui-icon aui-icon-small aui-iconfont-task "></span>
+ 任务列表
+</a>
+</li>
+                                                                            
+        
+                <li class="dropdown-item content-date" data-command="confMenuInsertDate" data-tooltip="插入日期 (/ then /)">
+<a id="rte-insert-date" class="item-link" href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#">
+                
+    
+    <span class="icon aui-icon aui-icon-small aui-iconfont-calendar "></span>
+ 日期
+</a>
+</li>
+                                            
+    
+                <li class="dropdown-item content-symbol" data-command="confCharmap" data-tooltip="插入符号">
+<a id="rte-insert-symbol" class="item-link" href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#">
+                
+    
+    <span class="icon aui-icon aui-icon-small aui-iconfont-symbol "></span>
+ 符号
+</a>
+</li>
+                                    </ul>
+                                <span class="assistive">插入宏</span>
+                                <ul id="macro-insert-list">
+                                                                                                                                                                                                <li class="dropdown-item macro-insertmention-button" data-macro-name="insertmention-button" data-tooltip="插入&#39;用户提及&#39;宏">
+<a id="insertmention-button" class="item-link" href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#">
+                
+    
+    <span class="icon aui-icon aui-icon-small aui-iconfont-mention "></span>
+ 用户提及
+</a>
+</li>
+                                                                                                                                                            <li class="dropdown-item macro-jiralink" data-macro-name="jiralink" data-tooltip="插入&#39;Jira问题/过滤器&#39;宏">
+<a id="jiralink" class="item-link" href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#">
+                
+    
+    <span class="icon aui-icon aui-icon-small aui-iconfont-jira "></span>
+ Jira问题/过滤器
+</a>
+</li>
+                                                                                                                                                            <li class="dropdown-item macro-info" data-macro-name="info" data-tooltip="插入&#39;信息&#39;宏">
+<a id="info" class="item-link" href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#">
+                
+    
+    <span class="icon aui-icon aui-icon-small aui-iconfont-info-filled "></span>
+ 信息
+</a>
+</li>
+                                                                                                                                                            <li class="dropdown-item macro-drawio" data-macro-name="drawio" data-tooltip="插入&#39;draw.io Diagram&#39;宏">
+<a id="drawio" class="item-link" href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#">
+                        
+    
+    <span class="icon "></span>
+ draw.io Diagram
+</a>
+</li>
+                                                                                                                                                            <li class="dropdown-item macro-inc-drawio" data-macro-name="inc-drawio" data-tooltip="插入&#39;Embed draw.io Diagram&#39;宏">
+<a id="inc-drawio" class="item-link" href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#">
+                        
+    
+    <span class="icon "></span>
+ Embed draw.io Diagram
+</a>
+</li>
+                                                                                                                                                            <li class="dropdown-item macro-drawio-sketch" data-macro-name="drawio-sketch" data-tooltip="插入&#39;draw.io Board Diagram&#39;宏">
+<a id="drawio-sketch" class="item-link" href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#">
+                        
+    
+    <span class="icon "></span>
+ draw.io Board Diagram
+</a>
+</li>
+                                                                                                                                                            <li class="dropdown-item macro-status" data-macro-name="status" data-tooltip="插入&#39;状态&#39;宏">
+<a id="status" class="item-link" href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#">
+                        
+    
+    <span class="icon confluence-icon-status-macro"></span>
+ 状态
+</a>
+</li>
+                                                                                                                                                            <li class="dropdown-item macro-gallery" data-macro-name="gallery" data-tooltip="插入&#39;画廊&#39;宏">
+<a id="gallery" class="item-link" href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#">
+                
+    
+    <span class="icon aui-icon aui-icon-small aui-iconfont-gallery "></span>
+ 画廊
+</a>
+</li>
+                                                                                                                                                            <li class="dropdown-item macro-toc" data-macro-name="toc" data-tooltip="插入&#39;目录&#39;宏">
+<a id="toc" class="item-link" href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#">
+                
+    
+    <span class="icon aui-icon aui-icon-small aui-iconfont-overview "></span>
+ 目录
+</a>
+</li>
+                                                                    </ul>
+                            </div>
+                            <div class="grouped-dropdown-item">
+                                <ul id="more-macros-list">
+                                    
+        
+                <li class="dropdown-item content-macro" data-command="mceConfMacroBrowser" data-tooltip="打开宏浏览器 (Ctrl+Shift+A)">
+<a id="rte-insert-macro" class="item-link" href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#">
+    其它宏
+</a>
+</li>
+                                    </ul>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+                            <ul class="aui-buttons rte-toolbar-group-page-layouts-section-types">
+                    <li id="pagelayout-menu" class="toolbar-item toolbar-dropdown">
+                        <div class="aui-dd-parent">
+                            <a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" class="toolbar-trigger aui-dd-trigger aui-button aui-button-subtle" id="rte-button-pagelayout" data-tooltip="页面布局" resolved="">
+                                            
+    
+    <span class="icon aui-icon aui-icon-small aui-iconfont-layout pagelayout-default">页面布局</span>
+                                            
+    
+    <span class="icon aui-icon aui-icon-small aui-iconfont-dropdown "></span>
+                            </a>
+
+                            <ul id="pagelayout-menu-options" class="aui-dropdown hidden">
+                                <li class="dropdown-item" data-tooltip="无布局">
+    <a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" class="item-link" data-atlassian-layout="{&quot;name&quot;: &quot;pagelayout-none&quot;, &quot;columns&quot;: 0   }">
+                    
+    
+    <span class="icon aui-icon aui-icon-small aui-iconfont-check hidden"></span>
+                    
+    
+    <span class="icon aui-icon aui-icon-small aui-iconfont-layout pagelayout-none">无布局</span>
+    </a>
+</li>
+                                <li class="dropdown-item" data-tooltip="两栏 (简单)">
+    <a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" class="item-link" data-atlassian-layout="{&quot;name&quot;: &quot;pagelayout-two-simple&quot;, &quot;columns&quot;: [&quot;&quot;, &quot;&quot;]   }">
+                    
+    
+    <span class="icon aui-icon aui-icon-small aui-iconfont-check hidden"></span>
+                    
+    
+    <span class="icon aui-icon aui-icon-small aui-iconfont-layout pagelayout-two-simple">两栏 (简单)</span>
+    </a>
+</li>
+                                <li class="dropdown-item" data-tooltip="两栏 (简单，左侧栏)">
+    <a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" class="item-link" data-atlassian-layout="{&quot;name&quot;: &quot;pagelayout-two-simple-left&quot;, &quot;columns&quot;: [&quot;aside&quot;, &quot;large&quot;]   }">
+                    
+    
+    <span class="icon aui-icon aui-icon-small aui-iconfont-check hidden"></span>
+                    
+    
+    <span class="icon aui-icon aui-icon-small aui-iconfont-layout pagelayout-two-simple-left">两栏 (简单，左侧栏)</span>
+    </a>
+</li>
+                                <li class="dropdown-item" data-tooltip="两栏 (简单，右侧栏)">
+    <a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" class="item-link" data-atlassian-layout="{&quot;name&quot;: &quot;pagelayout-two-simple-right&quot;, &quot;columns&quot;: [&quot;large&quot;, &quot;aside&quot;]   }">
+                    
+    
+    <span class="icon aui-icon aui-icon-small aui-iconfont-check hidden"></span>
+                    
+    
+    <span class="icon aui-icon aui-icon-small aui-iconfont-layout pagelayout-two-simple-right">两栏 (简单，右侧栏)</span>
+    </a>
+</li>
+                                <li class="dropdown-item" data-tooltip="三栏 (简单)">
+    <a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" class="item-link" data-atlassian-layout="{&quot;name&quot;: &quot;pagelayout-three-simple&quot;, &quot;columns&quot;: [&quot;&quot;, &quot;&quot;, &quot;&quot;]   }">
+                    
+    
+    <span class="icon aui-icon aui-icon-small aui-iconfont-check hidden"></span>
+                    
+    
+    <span class="icon aui-icon aui-icon-small aui-iconfont-layout pagelayout-three-simple">三栏 (简单)</span>
+    </a>
+</li>
+                                <li class="dropdown-item" data-tooltip="两栏">
+    <a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" class="item-link" data-atlassian-layout="{&quot;name&quot;: &quot;pagelayout-two&quot;, &quot;columns&quot;: [&quot;&quot;, &quot;&quot;] , &quot;header&quot;: true  , &quot;footer&quot;:true  }">
+                    
+    
+    <span class="icon aui-icon aui-icon-small aui-iconfont-check hidden"></span>
+                    
+    
+    <span class="icon aui-icon aui-icon-small aui-iconfont-layout pagelayout-two">两栏</span>
+    </a>
+</li>
+                                <li class="dropdown-item" data-tooltip="两栏 (左侧栏)">
+    <a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" class="item-link" data-atlassian-layout="{&quot;name&quot;: &quot;pagelayout-two-left&quot;, &quot;columns&quot;: [&quot;aside&quot;, &quot;large&quot;] , &quot;header&quot;: true  , &quot;footer&quot;:true  }">
+                    
+    
+    <span class="icon aui-icon aui-icon-small aui-iconfont-check hidden"></span>
+                    
+    
+    <span class="icon aui-icon aui-icon-small aui-iconfont-layout pagelayout-two-left">两栏 (左侧栏)</span>
+    </a>
+</li>
+                                <li class="dropdown-item" data-tooltip="两栏 (右侧栏)">
+    <a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" class="item-link" data-atlassian-layout="{&quot;name&quot;: &quot;pagelayout-two-right&quot;, &quot;columns&quot;: [&quot;large&quot;, &quot;aside&quot;] , &quot;header&quot;: true  , &quot;footer&quot;:true  }">
+                    
+    
+    <span class="icon aui-icon aui-icon-small aui-iconfont-check hidden"></span>
+                    
+    
+    <span class="icon aui-icon aui-icon-small aui-iconfont-layout pagelayout-two-right">两栏 (右侧栏)</span>
+    </a>
+</li>
+                                <li class="dropdown-item" data-tooltip="三列">
+    <a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" class="item-link" data-atlassian-layout="{&quot;name&quot;: &quot;pagelayout-three&quot;, &quot;columns&quot;: [&quot;&quot;, &quot;&quot;, &quot;&quot;] , &quot;header&quot;: true  , &quot;footer&quot;:true  }">
+                    
+    
+    <span class="icon aui-icon aui-icon-small aui-iconfont-check hidden"></span>
+                    
+    
+    <span class="icon aui-icon aui-icon-small aui-iconfont-layout pagelayout-three">三列</span>
+    </a>
+</li>
+                                <li class="dropdown-item" data-tooltip="三栏 (左边和右侧栏)">
+    <a href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" class="item-link" data-atlassian-layout="{&quot;name&quot;: &quot;pagelayout-three-sidebars&quot;, &quot;columns&quot;: [&quot;sidebars&quot;, &quot;large&quot;, &quot;sidebars&quot;] , &quot;header&quot;: true  , &quot;footer&quot;:true  }">
+                    
+    
+    <span class="icon aui-icon aui-icon-small aui-iconfont-check hidden"></span>
+                    
+    
+    <span class="icon aui-icon aui-icon-small aui-iconfont-layout pagelayout-three-sidebars">三栏 (左边和右侧栏)</span>
+    </a>
+</li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            
+                        
+            <ul class="aui-buttons aui-button-subtle rte-toolbar-group-undo">
+                
+            <li class="toolbar-item aui-button aui-button-subtle" id="rte-button-undo" data-tooltip="回退 (Ctrl+Z)" resolved="">
+    <a class="toolbar-trigger" href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" data-control-id="undo">
+                    
+    
+    <span class="icon aui-icon aui-icon-small aui-iconfont-undo ">回退</span>
+    </a>
+</li>
+                    
+            <li class="toolbar-item aui-button aui-button-subtle" id="rte-button-redo" data-tooltip="重做 (Ctrl+Y)" resolved="">
+    <a class="toolbar-trigger" href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" data-control-id="redo">
+                    
+    
+    <span class="icon aui-icon aui-icon-small aui-iconfont-redo ">重做</span>
+    </a>
+</li>
+            </ul>
+        </div>                                                    <div id="draft-status" style="display:none"></div>
+                <div class="aui-toolbar2-secondary">
+            <ul class="aui-buttons aui-button-subtle rte-toolbar-group-searchreplace">
+                <li class="toolbar-item aui-button aui-button-subtle" id="rte-button-searchreplace" data-tooltip="查找/替换" resolved="">
+    <a class="toolbar-trigger" href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" data-control-id="searchreplace">
+                    
+    
+    <span class="icon aui-icon aui-icon-small aui-iconfont-search ">查找/替换</span>
+    </a>
+</li>
+            </ul>
+            <ul class="aui-buttons aui-button-subtle rte-toolbar-group-help">
+                <li class="toolbar-item aui-button aui-button-subtle" id="rte-button-help" data-tooltip="帮助" resolved="">
+    <a class="toolbar-trigger" href="https://www.midlane.top/wiki/pages/viewpage.action?pageId=10060963#" data-control-id="help">
+                    
+    
+    <span class="icon aui-icon aui-icon-small aui-iconfont-editor-help ">键盘快捷方式帮助</span>
+    </a>
+</li>
+            </ul>
+        </div>    </div></div>
+
+
+                    <div id="editor-notifications-container"><div id="editor-messages"><div id="anonymous-warning" class="aui-message aui-message-warning closeable">你还没有登录。你所做的任何更改会将作者标记为<span class="smalltext">匿名用户</span>。 如果你已经拥有帐户，请<a href="https://www.midlane.top/wiki/login.action?os_destination=%2Fpages%2Fviewpage.action">登录</a>。</div><div id="heartbeat-div" class="hidden"><div class="aui-message info closeable">此页面正在由<span id="other-users-span"></span>编辑，当保存时将会和其他人编辑的内容进行合并。</div></div></div><div id="all-messages"><div id="action-messages-notifications"></div></div></div><div id="editor-precursor"><div class="cell"><div class="aui-buttons aui-toolbar2"><button class="aui-button aui-button-subtle rte-button-labels" type="button" data-tooltip="标签" id="rte-button-labels" data-explicit-restrictions="" data-inherited-restrictions="" aria-label="编辑页标签" resolved=""><span class="icon aui-icon aui-icon-small aui-iconfont-devtools-tag"></span></button></div><div id="content-title-div" class=""><input type="text" name="title" id="content-title" tabindex="1" class="text pagetitle" autocomplete="off" value="协程调度模块" placeholder="页面标题" aui-skip-link-target="编辑标题" aria-label="页面标题"></div></div></div>
+    
+<div id="wysiwyg">
+    <div id="rte" class="cell editor-default ">
+        <textarea id="wysiwygTextarea" name="wysiwygContent" class="hidden tinymce-editor"></textarea>
+    </div>
+</div>
+<div id="editor-html-source-container" class="hidden">
+    <textarea id="editor-html-source" class="monospaceInput"></textarea>
+</div>
+
+<div id="preview">
+    <div id="previewArea" class="cell">
+    </div>
+</div>
+
+    <div id="savebar-container"><div id="rte-savebar" class="aui-toolbar aui-toolbar2"><div class="toolbar-split toolbar-split-row"><div class="toolbar-split toolbar-split-left"><div class="aui-buttons"></div></div><div class="toolbar-split toolbar-split-right"><div id="pluggable-status-container" class="toolbar-item rte-toolbar-pluggable-status"><div id="pluggable-status"></div></div><div class="aui-buttons" id="rte-savebar-tinymce-plugin-point"></div><div class="aui-buttons"><span id="rte-spinner" class="toolbar-item ">&nbsp;</span></div><div class="aui-buttons toolbar-group-edit assistive"><button id="rte-button-edit" class="aui-button" title="返回编辑模式" type="button" resolved=""><span class="trigger-text">编辑</span></button></div><div class="aui-buttons toolbar-group-preview toolbar-group-preview-page toolbar-group-preview-non-shared-draft"><button class="aui-button toolbar-item" id="rte-button-preview" title="预览" type="button" resolved=""><span class="trigger-text">预览</span></button></div><div class="save-button-container"><button class="aui-button aui-button-primary" type="submit" id="rte-button-publish" name="confirm" value="Save" title="保存" resolved=""><span class="trigger-text">保存</span></button></div><div class="aui-buttons cancel-button-container-shared-draft"><button class="aui-button" type="submit" id="rte-button-cancel" name="cancel" value="cancel" resolved="">取消</button></div></div></div></div></div>
+
+
+    
+</div>
+
+
+
+<script type="text/x-template" title="dynamic-editor-metadata" id="dynamic-editor-metadata-template">
+            <meta name="ajs-use-watch" content="false">
+            <meta name="ajs-attachment-source-content-id" content="10060963">
+            <meta name="ajs-use-inline-tasks" content="true">
+            <meta name="ajs-heartbeat" content="true">
+            <meta name="ajs-action-locale" content="zh_CN">
+            <meta name="ajs-editor-plugin-resource-prefix" content="/wiki/s/-tas3ps/9012/8yg2g7/8.5.5/_">
+            <meta name="ajs-edit-mode" content="legacy">
+            <meta name="ajs-user-watching-own-content" content="false">
+            <meta name="ajs-new-page" content="false">
+            <meta name="ajs-editor-mode" content="richtext">
+            <meta name="ajs-auto-start" content="false">
+            <meta name="ajs-conf-revision" content="confluence$content$10060963.68">
+            <meta name="ajs-sync-revision-source" content="">
+            <meta name="ajs-draft-id" content="0">
+            <meta name="ajs-draft-share-id" content="">
+            <meta name="ajs-content-type" content="page">
+            <meta name="ajs-collaborative-editor-status" content="">
+            <meta name="ajs-existing-draft-id" content="0">
+            <meta name="ajs-content-id" content="10060963">
+            <meta name="ajs-form-name" content="inlinecommentform">
+            <meta name="ajs-can-attach-files" content="false">
+            <meta name="ajs-show-draft-message" content="false">
+            <meta name="ajs-shared-drafts" content="false">
+            <meta name="ajs-collaborative-content" content="false">
+            <meta name="ajs-min-editor-height" content="150">
+            <meta name="ajs-version-comment" content="">
+            <meta name="ajs-draft-type" content="page">
+                
+                <meta name="ajs-synchrony-token" content="">
+    <meta name="ajs-synchrony-base-url" content="">
+    <meta name="ajs-synchrony-app-id" content="">
+    <meta name="ajs-synchrony-expiry" content="">
+    <meta name="ajs-use-xhr-fallback" content="">
+
+            		    <meta name="ajs-max-thumb-width" content="300">
+		    <meta name="ajs-max-thumb-height" content="300">
+		    <meta name="ajs-can-send-email" content="false">
+		    <meta name="ajs-is-dev-mode" content="false">
+		    <meta name="ajs-draft-save-interval" content="30000">
+		    <meta name="ajs-show-hidden-user-macros" content="false">
+		    <meta name="ajs-can-view-profile" content="false">
+		    <meta name="ajs-is-admin" content="false">
+		    <meta name="ajs-is-dc-license" content="false">
+		    <meta name="ajs-heartbeat-interval" content="30000">
+	
+    </script>
+
+<script type="text/x-template" title="tableForm" id="table-form-template">
+    <form id="tinymce-table-form" class="aui">
+        <div class="field-group">
+            <label for="rows">行</label>
+            <input id="rows" name="rows" type="text" size="3" autocomplete="off" value="{0}">
+        </div>
+        <div class="field-group">
+            <label for="cols">列</label>
+            <input id="cols" name="cols" type="text" size="3" autocomplete="off" value="{1}">
+        </div>
+        <div class="field-group hidden">
+            <input id="width" type="hidden" name="width" value="">
+            <label for="width">宽</label>
+        </div>
+        <div class="group">
+            <div class="checkbox">
+                <input id="table-heading-checkbox" class="checkbox" type="checkbox" name="heading" checked="checked" value="true">
+                <label for="table-heading-checkbox">首行设为表头</label>
+            </div>
+        </div>
+        <div class="group hidden">
+            <div class="checkbox">
+                <input id="table-equal-width-columns-checkbox" class="checkbox" type="checkbox" name="equal-width-columns" value="false">
+                <label for="table-equal-width-columns-checkbox">等宽列</label>
+            </div>
+        </div>
+    </form>
+</script>
+<input class="hidden" type="hidden" name="draftId" id="draftId">
+<input class="hidden" type="hidden" name="originalVersion" id="originalVersion" value="31">
+
+<input class="hidden" type="hidden" name="syncRev" id="syncRev" value="dummy-sync-rev">
+    <input type="hidden" name="atl_token" value="23c593631beb51c94b6d8fd88317986e8d7fe45f">
+</div></body></html>

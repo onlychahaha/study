@@ -1,0 +1,38 @@
+
+/* 调整字体和大小，优化中文显示效果 */
+.wiki-content {
+	font-family: "Helvetica Neue", "Luxi Sans", "DejaVu Sans", "Hiragino Sans GB", "Microsoft Yahei", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "Segoe UI Symbol", "Android Emoji", "EmojiSymbols";
+	font-variant-ligatures: no-common-ligatures !important;
+	font-size: 16px;
+	text-rendering: optimizeLegibility !important;
+}
+
+/* 优化等宽字体，也就是行内代码的显示效果 */
+code {
+    padding: 1px 5px 1px 5px; 
+    font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
+    background-color: #eeeeee;
+}
+
+/* 固定右侧目录，使之不随页面滚动 */
+#main-content > div > div > div.cell.aside > .innerCell > .toc-macro {
+	position:fixed;
+	top:100px;
+        font-size:16px;
+	height: 75%;
+	overflow-y:scroll !important;
+	overscroll-behavior: contain !important;
+}
+/* 不显示目录的滚动条 */
+/* Hide scrollbar for Chrome, Safari and Opera */
+#main-content > div > div > div.cell.aside > .innerCell > .toc-macro::-webkit-scrollbar {
+  display:none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+#main-content > div > div > div.cell.aside > .innerCell > .toc-macro {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+
