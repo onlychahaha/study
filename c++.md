@@ -17,7 +17,7 @@
 #include "myproject/base/error.h"  // 项目内头文件
 #include "myproject/util/status.h"
 ```
-##CMAKE
+## CMAKE
 ```
 target_include_directories(
         ${kmc_library_name}
@@ -29,4 +29,6 @@ target_include_directories(
         ${CMAKE_CURRENT_SOURCE_DIR}/include/srtp2
 )
 #这样写可以用<>引用三方库的头文件
+
+共享库必须指定-fPIC参数，并且这个共享库里面的依赖三方库也必须指定-fPIC参数，否则不能生成动态库
 ```
