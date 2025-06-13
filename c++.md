@@ -17,3 +17,16 @@
 #include "myproject/base/error.h"  // 项目内头文件
 #include "myproject/util/status.h"
 ```
+##CMAKE
+```
+target_include_directories(
+        ${kmc_library_name}
+        SYSTEM PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/openssl
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/curl
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/sqlite
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/kmc
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/srtp2
+)
+#这样写可以用<>引用三方库的头文件
+```
