@@ -33,4 +33,5 @@ target_include_directories(
 #共享库编译必须指定-fPIC参数，并且这个共享库里面的依赖三方库也必须指定-fPIC参数，否则不能生成动态库,因此最好，无论你编译的是静态库还是动态库
 #都指定-fPIC参数
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)	全局生效
+或者通过命令 cmake -DCMAKE_POSITION_INDEPENDENT_CODE=ON ..  全局生效
 ```
