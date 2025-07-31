@@ -35,3 +35,17 @@ target_include_directories(
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)	全局生效
 或者通过命令 cmake -DCMAKE_POSITION_INDEPENDENT_CODE=ON ..  全局生效
 ```
+
+## Sqlite3
+```
+登录：sqlite3 数据库文件名.db
+
+列出所有表：.tables
+
+查看表结构：.schema 表名
+
+SELECT * FROM 表名;
+
+ 退出sqlite3：.exit:
+
+```
