@@ -49,3 +49,23 @@ SELECT * FROM 表名;
  退出sqlite3：.exit:
 
 ```
+
+## 函数返回值的注意点
+```
+std::vector<int> createVector() {
+    std::vector<int> local = {1, 2, 3};
+    return local;         // 依赖RVO（推荐）
+    // return std::move(local); // 显式移动（抑制RVO，不推荐）
+}
+如果再函数中定义了一个局部变量需要作为返回值返回，尤其是容器一类的，最好放到std::move()再返回，因为这个是一般编译器内部也会做的优化，但如果编译器没做这个优化就会报错，不过这个也看情况吧，能加也可以不加，主要为了加深理解
+另外注意下：
+std::vector<int>& processVector(std::vector<int>& a) {
+    a.push_back(42);
+    return std::move(a);  // 错误！
+}
+这样的话容易出问题
+再调用的时候
+std::vector<int> vec = {1, 2, 3};
+auto& result = processVector(vec);  // vec被移动，此时vec变为空！
+调用方法后会把vec置空，后续在使用就会出问题。
+```
