@@ -69,3 +69,11 @@ std::vector<int> vec = {1, 2, 3};
 auto& result = processVector(vec);  // vec被移动，此时vec变为空！
 调用方法后会把vec置空，后续在使用就会出问题。
 ```
+
+##c++语法
+```
+一个空的string，在默认情况下，首次最大接受的字符（std::string a)：
+​​GCC (libstdc++)​​：15个字符（含\0，实际可用14字符）
+​​Clang (libc++)​​：22个字符（含\0，实际可用21字符）
+​​MSVC (STL)​​：15个字符（含\0，实际可用14字符）
+```
